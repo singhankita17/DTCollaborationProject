@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
@@ -15,23 +16,23 @@ public class Blog implements Serializable{
 
 
 		@Id
-		@GeneratedValue
-		int blogId;
+		@GeneratedValue(strategy = GenerationType.AUTO)
+		private int blogId;
 		
-		String blogTitle;
+		private String blogTitle;
 		
 		@Lob
-		String blogContent;
+		private String blogContent;
 		
 		Date createdDate;
 		
-		int userId;
+		private int userId;
 		
-		String status;
+		private String status;
 		
-		int noOfLikes;
+		private int noOfLikes;
 		
-		int noOfDislikes;
+		private int noOfDislikes;
 
 		public int getBlogId() {
 			return blogId;

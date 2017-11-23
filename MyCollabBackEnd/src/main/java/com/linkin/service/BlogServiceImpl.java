@@ -43,4 +43,9 @@ public class BlogServiceImpl implements BlogService{
 		return blogDao.getAllUsersBlog();
 	}
 
+	public boolean deleteBlog(Blog blog) {
+		
+		return blogDao.deleteBlog(blog);
+	}
+
 }

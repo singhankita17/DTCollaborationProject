@@ -48,6 +48,8 @@ public class BlogDaoImpl implements BlogDao {
 			
 		Blog blogObj = session.get(Blog.class, blogId);
 		
+		session.close();
+		
 		return blogObj;
 	}
 
@@ -58,6 +60,8 @@ public class BlogDaoImpl implements BlogDao {
 		
 		List<Blog> blogList= session.createQuery("from Blog where userId = :userId",Blog.class)
 				.setParameter("userId", userId).list();
+		
+		session.close();
 		
 		return blogList;
 	}
@@ -96,6 +100,8 @@ public class BlogDaoImpl implements BlogDao {
 		Session session = sessionFactory.openSession();
 		
 		List<Blog> blogList= session.createQuery("from Blog",Blog.class).list();
+		
+		session.close();
 		
 		return blogList;
 	}

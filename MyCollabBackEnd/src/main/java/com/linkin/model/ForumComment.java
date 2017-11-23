@@ -1,6 +1,5 @@
 package com.linkin.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -11,13 +10,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class BlogComment implements Serializable{
+public class ForumComment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	private int blogId;
+	private int forumId;
 	
 	private String commentText;
 	
@@ -26,6 +25,8 @@ public class BlogComment implements Serializable{
 	private int userId;
 	
 	private String userName;
+	
+	//Getters and Setters
 
 	public int getId() {
 		return id;
@@ -35,12 +36,12 @@ public class BlogComment implements Serializable{
 		this.id = id;
 	}
 
-	public int getBlogId() {
-		return blogId;
+	public int getForumId() {
+		return forumId;
 	}
 
-	public void setBlogId(int blogId) {
-		this.blogId = blogId;
+	public void setForumId(int forumId) {
+		this.forumId = forumId;
 	}
 
 	public String getCommentText() {
@@ -74,5 +75,5 @@ public class BlogComment implements Serializable{
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-		
+	
 }

@@ -9,32 +9,30 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.linkin.model.BlogComment;
+import com.linkin.model.JobDetail;
 
 @Repository
-public class BlogCommentDaoImpl implements BlogCommentDao {
+public class JobsDaoImpl implements JobsDao {
 
 	@Autowired
 	SessionFactory sessionFactory;
-	
+
 	@Transactional
-	public boolean addBlogComment(BlogComment comment) {
+	public boolean addJobs(JobDetail job) {
 		try
 		{
-		    sessionFactory.getCurrentSession().save(comment);
+		    sessionFactory.getCurrentSession().save(job);
 			return true;
-			
 		}catch(Exception e){
 			System.out.println("Exception raised: "+e);
 			return false;
 		}
-
 	}
 
 	@Transactional
-	public boolean updateBlogComment(BlogComment comment) {
+	public boolean updateJobs(JobDetail job) {
 		try{
-			sessionFactory.getCurrentSession().update(comment);
+			sessionFactory.getCurrentSession().update(job);
 			return true;
 		}catch(Exception e){
 			System.out.println("Exception raised: "+e);
@@ -43,10 +41,10 @@ public class BlogCommentDaoImpl implements BlogCommentDao {
 	}
 
 	@Transactional
-	public boolean deleteBlogComment(BlogComment comment) {
+	public boolean deleteJobs(JobDetail job) {
 		try
 		{
-			sessionFactory.getCurrentSession().delete(comment);
+			sessionFactory.getCurrentSession().delete(job);
 			return true;
 			
 		}catch(Exception e){
@@ -57,29 +55,27 @@ public class BlogCommentDaoImpl implements BlogCommentDao {
 	}
 
 	@Transactional
-	public BlogComment getBlogComment(int blogCommentId) {
+	public JobDetail getJobDetail(int jobId) {
 		
 		Session session = sessionFactory.openSession();
 		
-		BlogComment blogObj = session.get(BlogComment.class, blogCommentId);
+		JobDetail jobsObj = session.get(JobDetail.class, jobId);
 		
 		session.close();
 		
-		return blogObj;
+		return jobsObj;
 	}
 
 	@Transactional
-	public List<BlogComment> getAllBlogComments(int blogId) {
-		
+	public List<JobDetail> getAllJobDetails() {
+
 		Session session = sessionFactory.openSession();
 		
-		List<BlogComment> blogCommentList= session.createQuery("from BlogComment",BlogComment.class).list();
+		List<JobDetail> jobsList= session.createQuery("from JobDetail",JobDetail.class).list();
 		
 		session.close();
 		
-		return blogCommentList;
-		
+		return jobsList;
 	}
 
-	
 }

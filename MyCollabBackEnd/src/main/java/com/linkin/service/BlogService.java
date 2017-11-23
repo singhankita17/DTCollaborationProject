@@ -17,4 +17,6 @@ public interface BlogService {
 	public boolean approveBlog(Blog blog);
 	
 	public List<Blog> getAllUsersBlog();
+	
+	public boolean deleteBlog(Blog blog);
 }

@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.linkin.model.Blog;
 import com.linkin.model.BlogComment;
+import com.linkin.model.Forum;
+import com.linkin.model.ForumComment;
+import com.linkin.model.JobDetail;
 import com.linkin.model.UsersDetails;
 
 @Configuration
@@ -50,11 +53,15 @@ public class AppContextDBConfig {
 	@Autowired
 	@Bean("sessionFactory")
 	public SessionFactory getSessionFactory(DataSource dataSource){
+		
 		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 		sessionBuilder.addProperties(getHibernateProperties());
 		sessionBuilder.addAnnotatedClass(UsersDetails.class);
 		sessionBuilder.addAnnotatedClass(Blog.class);
 		sessionBuilder.addAnnotatedClass(BlogComment.class);
+		sessionBuilder.addAnnotatedClass(Forum.class);
+		sessionBuilder.addAnnotatedClass(ForumComment.class);
+		sessionBuilder.addAnnotatedClass(JobDetail.class);
 		System.out.println("Session factory config");
 		return sessionBuilder.buildSessionFactory();
 	}

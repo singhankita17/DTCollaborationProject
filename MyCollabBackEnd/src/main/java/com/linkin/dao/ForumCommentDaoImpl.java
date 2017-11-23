@@ -10,15 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.linkin.model.BlogComment;
+import com.linkin.model.ForumComment;
 
 @Repository
-public class BlogCommentDaoImpl implements BlogCommentDao {
+public class ForumCommentDaoImpl implements ForumCommentDao {
 
 	@Autowired
 	SessionFactory sessionFactory;
 	
 	@Transactional
-	public boolean addBlogComment(BlogComment comment) {
+	public boolean addForumComment(ForumComment comment) {
 		try
 		{
 		    sessionFactory.getCurrentSession().save(comment);
@@ -28,11 +29,10 @@ public class BlogCommentDaoImpl implements BlogCommentDao {
 			System.out.println("Exception raised: "+e);
 			return false;
 		}
-
 	}
 
 	@Transactional
-	public boolean updateBlogComment(BlogComment comment) {
+	public boolean updateForumComment(ForumComment comment) {
 		try{
 			sessionFactory.getCurrentSession().update(comment);
 			return true;
@@ -43,7 +43,7 @@ public class BlogCommentDaoImpl implements BlogCommentDao {
 	}
 
 	@Transactional
-	public boolean deleteBlogComment(BlogComment comment) {
+	public boolean deleteForumComment(ForumComment comment) {
 		try
 		{
 			sessionFactory.getCurrentSession().delete(comment);
@@ -57,29 +57,28 @@ public class BlogCommentDaoImpl implements BlogCommentDao {
 	}
 
 	@Transactional
-	public BlogComment getBlogComment(int blogCommentId) {
+	public ForumComment getForumComment(int forumCommentId) {
 		
 		Session session = sessionFactory.openSession();
 		
-		BlogComment blogObj = session.get(BlogComment.class, blogCommentId);
+		ForumComment forumObj = session.get(ForumComment.class, forumCommentId);
 		
 		session.close();
 		
-		return blogObj;
+		return forumObj;
 	}
 
 	@Transactional
-	public List<BlogComment> getAllBlogComments(int blogId) {
-		
+	public List<ForumComment> getAllForumComments(int forumId) {
+
 		Session session = sessionFactory.openSession();
 		
-		List<BlogComment> blogCommentList= session.createQuery("from BlogComment",BlogComment.class).list();
+		List<ForumComment> forumCommentList= session.createQuery("from ForumComment",ForumComment.class).list();
 		
 		session.close();
 		
-		return blogCommentList;
+		return forumCommentList;
 		
 	}
 
-	
 }

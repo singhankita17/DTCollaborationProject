@@ -65,6 +65,23 @@ public class BlogTest {
 		
 	}
 	
+	@Ignore
+	@Test
+	public void deleteBlogTest(){
+		
+		Blog blog = new Blog();
+		blog.setBlogId(47);
+		blog.setBlogTitle("Spring MVC Framework");
+		blog.setBlogContent("Spring Web MVC is the original web framework built on the Servlet API");
+		blog.setStatus("PENDING");
+		blog.setCreatedDate(new Date());
+		blog.setUserId(42);
+		
+		assertTrue("Problem in deleting Blog details",blogService.deleteBlog(blog));
+		
+	}
+	
+	@Ignore
 	@Test
 	public void approveBlogTest(){
 		
