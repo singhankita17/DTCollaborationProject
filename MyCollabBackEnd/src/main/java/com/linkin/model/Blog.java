@@ -33,6 +33,8 @@ public class Blog implements Serializable{
 		private int noOfLikes;
 		
 		private int noOfDislikes;
+		
+		Date publishDate;
 
 		public int getBlogId() {
 			return blogId;
@@ -98,6 +100,13 @@ public class Blog implements Serializable{
 			this.noOfDislikes = noOfDislikes;
 		}
 
-		
+		public Date getPublishDate() {
+			return publishDate;
+		}
+
+		public void setPublishDate(Date publishDate) {
+			this.publishDate = publishDate;
+		}
+
 		
 }

@@ -1,30 +1,15 @@
 <!DOCTYPE html>
-<html ng-app="myModule">
+<html data-ng-app="myModule">
 <head>
 <meta charset="ISO-8859-1">
 <title>Home Page</title>
-<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="resources/css/bootstrap-theme.min.css">
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-<!-- <script type="text/javascript" src="resources/js/angular.min.js"></script> -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-cookies.js"></script>
-<!-- <script type="text/javascript" src="resources/js/angular-route.min.js"></script>
-<script type="text/javascript" src="resources/js/angular-cookies.min.js"></script> -->
-<script type="text/javascript" src="resources/js/app.js"></script>
-<script type="text/javascript" src="home/HomeController.js"></script>
-<script type="text/javascript" src="register/userService.js"></script>
-<script type="text/javascript" src="register/UserRegistrationController.js"></script>
-<script type="text/javascript" src="login/loginService.js"></script>
-<script type="text/javascript" src="login/LoginController.js"></script>
-<link rel="stylesheet" href="resources/css/style-main.css">
 
 </head>
-<body data-ng-controller='homeController'>
+<body>
 
-	<header>
+ 	<header>
 			<nav class="navbar navbar-default navbar-static-top">
+			 <div class="container-fluid">
 				<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" >
 					<span class="icon-bar"></span>
@@ -38,23 +23,71 @@
 			<ul class="nav navbar-nav">
 				<li><a href="#home">Home</a></li>
 			</ul>
-			
-				
-			<ul class="nav navbar-nav navbar-right"> 
-				   <li><a href="#register"> Register</a> </li>		
-				   <li><a href="#login"> LogIn </a></li>
+							
+			<ul class="nav navbar-nav navbar-right" data-ng-show="!isAdmin"> 
+				    <li class="dropdown">
+			          	<a class="dropdown-toggle" data-toggle="dropdown" href="">Blog<span class="caret"></span></a>
+				          <ul class="dropdown-menu">
+				            <li><a href="#createBlog">Create Blog</a></li>
+				            <li><a href="#viewBlogs">View Blogs</a></li>
+				          </ul>
+			        </li>
+					<li class="dropdown">
+			          	<a class="dropdown-toggle" data-toggle="dropdown" href="">Forum<span class="caret"></span></a>
+				          <ul class="dropdown-menu">
+				            <li><a href="#createForum">Create Forum</a></li>
+				            <li><a href="#viewForum">View Forum</a></li>
+				          </ul>
+			        </li>
+				   <li><a href="#register"><span data-ng-show="!islogged"> Register </span></a> </li>		
+				   <li><a href="#login"><span data-ng-show="!islogged"> LogIn </span></a></li>
+				   <li><a href=""><span data-ng-show="islogged"> Welcome User {{ globals.currentUser.firstname}} </span></a></li>
+				   <li><a href="" data-ng-click="logout()" data-ng-controller='LoginController'><span data-ng-show="islogged"> Logout </span></a></li>
+				   
 			</ul>
+			
+			<ul class="nav navbar-nav navbar-right" data-ng-show="isAdmin"> 
+									
+				   <li><a href=""><span data-ng-show="islogged"> Manage Blog </span></a> </li>		
+				   <li><a href=""><span data-ng-show="islogged"> Manage Forum </span></a></li>
+				   <li><a href=""><span data-ng-show="islogged"> Manage Users </span></a></li>
+				   <li><a href=""><span data-ng-show="islogged"> Welcome ADMIN  {{ globals.currentUser.firstname}} </span></a></li>
+				   <li><a href="" data-ng-click="logout()" data-ng-controller='LoginController'><span data-ng-show="islogged"> Logout </span></a></li>
+				   
+			</ul>
+		  </div>
 		  </div>
 	</nav>		
 	</header>
-
-
+		
 	<div id="main">
-		<div data-ng-view></div>
+		<div data-ng-view>
+		</div>
 	</div>
 	
 	<div class="footer">
 		<b>Website Footer</b> 
 	</div>
 </body>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <script type="text/javascript" src="resources/js/angular.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-cookies.js"></script>
+<!-- <script type="text/javascript" src="resources/js/angular-route.min.js"></script>
+<script type="text/javascript" src="resources/js/angular-cookies.min.js"></script> -->
+<script type="text/javascript" src="resources/js/app.js"></script>
+<script type="text/javascript" src="home/HomeController.js"></script>
+<script type="text/javascript" src="register/userService.js"></script>
+<script type="text/javascript" src="register/UserRegistrationController.js"></script>
+<script type="text/javascript" src="login/loginService.js"></script>
+<script type="text/javascript" src="login/LoginController.js"></script>
+<script type="text/javascript" src="blogs/BlogService.js"></script>
+<script type="text/javascript" src="blogs/blogController.js"></script>
+<script type="text/javascript" src="forums/ForumService.js"></script>
+<script type="text/javascript" src="forums/forumController.js"></script>
+<link rel="stylesheet" href="resources/css/style-main.css">
+
 </html>

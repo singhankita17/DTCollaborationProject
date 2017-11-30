@@ -14,9 +14,14 @@ public class UsersServiceImpl implements UsersService{
 	@Autowired
 	UsersDao usersDao;
 
-	public boolean saveOrUpdate(UsersDetails user) {
+	public boolean saveUser(UsersDetails user) {
 		
-		return usersDao.saveOrUpdate(user);
+		return usersDao.saveUser(user);
+	}
+	
+	public boolean updateUser(UsersDetails user) {
+		
+		return usersDao.updateUser(user);
 	}
 
 	public UsersDetails getUserById(int userId) {
@@ -44,14 +49,14 @@ public class UsersServiceImpl implements UsersService{
 		return usersDao.getUserByName(name);
 	}
 
-	public boolean checkIfValidUser(UsersDetails user) {
+	public boolean deleteUser(int id) {
 		
-		return usersDao.checkIfValidUser(user);
+		return usersDao.deleteUser(id);
 	}
 
-	public boolean deleteUser(UsersDetails user) {
+	public boolean checkIfValidUser(String username, String password) {
 		
-		return usersDao.deleteUser(user);
+		return usersDao.checkIfValidUser(username, password);
 	}
 	
 	

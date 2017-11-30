@@ -1,5 +1,4 @@
-<div ng-controller="loginController">
-
+<div data-ng-controller="LoginController">
 <div class="row vertical-offset-100">
 		<div class="col-md-4 col-md-offset-4">
     		<div class="panel panel-default">
@@ -7,18 +6,19 @@
 			    	<h3 class="panel-title">Please sign in</h3>
 			 	</div>
 			  	<div class="panel-body">
-			    	<form action="" data-ng-submit="vm.login()">
                     <fieldset>
+                     <p><font color="red">{{message}}</font></p>
+                    <br>
 			    	  	<div class="form-group">
-			    		    <input class="form-control" placeholder="UserName" name="userName"  ng-model="userName" type="text" >
+			    		    <input class="form-control" placeholder="UserName" name="username"  data-ng-model="user.userName" type="text" >
 			    		</div>
 			    		<div class="form-group">
-			    			<input class="form-control" placeholder="Password" type="password" ng-model="password"  name="password" maxlength="15"  value="">
+			    			<input class="form-control" placeholder="Password" type="password" data-ng-model="user.password"  name="password" maxlength="15"  value="">
 			    		</div>
 			    		
-			    		<input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+			    		<button class="btn btn-lg btn-success btn-block" data-ng-click="login()">Login</button>
 			    	</fieldset>
-			      	</form>
+			      	
 			    </div>
 			</div>
 		</div>

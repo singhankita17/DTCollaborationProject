@@ -17,13 +17,25 @@ public class UsersDaoImpl implements UsersDao{
 	SessionFactory sessionFactory;
 
 	@Transactional
-	public boolean saveOrUpdate(UsersDetails user) {
+	public boolean saveUser(UsersDetails user) {
 			
 		try{
 			Session session = sessionFactory.getCurrentSession();
 			user.setEnabled(true);
 			user.setOnline(false);
-			session.saveOrUpdate(user);
+			session.save(user);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
+	}
+	
+	@Transactional
+	public boolean updateUser(UsersDetails user) {
+			
+		try{
+			Session session = sessionFactory.getCurrentSession();
+			session.update(user);
 			return true;
 		}catch(Exception e){
 			return false;
@@ -73,21 +85,16 @@ public class UsersDaoImpl implements UsersDao{
 
 	@Transactional
 	public boolean checkIfValidUser(UsersDetails user) {
-		String queryString = "from UsersDetails where userName = :username AND password = :password";
-		UsersDetails userObj = sessionFactory.getCurrentSession().createQuery(queryString,UsersDetails.class)
-				.setParameter("username", user.getUserName())
-				.setParameter("password",user.getPassword()).uniqueResult();
-		if(userObj!=null)
-				return true;
-		else
-				return false;
+		return false;
 	}
 
 	@Transactional
-	public boolean deleteUser(UsersDetails user) {
+	public boolean deleteUser(int id) {
 		try
 		{
-			sessionFactory.getCurrentSession().delete(user);
+			Session session = sessionFactory.getCurrentSession();
+			UsersDetails user = session.get(UsersDetails.class, id);
+			session.delete(user);
 			return true;
 			
 		}catch(Exception e){
@@ -95,6 +102,18 @@ public class UsersDaoImpl implements UsersDao{
 			System.out.println("Exception raised: "+e);
 			return false;
 		}
+	}
+
+	@Transactional
+	public boolean checkIfValidUser(String username, String password) {
+		String queryString = "from UsersDetails where userName = :username AND password = :password";
+		UsersDetails userObj = sessionFactory.getCurrentSession().createQuery(queryString,UsersDetails.class)
+				.setParameter("username", username)
+				.setParameter("password",password).uniqueResult();
+		if(userObj!=null)
+				return true;
+		else
+				return false;
 	}
 
 	

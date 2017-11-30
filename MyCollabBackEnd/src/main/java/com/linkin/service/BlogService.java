@@ -16,7 +16,15 @@ public interface BlogService {
 	
 	public boolean approveBlog(Blog blog);
 	
+	public boolean rejectBlog(Blog blog);
+	
 	public List<Blog> getAllUsersBlog();
 	
 	public boolean deleteBlog(Blog blog);
+	
+	public List<Blog> getAllPendingBlogs();	
+
+	public int incrementLikes(int blogId);
+	
+	public int incrementDisLikes(int blogId);
 }

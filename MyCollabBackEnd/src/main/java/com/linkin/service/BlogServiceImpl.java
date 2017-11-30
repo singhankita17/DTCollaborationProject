@@ -48,4 +48,24 @@ public class BlogServiceImpl implements BlogService{
 		return blogDao.deleteBlog(blog);
 	}
 
+	public boolean rejectBlog(Blog blog) {
+		
+		return blogDao.rejectBlog(blog);
+	}
+
+	public List<Blog> getAllPendingBlogs() {
+		
+		return blogDao.getAllPendingBlogs();
+	}
+
+	public int incrementLikes(int blogId) {
+		
+		return blogDao.incrementLikes(blogId);
+	}
+
+	public int incrementDisLikes(int blogId) {
+		
+		return blogDao.incrementDisLikes(blogId);
+	}
+
 }

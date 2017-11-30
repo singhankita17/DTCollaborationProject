@@ -91,7 +91,19 @@ public class ForumDaoImpl implements ForumDao {
 	public List<Forum> getAllUsersForum() {
 		Session session = sessionFactory.openSession();
 		
-		List<Forum> forumList= session.createQuery("from Forum",Forum.class).list();
+		List<Forum> forumList= session.createQuery("from Forum where status = 'APPROVED'",Forum.class).list();
+		
+		session.close();
+		
+		return forumList;
+	}
+
+	@Transactional
+	public List<Forum> getAllPendingForums() {
+		
+		Session session = sessionFactory.openSession();
+		
+		List<Forum> forumList= session.createQuery("from Forum where status = 'PENDING'",Forum.class).list();
 		
 		session.close();
 		

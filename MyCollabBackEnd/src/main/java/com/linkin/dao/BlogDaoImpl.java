@@ -1,5 +1,6 @@
 package com.linkin.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -71,7 +72,8 @@ public class BlogDaoImpl implements BlogDao {
 		try{
 			
 			Blog blogObj = sessionFactory.getCurrentSession().load(Blog.class, blog.getBlogId());
-			blogObj.setStatus(blog.getStatus());
+			blogObj.setStatus("APPROVED");
+			blogObj.setPublishDate(new Date());
 			return true;
 			
 		}catch(Exception e){
@@ -99,11 +101,69 @@ public class BlogDaoImpl implements BlogDao {
 	public List<Blog> getAllUsersBlog() {
 		Session session = sessionFactory.openSession();
 		
-		List<Blog> blogList= session.createQuery("from Blog",Blog.class).list();
+		List<Blog> blogList= session.createQuery("from Blog where status = 'APPROVED'",Blog.class).list();
 		
 		session.close();
 		
 		return blogList;
+	}
+
+	@Transactional
+	public boolean rejectBlog(Blog blog) {
+		try{
+			
+			Blog blogObj = sessionFactory.getCurrentSession().load(Blog.class, blog.getBlogId());
+			blogObj.setStatus("REJECTED");
+			blogObj.setPublishDate(new Date());
+			return true;
+			
+		  }catch(Exception e){
+			System.out.println("Exception raised: "+e);
+			return false;
+		  }
+	}
+
+	@Transactional
+	public List<Blog> getAllPendingBlogs() {
+
+		Session session = sessionFactory.openSession();
+		
+		List<Blog> blogList= session.createQuery("from Blog where status = 'PENDING'",Blog.class).list();
+		
+		session.close();
+		
+		return blogList;
+	}
+
+	@Transactional
+	public int incrementLikes(int blogId) {
+		try{
+			Blog blogObj = sessionFactory.getCurrentSession().load(Blog.class, blogId);
+			int noOfLikes = blogObj.getNoOfLikes();
+			noOfLikes++;
+			blogObj.setNoOfLikes(noOfLikes);
+			return noOfLikes;
+			
+		}catch(Exception e){
+			System.out.println("Exception raised: "+e);
+			return 0;
+		}
+	}
+
+	@Transactional
+	public int incrementDisLikes(int blogId) {
+		try{
+			
+			Blog blogObj = sessionFactory.getCurrentSession().load(Blog.class, blogId);
+			int noOfDislikes = blogObj.getNoOfDislikes();
+			noOfDislikes++;
+			blogObj.setNoOfLikes(noOfDislikes);
+			return noOfDislikes;
+			
+		}catch(Exception e){
+			System.out.println("Exception raised: "+e);
+			return 0;
+		}
 	}
 
 }

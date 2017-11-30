@@ -29,6 +29,8 @@ public class Forum {
 
 	private String status;
 	
+	private Date publishDate;
+	
 	//Getters and Setters
 
 	public int getForumId() {
@@ -78,6 +80,13 @@ public class Forum {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 
+	public Date getPublishDate() {
+		return publishDate;
+	}
+
+	public void setPublishDate(Date publishDate) {
+		this.publishDate = publishDate;
+	}
+	
 }

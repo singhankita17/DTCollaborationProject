@@ -49,7 +49,7 @@ public class UsersTest {
 		user.setEnabled(true);
 		user.setOnline(false);
 		
-		assertTrue("Problem in storing user details",usersService.saveOrUpdate(user));
+		assertTrue("Problem in storing user details",usersService.saveUser(user));
 		
 	}
 	
@@ -77,7 +77,7 @@ public class UsersTest {
 		user.setEnabled(true);
 		user.setOnline(false);
 		
-		assertTrue("Problem in storing user details",usersService.saveOrUpdate(user));
+		assertTrue("Problem in storing user details",usersService.updateUser(user));
 		
 		
 	}
@@ -86,11 +86,8 @@ public class UsersTest {
 	@Test
 	public void deleteUserTest(){
 		
-		UsersDetails user = new UsersDetails();
-		user.setC_user_id(2);
 		
-		
-		assertTrue("Problem in storing user details",usersService.deleteUser(user));
+		assertTrue("Problem in storing user details",usersService.deleteUser(2));
 	}
 	
 	@Test

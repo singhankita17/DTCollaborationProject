@@ -7,9 +7,11 @@ import com.linkin.model.UsersDetails;
 
 public interface UsersDao {
 
-	public boolean saveOrUpdate(UsersDetails user);
+	public boolean saveUser(UsersDetails user);
 	
-	public boolean deleteUser(UsersDetails user);
+	public boolean updateUser(UsersDetails user);
+	
+	public boolean deleteUser(int id);
 	
 	public UsersDetails getUserById(int userId);
 	
@@ -21,6 +23,6 @@ public interface UsersDao {
 
 	public boolean checkIfExistingUser(UsersDetails user);
 
-	public boolean checkIfValidUser(UsersDetails user);
+	public boolean checkIfValidUser(String username, String password);
 	
 }

@@ -1,0 +1,37 @@
+<div class="row vertical-offset-20" data-ng-controller="blogController">
+		<div class="col-md-4 col-md-offset-4">
+    		<div class="panel panel-default">
+			  	<div class="panel-heading">
+		  
+		  			<h3 class="panel-title"> Create New Blog </h3>
+		        </div>
+			<div class="panel-body">
+				<div class="panel-body">
+			
+			<!-- <form > -->
+			 <p><font color="red">{{errormessage}}</font></p>
+			<fieldset>
+				  <div class="form-group">
+				  	<label for="firstName">Blog Title: </label>
+				    <input class="form-control"  type="text"    name="blogTitle" placeholder="Enter Blog Title" data-ng-model="blog.blogTitle" required="required"/>
+				   </div>
+		    
+					   <div class="form-group">
+					    <label for="lastName">Blog Content: </label>
+					    <textarea class="form-control"  type="text"  name="blogContent" placeholder="Enter Blog Content" data-ng-model="blog.blogContent"></textarea>
+					  	</div>
+					
+					
+					   	<div class="form-group">
+							    <div class="clearfix">
+							      <button type="submit" class="btn btn-success" data-ng-click="createNewBlog()">Create Blog</button>
+							      <button type="reset"  class="btn btn-danger">Cancel</button>		     
+							 </div>
+			    		</div>
+			    	</fieldset>
+			 <!--    </form> -->
+			   </div>
+		</div>
+		</div>
+  </div>
+</div>

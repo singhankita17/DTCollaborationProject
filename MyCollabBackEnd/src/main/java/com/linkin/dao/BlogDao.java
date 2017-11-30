@@ -18,6 +18,13 @@ public interface BlogDao {
 	
 	public boolean approveBlog(Blog blog);
 	
+	public boolean rejectBlog(Blog blog);
+	
 	public List<Blog> getAllUsersBlog();
 	
+	public List<Blog> getAllPendingBlogs();
+	
+	public int incrementLikes(int blogId);
+	
+	public int incrementDisLikes(int blogId);
 }
