@@ -42,6 +42,13 @@ app.controller('LoginController', LoginController);
                 	 
                    //  FlashService.Error(response.message);
                  //	     alert("error")
+                	 $scope.error = response.data;
+                        console.log(response.data)
+                		 AuthenticationService.ClearCredentials();
+                         console.log("User is invalid"+response.data)
+                         $rootScope.islogged=false;
+                         $location.path('/login');
+                	
                  }
              });
          };

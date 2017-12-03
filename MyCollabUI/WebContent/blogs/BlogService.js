@@ -8,6 +8,8 @@ function BlogService($http, $cookieStore, $rootScope){
 	
 	service.createBlog = createBlog;
 	service.viewBlogs = viewBlogs;
+	service.viewBlogById = viewBlogById;
+	service.updateNoOfLikes = updateNoOfLikes;
 	
 	return service;
 	
@@ -59,4 +61,52 @@ function BlogService($http, $cookieStore, $rootScope){
 		})
 	}
 	
+	
+	function viewBlogById(blogId,callback){
+		
+		$http.get(BASE_URL+"/viewBlogById/"+blogId).then(function(response){
+	
+			console.log("response data: "+response.data)
+    			if(response!=null){
+    				 
+    				 response = { success: true, data: response.data };
+                } else {
+                	 
+                    response = { success: false, message: 'Blog Search failed' };
+                }
+                    callback(response);
+		},function(response){
+			console.log(response.data)
+    			if(response!=null){
+    				 
+    				 response = { success: false, message: 'Fetching blog details failed' };
+                }
+			
+                    callback(response);
+		})
+	}
+	
+	function updateNoOfLikes(blog, callback){
+		
+		$http.post(BASE_URL+"/updateLikes",blog).then(function(response){
+			
+			console.log("response data: "+response.data)
+    			if(response!=null){
+    				 
+    				 response = { success: true, data: response.data };
+                } else {
+                	 
+                    response = { success: false, message: 'Likes updation failed' };
+                }
+                    callback(response);
+		},function(response){
+			console.log(response.data)
+    			if(response!=null){
+    				 
+    				 response = { success: false, message: 'Likes updation failed' };
+                }
+			
+                    callback(response);
+		})
+	}
 }

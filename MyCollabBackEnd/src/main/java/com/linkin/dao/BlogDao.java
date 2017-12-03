@@ -24,7 +24,5 @@ public interface BlogDao {
 	
 	public List<Blog> getAllPendingBlogs();
 	
-	public int incrementLikes(int blogId);
-	
-	public int incrementDisLikes(int blogId);
+	public int updateNoOfLikes(Blog blog);
 }

@@ -51,6 +51,8 @@
 				   <li><a href=""><span data-ng-show="islogged"> Manage Blog </span></a> </li>		
 				   <li><a href=""><span data-ng-show="islogged"> Manage Forum </span></a></li>
 				   <li><a href=""><span data-ng-show="islogged"> Manage Users </span></a></li>
+				   <li><a href="#register"><span data-ng-show="!islogged"> Register </span></a> </li>		
+				   <li><a href="#login"><span data-ng-show="!islogged"> LogIn </span></a></li>
 				   <li><a href=""><span data-ng-show="islogged"> Welcome ADMIN  {{ globals.currentUser.firstname}} </span></a></li>
 				   <li><a href="" data-ng-click="logout()" data-ng-controller='LoginController'><span data-ng-show="islogged"> Logout </span></a></li>
 				   
@@ -72,6 +74,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- <script type="text/javascript" src="resources/js/angular.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script>
@@ -86,8 +89,10 @@
 <script type="text/javascript" src="login/LoginController.js"></script>
 <script type="text/javascript" src="blogs/BlogService.js"></script>
 <script type="text/javascript" src="blogs/blogController.js"></script>
+<script type="text/javascript" src="blogs/BlogCommentService.js"></script>
+<script type="text/javascript" src="blogs/blogViewController.js"></script>
 <script type="text/javascript" src="forums/ForumService.js"></script>
 <script type="text/javascript" src="forums/forumController.js"></script>
 <link rel="stylesheet" href="resources/css/style-main.css">
-
+<link rel="stylesheet" href="resources/css/style-blog.css">
 </html>

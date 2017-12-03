@@ -156,7 +156,7 @@ public class UsersRESTController {
 	    
 	    if(validUser==null)
 	    {
-	    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(5,"User session details not found"),HttpStatus.UNAUTHORIZED);
+	    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
 		}	   
 	    else	
 	    {

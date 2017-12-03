@@ -58,14 +58,10 @@ public class BlogServiceImpl implements BlogService{
 		return blogDao.getAllPendingBlogs();
 	}
 
-	public int incrementLikes(int blogId) {
+	public int updateNoOfLikes(Blog blog) {
 		
-		return blogDao.incrementLikes(blogId);
+		return blogDao.updateNoOfLikes(blog);
 	}
 
-	public int incrementDisLikes(int blogId) {
-		
-		return blogDao.incrementDisLikes(blogId);
-	}
 
 }

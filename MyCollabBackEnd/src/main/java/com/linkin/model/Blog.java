@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table
 public class Blog implements Serializable{
@@ -24,16 +26,18 @@ public class Blog implements Serializable{
 		@Lob
 		private String blogContent;
 		
+		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy@HH:mm:ss")
 		Date createdDate;
 		
 		private int userId;
 		
+		private String userName;
+		
 		private String status;
 		
 		private int noOfLikes;
-		
-		private int noOfDislikes;
-		
+			
+		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy@HH:mm:ss")
 		Date publishDate;
 
 		public int getBlogId() {
@@ -92,20 +96,20 @@ public class Blog implements Serializable{
 			this.noOfLikes = noOfLikes;
 		}
 
-		public int getNoOfDislikes() {
-			return noOfDislikes;
-		}
-
-		public void setNoOfDislikes(int noOfDislikes) {
-			this.noOfDislikes = noOfDislikes;
-		}
-
 		public Date getPublishDate() {
 			return publishDate;
 		}
 
 		public void setPublishDate(Date publishDate) {
 			this.publishDate = publishDate;
+		}
+
+		public String getUserName() {
+			return userName;
+		}
+
+		public void setUserName(String userName) {
+			this.userName = userName;
 		}
 
 		

@@ -1,0 +1,31 @@
+<div class="post">
+          <div>            
+            <h2>{{blog.blogTitle}}</h2>
+            <cite>by {{ blog.userName}} on {{blog.createdDate}}</cite>
+            <div class="post-body">
+             <p>
+               {{blog.blogContent}}
+             </p> 
+            </div>
+            
+            <div class="comments">
+              <input type="hidden"  data-ng-model="clickCount" value="0"/>         
+              <button class="fa fa-heart" data-ng-click="updateLikes(blog)"> {{blog.noOfLikes}}</button>
+              <h3>Comments</h3>
+              <ul>
+               <li data-ng-repeat="comment in commentList">
+                 "{{comment.commentText}}" on {{comment.commentDate}}
+                 <cite>- <b>{{comment.userName}}</b></cite>
+               </li>
+              </ul>
+              <form name="commentForm">
+	              
+	                
+	                <h4>Add Comment</h4>
+	                  <textarea data-ng-model="comment.commentText" cols="20" rows="5" placeholder="Comment Text Here" required></textarea>
+	                                  
+	                  <button data-ng-click="addComment(comment,blog.blogId)">Submit</button>
+	           </form>
+              </div>
+        </div>
+      </div>

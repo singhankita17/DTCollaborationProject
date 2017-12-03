@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table
 public class BlogComment implements Serializable{
@@ -21,12 +23,14 @@ public class BlogComment implements Serializable{
 	
 	private String commentText;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy@HH:mm:ss")
 	private Date commentDate;
 	
 	private int userId;
 	
 	private String userName;
 
+	
 	public int getId() {
 		return id;
 	}

@@ -1,40 +1,19 @@
-<div class="row vertical-offset-20" data-ng-controller="userRegistrationController">
-		<div class="col-md-6 col-md-offset-3">
-    		<div class="panel panel-default">
-    		<div class="panel-heading">
-    		<h2>Blog Details</h2>
-    		</div>
-    		<div class="panel-body">
-				<div class="panel-body">
-	<table class="table-striped" border="1">
-		<thead>			
-			<tr>
-				<th>Blog Id</th>
-				<th>Blog Title</th>
-				<th>Blog Content</th>
-				<th>Created On </th>				
-				<th>User Id</th>
-				<th>Status</th>
-				<th>NoOfLikes</th>
-				<th>NoOfDislikes</th>
-				<th>Published On</th>
-			</tr>							
-		</thead>
-		<tbody>
-			<tr data-ng-repeat="blog in blogList">
-			<td>{{blog.blogId}}</td>
-			<td>{{blog.blogTitle}}</td>
-			<td>{{blog.blogContent}}</td>
-			<td>{{blog.createdDate}}</td>
-			<td>{{blog.userId}}</td>
-			<td>{{blog.status}}</td>
-			<td>{{blog.noOfLikes}}</td>
-			<td>{{blog.noOfDislikes}}</td>
-			<td>{{blog.publishedDate}}</td>
-		</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
+<div class="content">
+        <div class="container">
+          <div class="row">
+           <ul class="post-grid">
+           <li data-ng-repeat="blog in blogList" class="col-sm-4">
+           <a href="#/viewBlogDetail/{{blog.blogId}}">
+            <h3>{{blog.blogTitle | limitTo:40}}</h3></a>
+            <p>{{blog.blogContent | limitTo:70}}...</p>
+            
+            <p class="fa fa-comment push-left"> 
+            </p>
+            <p class="fa fa-heart pull-right"> {{blog.noOfLikes}}
+            </p>
+          </li>
+          </ul>
+         
+        </div>
+      </div>
+    </div>

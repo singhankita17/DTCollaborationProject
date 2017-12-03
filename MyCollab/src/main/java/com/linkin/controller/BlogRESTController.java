@@ -3,6 +3,8 @@ package com.linkin.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.linkin.model.Blog;
+import com.linkin.model.BlogComment;
 import com.linkin.model.UsersDetails;
+import com.linkin.service.BlogCommentService;
 import com.linkin.service.BlogService;
 import com.linkin.service.UsersService;
 import com.linkin.utility.CollabApplicationError;
@@ -26,6 +30,9 @@ public class BlogRESTController {
 	
 	@Autowired
 	BlogService blogService;
+	
+	@Autowired
+	BlogCommentService blogCommentService;
 
 	@RequestMapping(value="/createBlog",method=RequestMethod.POST)
 	public ResponseEntity<?> createBlog(@RequestBody Blog blog){
@@ -33,8 +40,7 @@ public class BlogRESTController {
 		if(user.isOnline()){
 			blog.setStatus("PENDING");
 			blog.setCreatedDate(new Date());
-			blog.setNoOfDislikes(0);
-			blog.setNoOfDislikes(0);
+			blog.setNoOfLikes(0);
 			if(blogService.addBlog(blog)){
 				return new ResponseEntity<Blog>(blog, HttpStatus.OK);
 			}else{
@@ -49,6 +55,21 @@ public class BlogRESTController {
 		List<Blog> blogList = blogService.getAllUsersBlog();
 		if(blogList!=null){
 				return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
+		}
+		else
+		{
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(13,"Retrieving Blog details failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@RequestMapping(value="/viewBlogById/{blogId}",method=RequestMethod.GET)
+	public ResponseEntity<?> viewBlogById(@PathVariable("blogId") int blogId){
+		
+		Blog blog = blogService.getBlog(blogId);
+		
+		if(blog!=null){
+				System.out.println("Blog details: "+blog.getBlogId()+" Date: "+blog.getCreatedDate());
+				return new ResponseEntity<Blog>(blog, HttpStatus.OK);
 		}
 		else
 		{
@@ -71,8 +92,7 @@ public class BlogRESTController {
 	@RequestMapping(value="/approveBlog/{blogId}",method=RequestMethod.GET)
 	public ResponseEntity<?> approveBlog(@PathVariable("blogId") int blogId){
 		Blog blog = blogService.getBlog(blogId);
-		if(blog!=null){
-				
+		if(blog!=null){				
 			if(blogService.approveBlog(blog)){
 				    blog = blogService.getBlog(blogId);
 					return new ResponseEntity<Blog>(blog, HttpStatus.OK);
@@ -107,6 +127,53 @@ public class BlogRESTController {
 		{
 				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(15,"No Blogs found for given Id"), HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	
+	@RequestMapping(value="/getBlogComment/{blogId}",method=RequestMethod.GET)
+	public ResponseEntity<?> getBlogComment(@PathVariable("blogId") int blogId){
+		
+		List<BlogComment> commentList = blogCommentService.getAllBlogComments(blogId);
+		
+		if(commentList!=null){
+			
+				return new ResponseEntity<List<BlogComment>>(commentList, HttpStatus.OK);
+		}
+		else
+		{
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(17,"Retrieving Blog Comment details failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@RequestMapping(value="/addBlogComment",method=RequestMethod.POST)
+	public ResponseEntity<?> addBlogComment(@RequestBody BlogComment blogComment,HttpSession session){
+		System.out.println("Blog comment = "+blogComment.getBlogId()+" user Id; "+blogComment.getUserId() );
+		UsersDetails user = (UsersDetails) session.getAttribute("user");
+		if(user.isOnline()){
+			blogComment.setCommentDate(new Date());
+			blogComment.setUserName(user.getFirstName()+" "+user.getLastName());
+			if(blogCommentService.addBlogComment(blogComment)){
+				return new ResponseEntity<BlogComment>(blogComment, HttpStatus.OK);
+			}else{
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(19,"Blog Comment Addition failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(12,"User must be logged in to add a comment"),HttpStatus.CONFLICT);
+	}
+	
+	
+	@RequestMapping(value="/updateLikes",method=RequestMethod.POST)
+	public ResponseEntity<?> updateNoOfLikes(@RequestBody Blog blog,HttpSession session){
+		
+		UsersDetails user = (UsersDetails) session.getAttribute("user");
+		if(user.isOnline()){			
+			if(blogService.updateBlog(blog)){
+				return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+			}else{
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(11,"Blog updation failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(12,"User must be logged in to like"),HttpStatus.CONFLICT);
 	}
 	
 }

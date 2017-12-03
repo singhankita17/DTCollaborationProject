@@ -30,6 +30,10 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						.when("/createForum",{
 							templateUrl: "forums/createNewForum.html",
 							controller: "forumController"
+						})
+						.when("/viewBlogDetail/:id",{
+							templateUrl: "blogs/viewBlogDetail.html",
+							controller: "blogViewController"
 						});
 						 
 					})
@@ -50,7 +54,7 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						        // redirect to login page if not logged in and trying to access a restricted page
 						    	console.log("$location.path() ="+$location.path())
 						    	
-						        var restrictedPage = $.inArray($location.path(), ['/register','/home','/viewBlogs','','/viewForum']) === -1;
+						        var restrictedPage = $.inArray($location.path(), ['/register','/home','/viewBlogs','','/viewForum','/viewBlogDetail/']) === -1;
 						        var loggedInUser = $rootScope.globals.currentUser;
 						    
 						        if(loggedInUser){

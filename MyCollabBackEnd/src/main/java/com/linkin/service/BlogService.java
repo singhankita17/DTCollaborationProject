@@ -24,7 +24,6 @@ public interface BlogService {
 	
 	public List<Blog> getAllPendingBlogs();	
 
-	public int incrementLikes(int blogId);
+	public int updateNoOfLikes(Blog blog);
 	
-	public int incrementDisLikes(int blogId);
 }

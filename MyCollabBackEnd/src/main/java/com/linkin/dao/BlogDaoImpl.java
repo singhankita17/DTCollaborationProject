@@ -136,34 +136,17 @@ public class BlogDaoImpl implements BlogDao {
 	}
 
 	@Transactional
-	public int incrementLikes(int blogId) {
-		try{
-			Blog blogObj = sessionFactory.getCurrentSession().load(Blog.class, blogId);
-			int noOfLikes = blogObj.getNoOfLikes();
-			noOfLikes++;
-			blogObj.setNoOfLikes(noOfLikes);
-			return noOfLikes;
-			
-		}catch(Exception e){
-			System.out.println("Exception raised: "+e);
-			return 0;
-		}
-	}
-
-	@Transactional
-	public int incrementDisLikes(int blogId) {
+	public int updateNoOfLikes(Blog blog) {
 		try{
 			
-			Blog blogObj = sessionFactory.getCurrentSession().load(Blog.class, blogId);
-			int noOfDislikes = blogObj.getNoOfDislikes();
-			noOfDislikes++;
-			blogObj.setNoOfLikes(noOfDislikes);
-			return noOfDislikes;
+			Blog blogObj = sessionFactory.getCurrentSession().load(Blog.class, blog.getBlogId());
+			blogObj.setNoOfLikes(blog.getNoOfLikes());
+			return blogObj.getNoOfLikes();
 			
-		}catch(Exception e){
+		  }catch(Exception e){
 			System.out.println("Exception raised: "+e);
 			return 0;
-		}
+		  }
 	}
 
 }

@@ -82,7 +82,7 @@ app.factory('AuthenticationService', AuthenticationService);
             $rootScope.globals = {};
             $cookieStore.remove('globals');
             $http.defaults.headers.common.Authorization = 'Basic';
-           // alert("credential cleared");
+            //alert("credential cleared");
         }
     }
     var Base64 = {

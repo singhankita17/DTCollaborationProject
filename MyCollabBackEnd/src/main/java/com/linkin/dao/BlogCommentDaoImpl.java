@@ -73,7 +73,8 @@ public class BlogCommentDaoImpl implements BlogCommentDao {
 		
 		Session session = sessionFactory.openSession();
 		
-		List<BlogComment> blogCommentList= session.createQuery("from BlogComment",BlogComment.class).list();
+		List<BlogComment> blogCommentList= session.createQuery("from BlogComment where blogId = :blogId",BlogComment.class)
+				.setParameter("blogId", blogId).list();
 		
 		session.close();
 		

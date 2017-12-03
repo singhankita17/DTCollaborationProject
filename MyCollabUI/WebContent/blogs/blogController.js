@@ -8,21 +8,7 @@ function blogController($scope,$location,BlogService,$rootScope){
 		 
      $scope.errormessage=''
     	 
-    	
-    /*retrieveUser = function (){
-		 
-		 userService.retrieveUserByUserName()
-		 		.then(function(response){
-		 		console.log("User details retrieved")
-		 		$scope.blog.userId = response.data.c_user_id;
-		 		
-		 	}, function(response){
-		 		$scope.errormessage = response.data.errormessage;
-		 		console.log($scope.errormessage)
-		 		$location.path("/createBlog")
-		 	})
-	 }*/
-    	 
+   	 
      $scope.createNewBlog = function (){
     	 
     	 $scope.blog.userId = $rootScope.globals.currentUser.userObj.c_user_id
@@ -56,12 +42,12 @@ function blogController($scope,$location,BlogService,$rootScope){
 		 		
 		 	}else{
 		 		
-		 		$scope.errormessage = response.data.errormessage;
-		 		console.log($scope.errormessage)
+		 		console.log( response.data)
 		 		
 		 	}
 		 })
 	 }
 	 
 	 viewBlogs();
+	
 }
