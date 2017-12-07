@@ -29,7 +29,7 @@
 			          	<a class="dropdown-toggle" data-toggle="dropdown" href="">Blog<span class="caret"></span></a>
 				          <ul class="dropdown-menu">
 				            <li><a href="#createBlog">Create Blog</a></li>
-				            <li><a href="#viewBlogs">View Blogs</a></li>
+				            <li><a href="#viewBlogs">View All Blogs</a></li>
 				          </ul>
 			        </li>
 					<li class="dropdown">
@@ -39,6 +39,7 @@
 				            <li><a href="#viewForum">View Forum</a></li>
 				          </ul>
 			        </li>
+			       <li><a href="#editprofile"><span data-ng-show="!islogged"> Profile </span></a> </li> 
 				   <li><a href="#register"><span data-ng-show="!islogged"> Register </span></a> </li>		
 				   <li><a href="#login"><span data-ng-show="!islogged"> LogIn </span></a></li>
 				   <li><a href=""><span data-ng-show="islogged"> Welcome User {{ globals.currentUser.firstname}} </span></a></li>
@@ -48,11 +49,9 @@
 			
 			<ul class="nav navbar-nav navbar-right" data-ng-show="isAdmin"> 
 									
-				   <li><a href=""><span data-ng-show="islogged"> Manage Blog </span></a> </li>		
+				   <li><a href="#manageBlog"><span data-ng-show="islogged"> Manage Blog </span></a> </li>		
 				   <li><a href=""><span data-ng-show="islogged"> Manage Forum </span></a></li>
 				   <li><a href=""><span data-ng-show="islogged"> Manage Users </span></a></li>
-				   <li><a href="#register"><span data-ng-show="!islogged"> Register </span></a> </li>		
-				   <li><a href="#login"><span data-ng-show="!islogged"> LogIn </span></a></li>
 				   <li><a href=""><span data-ng-show="islogged"> Welcome ADMIN  {{ globals.currentUser.firstname}} </span></a></li>
 				   <li><a href="" data-ng-click="logout()" data-ng-controller='LoginController'><span data-ng-show="islogged"> Logout </span></a></li>
 				   

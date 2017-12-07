@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,24 +36,36 @@ public class BlogRESTController {
 	BlogCommentService blogCommentService;
 
 	@RequestMapping(value="/createBlog",method=RequestMethod.POST)
-	public ResponseEntity<?> createBlog(@RequestBody Blog blog){
-		UsersDetails user = userService.getUserById(blog.getUserId());
-		if(user.isOnline()){
-			blog.setStatus("PENDING");
-			blog.setCreatedDate(new Date());
-			blog.setNoOfLikes(0);
-			if(blogService.addBlog(blog)){
-				return new ResponseEntity<Blog>(blog, HttpStatus.OK);
-			}else{
-				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(11,"Blog Creation failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<?> createBlog(@RequestBody Blog blog,HttpSession session){
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		 if(userId==null)
+		    {
+		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+		    else	
+		    {
+				UsersDetails user = userService.getUserById(userId);
+				
+				if(user.isOnline()){
+					blog.setUserId(user.getC_user_id());
+					blog.setUserName(user.getUserName());
+					blog.setStatus("PENDING");
+					blog.setCreatedDate(new Date());
+					blog.setNoOfLikes(0);
+					if(blogService.addBlog(blog)){
+						return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+					}else{
+						return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(11,"Blog Creation failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+				}
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(12,"User must be logged in to create blog"),HttpStatus.CONFLICT);
 			}
-		}
-		return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(12,"User must be logged in to create blog"),HttpStatus.CONFLICT);
 	}
 	
 	@RequestMapping(value="/viewBlogs",method=RequestMethod.GET)
 	public ResponseEntity<?> viewBlogs(){
-		List<Blog> blogList = blogService.getAllUsersBlog();
+		List<Blog> blogList = blogService.getAllApprovedBlog();
 		if(blogList!=null){
 				return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
 		}
@@ -87,6 +100,39 @@ public class BlogRESTController {
 		{
 				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(13,"Retrieving Blog details failed"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@RequestMapping(value="/viewAllBlogs",method=RequestMethod.GET)
+	public ResponseEntity<?> viewAllBlogs(){
+		List<Blog> blogList = blogService.getAllBlogs();
+		if(blogList!=null){
+				return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
+		}
+		else
+		{
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(13,"Retrieving Blog details failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	@RequestMapping(value="/viewUserBlogs",method=RequestMethod.GET)
+	public ResponseEntity<?> viewUserBlogs(HttpSession session){
+		Integer userId = (Integer) session.getAttribute("userId");
+		if(userId==null)
+	    {
+	    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+		}	   
+	    else	
+	    {
+				List<Blog> blogList = blogService.getAllBlogs(userId);
+				if(blogList!=null){
+						return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
+				}
+				else
+				{
+						return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(13,"Retrieving Blog details failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+	    }
 	}
 	
 	@RequestMapping(value="/approveBlog/{blogId}",method=RequestMethod.GET)
@@ -176,4 +222,54 @@ public class BlogRESTController {
 		return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(12,"User must be logged in to like"),HttpStatus.CONFLICT);
 	}
 	
+	
+	@RequestMapping(value="/updateBlog",method=RequestMethod.PUT)
+	public ResponseEntity<?> updateBlog(@RequestBody Blog blog,HttpSession session){
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		 if(userId==null)
+		    {
+		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+		    else	
+		    {
+				UsersDetails user = userService.getUserById(userId);
+				
+				if(user.isOnline()){
+					Blog tempBlog = blogService.getBlog(blog.getBlogId());
+					tempBlog.setBlogTitle(blog.getBlogTitle());
+					tempBlog.setBlogContent(blog.getBlogContent());
+					if(blogService.updateBlog(tempBlog)){
+						return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+					}else{
+						return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(21,"Blog Updation failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+				}
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(22,"User must be logged in to update blog"),HttpStatus.CONFLICT);
+			}
+	}
+	
+	@RequestMapping(value="/deleteBlogById/{blogId}",method=RequestMethod.DELETE)
+	public ResponseEntity<?> deleteBlogById(@PathVariable("blogId") int blogId,HttpSession session){
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		 if(userId==null)
+		    {
+		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+		    else	
+		    {
+		    	UsersDetails user = userService.getUserById(userId);
+		    	if(user.isOnline()){
+					Blog tempBlog = blogService.getBlog(blogId);
+					if(blogService.deleteBlog(tempBlog)){
+						return new ResponseEntity<Blog>(tempBlog, HttpStatus.OK);
+					}else{
+						return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(23,"Blog Deletion failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+				}
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(24,"User must be logged in to delete blog"),HttpStatus.CONFLICT);
+		    	
+		    }
+	}
 }

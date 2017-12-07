@@ -20,9 +20,11 @@ public interface BlogDao {
 	
 	public boolean rejectBlog(Blog blog);
 	
-	public List<Blog> getAllUsersBlog();
+	public List<Blog> getAllBlogs();
 	
 	public List<Blog> getAllPendingBlogs();
+	
+	public List<Blog> getAllApprovedBlog();
 	
 	public int updateNoOfLikes(Blog blog);
 }

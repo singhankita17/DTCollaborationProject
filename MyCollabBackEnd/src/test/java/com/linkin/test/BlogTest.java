@@ -120,7 +120,7 @@ public class BlogTest {
 	@Test
 	public void getAllUsersBlogTest(){
 		
-		List<Blog> blogList = blogService.getAllUsersBlog();
+		List<Blog> blogList = blogService.getAllBlogs();
 		assertNotNull("Problem in retrieving Blog details",blogList);
 		showBlogDetails(blogList);
 		

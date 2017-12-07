@@ -18,11 +18,13 @@ public interface BlogService {
 	
 	public boolean rejectBlog(Blog blog);
 	
-	public List<Blog> getAllUsersBlog();
+	public List<Blog> getAllBlogs();	
 	
 	public boolean deleteBlog(Blog blog);
 	
 	public List<Blog> getAllPendingBlogs();	
+	
+	public List<Blog> getAllApprovedBlog();
 
 	public int updateNoOfLikes(Blog blog);
 	

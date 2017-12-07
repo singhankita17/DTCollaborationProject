@@ -38,9 +38,9 @@ public class BlogServiceImpl implements BlogService{
 		
 	}
 
-	public List<Blog> getAllUsersBlog() {
+	public List<Blog> getAllBlogs() {
 		
-		return blogDao.getAllUsersBlog();
+		return blogDao.getAllBlogs();
 	}
 
 	public boolean deleteBlog(Blog blog) {
@@ -61,6 +61,11 @@ public class BlogServiceImpl implements BlogService{
 	public int updateNoOfLikes(Blog blog) {
 		
 		return blogDao.updateNoOfLikes(blog);
+	}
+
+	public List<Blog> getAllApprovedBlog() {
+		
+		return blogDao.getAllApprovedBlog();
 	}
 
 

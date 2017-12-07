@@ -33,11 +33,13 @@ app.controller('LoginController', LoginController);
              console.log("logout func")
               AuthenticationService.Logout(function (response) {	 
                  if (response.success) {
-                              
+                	 
                  	AuthenticationService.ClearCredentials();
                      console.log("success"+response.data)
-                   $rootScope.islogged=false;
+                     $rootScope.islogged=false;
+                     $rootScope.isAdmin = false;
                      $location.path('/login');
+                     
                  } else {
                 	 
                    //  FlashService.Error(response.message);

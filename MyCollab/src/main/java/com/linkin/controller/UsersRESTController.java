@@ -127,21 +127,21 @@ public class UsersRESTController {
 		
 		System.out.println("User Name = "+users.getUserName());
 		System.out.println("Password = "+users.getPassword());
-		
+		UsersDetails validUser;
 		boolean ifExists = usersService.checkIfValidUser(users.getUserName(), users.getPassword());
 		
 		System.out.println("User Exists = "+ifExists);
 			    
 		if(ifExists){
-			users = usersService.getUserByName(users.getUserName());
-			users.setOnline(true);
-	        usersService.updateUser(users);
-			session.setAttribute("user", users);
-			return new ResponseEntity<UsersDetails>(users, HttpStatus.OK);
+			validUser = usersService.getUserByName(users.getUserName());
+			validUser.setOnline(true);
+	        usersService.updateUser(validUser);
+			session.setAttribute("userId", validUser.getC_user_id());
+			return new ResponseEntity<UsersDetails>(validUser, HttpStatus.OK);
 			
 		}else{
 			
-			return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(6,"User or Password does not match"), HttpStatus.CONFLICT);
+			return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(6,"UserName or Password does not match"), HttpStatus.CONFLICT);
 		}	
 	
 	}
@@ -150,19 +150,20 @@ public class UsersRESTController {
 	@RequestMapping(value="/logout",method=RequestMethod.GET)
 	public ResponseEntity<?> logout(HttpSession session)
 	{ 
-	  
-	    UsersDetails validUser=(UsersDetails) session.getAttribute("user");
-	    System.out.println("user in session = "+validUser);
+	    Integer userId = (Integer) session.getAttribute("userId");
+	   
 	    
-	    if(validUser==null)
+	    if(userId==null)
 	    {
 	    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
 		}	   
 	    else	
 	    {
+	    	UsersDetails validUser= usersService.getUserById(userId);
+	 	    System.out.println("user in session = "+validUser);
 	        validUser.setOnline(false);
 	        usersService.updateUser(validUser);
-		    session.removeAttribute("user");
+		    session.removeAttribute("userId");
 		    session.invalidate();
 		    return new ResponseEntity<UsersDetails>(validUser,HttpStatus.OK);    
 		}

@@ -71,9 +71,10 @@ app.factory('AuthenticationService', AuthenticationService);
                      userObj: $rootScope.currentuser
                  }
             };
- 
+            
             $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
             $cookieStore.put('globals', $rootScope.globals);
+            $cookieStore.put("currentuser",$rootScope.currentuser);
           //  alert("credential successfully set");
         }
  
@@ -81,6 +82,8 @@ app.factory('AuthenticationService', AuthenticationService);
         	//alert("inside clear credential");
             $rootScope.globals = {};
             $cookieStore.remove('globals');
+            $cookieStore.remove('currentuser');
+            $rootScope.currentuser={}
             $http.defaults.headers.common.Authorization = 'Basic';
             //alert("credential cleared");
         }

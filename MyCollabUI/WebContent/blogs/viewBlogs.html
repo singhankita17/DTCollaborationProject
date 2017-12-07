@@ -2,9 +2,8 @@
         <div class="container">
           <div class="row">
            <ul class="post-grid">
-           <li data-ng-repeat="blog in blogList" class="col-sm-4">
-           <a href="#/viewBlogDetail/{{blog.blogId}}">
-            <h3>{{blog.blogTitle | limitTo:40}}</h3></a>
+           <li data-ng-repeat="blog in blogList" class="col-sm-4">           
+            <h3><a href="#/viewBlogDetail/{{blog.blogId}}">{{blog.blogTitle | limitTo:40}}</a></h3>
             <p>{{blog.blogContent | limitTo:70}}...</p>
             
             <p class="fa fa-comment push-left"> 
@@ -12,8 +11,7 @@
             <p class="fa fa-heart pull-right"> {{blog.noOfLikes}}
             </p>
           </li>
-          </ul>
-         
+          </ul>     
         </div>
       </div>
     </div>

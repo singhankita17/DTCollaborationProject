@@ -98,7 +98,7 @@ public class BlogDaoImpl implements BlogDao {
 	}
 
 	@Transactional
-	public List<Blog> getAllUsersBlog() {
+	public List<Blog> getAllApprovedBlog() {
 		Session session = sessionFactory.openSession();
 		
 		List<Blog> blogList= session.createQuery("from Blog where status = 'APPROVED'",Blog.class).list();
@@ -148,5 +148,18 @@ public class BlogDaoImpl implements BlogDao {
 			return 0;
 		  }
 	}
+
+	@Transactional
+	public List<Blog> getAllBlogs() {
+		
+		Session session = sessionFactory.openSession();
+		
+		List<Blog> blogList= session.createQuery("from Blog where status != 'PENDING'",Blog.class).list();
+		
+		session.close();
+		
+		return blogList;
+	}
+
 
 }

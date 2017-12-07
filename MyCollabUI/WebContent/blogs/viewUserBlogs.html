@@ -1,0 +1,40 @@
+<div class="row vertical-offset-20">
+		<div class="col-md-8 col-md-offset-2">
+    		<div class="panel panel-default">
+			  	<div class="panel-heading">
+		  
+		  			<h3 class="panel-title"> User Blogs</h3>
+		        </div>
+			<div class="panel-body">
+				<table>
+					<thead>
+						<tr>
+							<th>Blog Id</th>
+							<th>Blog Title</th>
+							<th>Blog Content</th>
+							<th>Creation Date</th>
+							<th>Created By</th>
+							<th>Publish Date</th>
+							<th>No Of Likes</th>
+							<th>Blog Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="blog in blogPendingList">
+							<td>{{blog.blogId}}</td>
+							<td>{{blog.blogTitle}}</td>
+							<td>{{blog.blogContent | limitTo:70}}...}}</td>
+							<td>{{blog.createdDate}}</td>
+							<td>{{blog.userName}}</td>
+							<td>{{blog.publishDate}}</td>
+							<td>{{blog.noOfLikes}}</td>
+							<td> <a href="#editBlog/{{blog.blogId}}"><span class="glyphicon glyphicon-pencil"></span></a> <br>
+							 <a href="#deleteBlog/{{blog.blogId}}"><span class="glyphicon glyphicon-remove"></span></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>			
+	</div>
+</div>
+</div>		
+				

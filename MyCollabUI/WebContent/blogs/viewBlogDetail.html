@@ -10,14 +10,16 @@
             
             <div class="comments">
               <input type="hidden"  data-ng-model="clickCount" value="0"/>         
-              <button class="fa fa-heart" data-ng-click="updateLikes(blog)"> {{blog.noOfLikes}}</button>
+              <button class="fa fa-heart" data-ng-click="updateLikes(blog)" data-ng-if="blog.userName != currentuser.userName" data-ng-show="currentuser.userName"> {{blog.noOfLikes}}</button>
               <h3>Comments</h3>
               <ul>
                <li data-ng-repeat="comment in commentList">
-                 "{{comment.commentText}}" on {{comment.commentDate}}
-                 <cite>- <b>{{comment.userName}}</b></cite>
+                 "{{comment.commentText}}"
+                 <cite>- <b>{{comment.userName}}</b> </cite>
+                 <br> {{comment.commentDate}}
                </li>
               </ul>
+              <div data-ng-show="currentuser.userName">
               <form name="commentForm">
 	              
 	                
@@ -26,6 +28,7 @@
 	                                  
 	                  <button data-ng-click="addComment(comment,blog.blogId)">Submit</button>
 	           </form>
+	           </div>
               </div>
         </div>
       </div>

@@ -15,12 +15,24 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							templateUrl: "register/userregister.html",
 							controller: "userRegistrationController"
 						})
+						.when("/editprofile",{
+							templateUrl: "register/editprofile.html",
+							controller: "userRegistrationController"
+						})
 						.when("/viewBlogs",{
 							templateUrl: "blogs/viewBlogs.html",
 							controller: "blogController"
 						})
+						.when("/viewMyBlogs",{
+							templateUrl: "blogs/viewUserBlogs.html",
+							controller: "blogViewController"
+						})
 						.when("/createBlog",{
 							templateUrl: "blogs/createNewBlog.html",
+							controller: "blogController"
+						})
+						.when("/manageBlog",{
+							templateUrl: "blogs/manageBlog.html",
 							controller: "blogController"
 						})
 						.when("/viewForum",{
@@ -37,11 +49,11 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						});
 						 
 					})
-					.run(function run($rootScope, $location, $cookies, $http) {
+					.run(function run($rootScope, $location, $routeParams,$cookies, $http) {
 						    // keep user logged in after page refresh
 						 	$rootScope.isAdmin = false; 	
 					       $rootScope.globals = $cookies.getObject('globals') || {};
-						   
+						   $rootScope.currentuser =  $cookies.getObject('currentuser') || {};
 						    console.log(" $rootScope.globals = "+ $rootScope.globals)
 						  
 						    console.log(" $rootScope.globals.currentUser = "+ $rootScope.globals.currentUser)
@@ -52,9 +64,13 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						
 						    $rootScope.$on('$locationChangeStart', function (event, next, current) {
 						        // redirect to login page if not logged in and trying to access a restricted page
-						    	console.log("$location.path() ="+$location.path())
+						    	console.log("$location.path() ="+$location.path());
+						    	console.log($routeParams);
 						    	
-						        var restrictedPage = $.inArray($location.path(), ['/register','/home','/viewBlogs','','/viewForum','/viewBlogDetail/']) === -1;
+						    	var	blogid = $routeParams.id;
+						    	
+						        var restrictedPage = $.inArray($location.path(), ['/register','/viewBlogs','','/viewForum']) === -1;
+						    	var adminPage = $.inArray($location.path(), ['/manageBlog']) === -1;
 						        var loggedInUser = $rootScope.globals.currentUser;
 						    
 						        if(loggedInUser){
@@ -62,9 +78,14 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						        	   $rootScope.islogged =true;
 						        	   if($rootScope.globals.currentUser.role === 'ADMIN')
 										   	$rootScope.isAdmin = true;
+						        	   else
+						        		   $rootScope.isAdmin = false;
 						        }
-						        
-						        if (restrictedPage && !loggedInUser) {
+						       
+						        if(($location.path().includes('/viewBlogDetail/')) && !loggedInUser){
+						        	 console.log("Not restricted : ")
+							           
+							    }else if (restrictedPage && !loggedInUser) {
 						        	 console.log("Redirect to login : ")
 						            $location.path('/login');
 						        }

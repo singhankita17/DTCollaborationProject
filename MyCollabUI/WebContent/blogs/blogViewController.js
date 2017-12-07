@@ -4,13 +4,13 @@
 
 app.controller('blogViewController',blogViewController);
 
-blogController.$inject = ['$scope','$location','BlogService','BlogCommentService','$rootScope'];
+blogController.$inject = ['$scope','$location','BlogService','BlogCommentService','$rootScope','$routeParams'];
 
 
 function blogViewController($scope,$location,BlogService,BlogCommentService,$rootScope,$routeParams){
 	
 	console.log("Inside Blog View Controller")
-	
+	console.log($routeParams.id)
 	var blogId = $routeParams.id;
 	$rootScope.clickCount = 0;
 	function viewBlogDetails(blogId){

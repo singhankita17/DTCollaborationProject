@@ -1,15 +1,15 @@
 <div class="row vertical-offset-20" data-ng-controller="blogController">
-		<div class="col-md-4 col-md-offset-4">
+		<div class="col-md-8 col-md-offset-2">
     		<div class="panel panel-default">
 			  	<div class="panel-heading">
 		  
-		  			<h3 class="panel-title"> Create New Blog </h3>
+		  			<h3 class="panel-title"> <span data-ng-hide="editBlogFlag">Create New Blog </span>  <span data-ng-show="editBlogFlag">Update Blog </span></h3>
 		        </div>
 			<div class="panel-body">
 				<div class="panel-body">
 			
 			<!-- <form > -->
-			 <p><font color="red">{{errormessage}}</font></p>
+			 <p><font color="red"></font></p>
 			<fieldset>
 				  <div class="form-group">
 				  	<label for="firstName">Blog Title: </label>
@@ -18,20 +18,49 @@
 		    
 					   <div class="form-group">
 					    <label for="lastName">Blog Content: </label>
-					    <textarea class="form-control"  type="text"  name="blogContent" placeholder="Enter Blog Content" data-ng-model="blog.blogContent"></textarea>
+					    <textarea class="form-control"  name="blogContent" placeholder="Enter Blog Content" data-ng-model="blog.blogContent"></textarea>
 					  	</div>
 					
 					
 					   	<div class="form-group">
-							    <div class="clearfix">
-							      <button type="submit" class="btn btn-success" data-ng-click="createNewBlog()">Create Blog</button>
-							      <button type="reset"  class="btn btn-danger">Cancel</button>		     
+							    <div class="clearfix col-md-offset-5" >
+							      <button type="submit" class="btn btn-success" data-ng-click="createNewBlog()" data-ng-hide="editBlogFlag">Create Blog</button>
+							      <button type="submit" class="btn btn-success" data-ng-click="updateBlog(blog)" data-ng-show="editBlogFlag">Update Blog</button>
+							     		     
 							 </div>
 			    		</div>
 			    	</fieldset>
 			 <!--    </form> -->
 			   </div>
 		</div>
-		</div>
+		
+			  	<div class="panel-heading">
+		  
+		  			<h3 class="panel-title"> User Blogs </h3>
+		        </div>
+			<div class="panel-body">
+				<table>
+					<thead>
+						<tr>
+							<th>Blog Id</th>
+							<th>Blog Title</th>
+							<th>Blog Content</th>
+							<th>Blog Status</th>
+							<th colspan="2">Blog Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="blog in blogUserList">
+							<td>{{blog.blogId}}</td>
+							<td>{{blog.blogTitle}}</td>
+							<td>{{blog.blogContent | limitTo:70}}..</td>
+							<td>{{blog.status}}</td>
+							<td colspan="2"> <button data-ng-click="editBlog(blog)"><span class="glyphicon glyphicon-pencil"></span></button> <br>
+							 <button  data-ng-click="deleteBlog(blog.blogId)"><span class="glyphicon glyphicon-remove"></span></button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>			
+	</div>
   </div>
 </div>
