@@ -5,7 +5,9 @@ app.factory('userService',function($http,$rootScope){
 	var userService = {
 			
 			registerUser:registerUser,
-			retrieveUserByUserName:retrieveUserByUserName
+			retrieveUserByUserName:retrieveUserByUserName,
+			retrieveUserByUserId:retrieveUserByUserId,
+			edituserprofile:edituserprofile
 	};
 	
 	/*userService.registerUser = registerUser;
@@ -25,6 +27,21 @@ app.factory('userService',function($http,$rootScope){
 		
 		return $http.get(BASE_URL+"/retrieveUser/"+username)
 		
+	}
+	
+	function retrieveUserByUserId(userId){
+		
+		console.log("Retrieve User By Id start");
+		
+		return $http.get(BASE_URL+"/retrieveUserById/"+userId)
+		
+	}
+	
+	function edituserprofile(user){
+		
+		console.log("Update User Profile")
+		
+		return $http.put(BASE_URL+"/updateUser",user)
 	}
 	
 	return userService;

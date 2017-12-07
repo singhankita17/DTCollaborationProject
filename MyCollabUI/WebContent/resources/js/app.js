@@ -46,6 +46,10 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						.when("/viewBlogDetail/:id",{
 							templateUrl: "blogs/viewBlogDetail.html",
 							controller: "blogViewController"
+						})
+						.when("/uploadpicture",{
+							templateUrl: "register/uploadpic.html",
+							controller: "ImageController"
 						});
 						 
 					})

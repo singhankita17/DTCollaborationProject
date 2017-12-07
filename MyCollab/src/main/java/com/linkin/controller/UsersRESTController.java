@@ -1,5 +1,6 @@
 package com.linkin.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.linkin.model.UsersDetails;
 import com.linkin.service.UsersService;
@@ -66,7 +69,7 @@ public class UsersRESTController {
 	}
 	
 	
-	@RequestMapping(value="/updateUser",method=RequestMethod.POST)
+	@RequestMapping(value="/updateUser",method=RequestMethod.PUT)
 	public ResponseEntity<?> updateExistingUser(@RequestBody UsersDetails user){
 		
 		boolean isUpdated = usersService.updateUser(user);
@@ -86,20 +89,28 @@ public class UsersRESTController {
 	}
 	
 	@RequestMapping(value="/retrieveUserById/{id}",method=RequestMethod.GET,produces =MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> retrieveUserById(@PathVariable("id") int id){
-		System.out.println("User Id: "+id);
+	public ResponseEntity<?> retrieveUserById(@PathVariable("id") int id,HttpSession session){
+		Integer userId = (Integer) session.getAttribute("userId");
+		 if(userId==null)
+		    {
+		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+		    else	
+		    {
+		    	System.out.println("User Id: "+id);
 		
-		UsersDetails userObj = usersService.getUserById(id);
+		    	UsersDetails userObj = usersService.getUserById(userId);
 		
-		if(userObj!=null){
-			System.out.println("User Object: "+userObj.toString());
-			return new ResponseEntity<UsersDetails>(userObj,HttpStatus.OK);	
-		
-		}else{
-			
-			System.out.println("User Object:IS NULL");
-			return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(5,"User Details Not Found"), HttpStatus.NOT_FOUND);	
-		}
+				if(userObj!=null){
+					System.out.println("User Object: "+userObj.toString());
+					return new ResponseEntity<UsersDetails>(userObj,HttpStatus.OK);	
+				
+				}else{
+					
+					System.out.println("User Object:IS NULL");
+					return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(5,"User Details Not Found"), HttpStatus.NOT_FOUND);	
+				}
+		    }
 	
 	}
 	
@@ -169,4 +180,33 @@ public class UsersRESTController {
 		}
 	}
 	
+	
+	
+	@RequestMapping(value="/uploadUserImage",method=RequestMethod.POST)
+	public ResponseEntity<?> uploadUserImage(@RequestParam("file")MultipartFile file,HttpSession session){
+		 Integer userId = (Integer) session.getAttribute("userId");
+		   		
+		    if(userId==null)
+		    {
+		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+		    else
+		    {
+		    	UsersDetails user = usersService.getUserById(userId);
+		    	try {
+					user.setImage(file.getBytes());
+				} catch (IOException e) {
+					return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(4,"User Image Updation failed"+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+				}	
+		        if(usersService.updateUser(user)){
+		        
+					return new ResponseEntity<UsersDetails>(user, HttpStatus.OK);
+				
+				}else{
+					
+					return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(4,"User Image Updation failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+		    }
+	
+	}
 }

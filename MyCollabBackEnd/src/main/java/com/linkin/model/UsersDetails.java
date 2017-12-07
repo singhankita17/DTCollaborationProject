@@ -15,13 +15,20 @@ public class UsersDetails implements Serializable{
 	private int c_user_id;
 	private String firstName;
 	private String lastName;
+	
+	@Column(unique=true,nullable=false)
 	private String userName;
 	private String contact;
+	
+	@Column(unique=true,nullable=false)
 	private String email;
 	private String password;
 	private String role;
 	private boolean isEnabled;
 	private boolean isOnline;
+	
+	@Lob
+	private byte[] image;
 	
 	public boolean isEnabled() {
 		return isEnabled;
@@ -83,8 +90,11 @@ public class UsersDetails implements Serializable{
 	public void setRole(String role) {
 		this.role = role;
 	}
-
-	
-	
+	public byte[] getImage() {
+		return image;
+	}
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 	
 }
