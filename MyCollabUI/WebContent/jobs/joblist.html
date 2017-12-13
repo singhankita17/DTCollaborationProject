@@ -1,0 +1,46 @@
+<div class="row vertical-offset-20">
+		<div class="col-md-6 col-md-offset-3">
+		
+		<div class="panel panel-default">
+			  	<div class="panel-heading">
+		  
+		  			<h3 class="panel-title"> All Jobs </h3>
+		        </div>
+			<div class="panel-body">
+			
+			
+			<table class="table-striped">
+					<thead>
+						<tr>
+							<th>Job Title</th>
+							<th>Job Description</th>
+							<th>Job Posted On</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="job in jobList">
+							<td><a href="" data-ng-click="getJob(job.id)">{{job.jobTitle}}</a></td>
+							<td>{{job.jobDesc}}</td>
+							<td>{{job.postedOn}}</td>
+						</tr>
+					</tbody>
+			</table>
+			</div>
+			<div data-ng-hide="!job">
+			<h3>Job Detail </h3>
+					<pre>
+						<p>Job Title :  {{job.jobTitle}}</p>
+						<p>Job Description : {{job.jobDesc}}</p>
+						<p>Skills Required : {{job.skillsRequired}}</p>
+						<p>Location : {{job.location}}</p>		
+						<p>Company Name : {{job.companyName}}</p>
+						<p>Salary : {{job.salary}}</p>		
+						<p>Years Of Exp : {{job.yrsOfExp}}</p>		
+						<p>Posted On : {{job.postedOn}}</p>		
+					</pre>					
+			
+			</div>
+		</div>
+</div>
+</div>

@@ -24,6 +24,7 @@ public class JobsTest {
 	
 	@BeforeClass
 	public static void initialize(){
+		
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 		context.scan("com.linkin");
 		context.refresh();
@@ -37,37 +38,49 @@ public class JobsTest {
 		
 		JobDetail job = new JobDetail();
 		job.setJobDesc("Responsible for coding, testing and deploying user friendly applications");
-		job.setJobProfile("Software Engineer");
-		job.setQualification("B.Tech");
-		job.setPostDate(new Date());
+		job.setJobTitle("Software Engineer");
+		job.setSkillsRequired("B.Tech");
+		job.setCompanyName("XYZ Pvt Ltd");
+		job.setLocation("Hyderabad");
+		job.setYrsOfExp("2+ Yrs");
+		job.setSalary("250000");
+		job.setPostedOn(new Date());
 		
 		assertTrue("Problem in storing Job details",jobsService.addJobs(job));
 	}
 	
-
+  
 	@Test
 	public void updateJobsTest(){
 		
 		JobDetail job = new JobDetail();
-		job.setId(60);
+		job.setId(142);
 		job.setJobDesc("Responsible for coding, testing and deploying user friendly applications");
-		job.setJobProfile("Software Engineer");
-		job.setQualification("B.Tech");
-		job.setPostDate(new Date());
+		job.setJobTitle("Software Engineer");
+		job.setSkillsRequired("B.Tech");
+		job.setCompanyName("ABC Pvt Ltd");
+		job.setLocation("Chennai");
+		job.setYrsOfExp("4+ Yrs");
+		job.setSalary("450000");
+		job.setPostedOn(new Date());
 		
 		assertTrue("Problem in updating job details",jobsService.updateJobs(job));
 	}
 	
-	
+  
 	@Test
 	public void deleteJobsTest(){
 		
 		JobDetail job = new JobDetail();
-		job.setId(63);
+		job.setId(142);
 		job.setJobDesc("Responsible for coding, testing and deploying user friendly applications");
-		job.setJobProfile("Software Engineer");
-		job.setQualification("B.Tech");
-		job.setPostDate(new Date());
+		job.setJobTitle("Software Engineer");
+		job.setSkillsRequired("B.Tech");
+		job.setCompanyName("XYZ Pvt Ltd");
+		job.setLocation("Hyderabad");
+		job.setYrsOfExp("2+ Yrs");
+		job.setSalary("250000");
+		job.setPostedOn(new Date());
 		
 		assertTrue("Problem in deleting job details",jobsService.deleteJobs(job));
 	}
@@ -75,9 +88,9 @@ public class JobsTest {
 	@Test
 	public void getJobTest(){
 		
-		JobDetail job = jobsService.getJobs(60);
+		JobDetail job = jobsService.getJobs(141);
 		assertNotNull("Problem in retrieving Job details",job);
-		System.out.println("Job Id : "+job.getId()+"  Job Desc: "+job.getJobDesc()+"  Job Profile : "+job.getJobProfile()+"  Job Qualification : "+job.getQualification()+"  Job "+job.getPostDate());
+		System.out.println("Job Id : "+job.getId()+"  Job Desc: "+job.getJobDesc()+"  Job Profile : "+job.getJobTitle()+"  Job Qualification : "+job.getSkillsRequired()+"  Job "+job.getPostedOn());
 		
 	}
 	
@@ -97,9 +110,9 @@ public class JobsTest {
 			
 			System.out.println(" Job Id : "+jobs.getId());
 			System.out.println(" Job Desc : "+jobs.getJobDesc());
-			System.out.println(" Job Profile : "+jobs.getJobProfile());
-			System.out.println(" Job Qualification : "+jobs.getQualification());
-			System.out.println(" Job Posted Date : "+jobs.getPostDate());
+			System.out.println(" Job Profile : "+jobs.getJobTitle());
+			System.out.println(" Job Qualification : "+jobs.getSkillsRequired());
+			System.out.println(" Job Posted Date : "+jobs.getPostedOn());
 			
 		}
 		

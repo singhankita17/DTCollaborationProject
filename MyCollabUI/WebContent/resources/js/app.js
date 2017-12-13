@@ -50,6 +50,14 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						.when("/uploadpicture",{
 							templateUrl: "register/uploadpic.html",
 							controller: "ImageController"
+						})
+						.when("/addjob",{
+							templateUrl: "jobs/jobform.html",
+							controller: "JobController"
+						})
+						.when("/viewjobs",{
+							templateUrl: "jobs/joblist.html",
+							controller: "JobController"
 						});
 						 
 					})
@@ -75,8 +83,9 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						    	
 						        var restrictedPage = $.inArray($location.path(), ['/register','/viewBlogs','','/viewForum']) === -1;
 						    	var adminPage = $.inArray($location.path(), ['/manageBlog']) === -1;
-						        var loggedInUser = $rootScope.globals.currentUser;
-						    
+						        var loggedInUser =  $rootScope.currentuser; // $rootScope.globals.currentUser;
+						    console.log("loggedInUser : ")
+						    console.log(loggedInUser)
 						        if(loggedInUser){
 						        	   console.log(" $rootScope.islogged = "+ $rootScope.islogged)
 						        	   $rootScope.islogged =true;

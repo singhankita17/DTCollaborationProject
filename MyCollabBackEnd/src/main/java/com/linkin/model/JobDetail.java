@@ -18,16 +18,21 @@ public class JobDetail {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	private String jobProfile;
+	private String jobTitle;
 	
 	private String jobDesc;
 	
-	private String qualification;
+	private String skillsRequired;
 	
-	private String status;
+	private String location;
 	
-	private Date postDate;
-
+	private String companyName;
+	
+	private String salary;
+	
+	private String yrsOfExp;
+	
+	private Date postedOn;
 	
 
 	public int getId() {
@@ -38,12 +43,12 @@ public class JobDetail {
 		this.id = id;
 	}
 
-	public String getJobProfile() {
-		return jobProfile;
+	public String getJobTitle() {
+		return jobTitle;
 	}
 
-	public void setJobProfile(String jobProfile) {
-		this.jobProfile = jobProfile;
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
 	}
 
 	public String getJobDesc() {
@@ -54,28 +59,53 @@ public class JobDetail {
 		this.jobDesc = jobDesc;
 	}
 
-	public String getQualification() {
-		return qualification;
+	public String getSkillsRequired() {
+		return skillsRequired;
 	}
 
-	public void setQualification(String qualification) {
-		this.qualification = qualification;
+	public void setSkillsRequired(String skillsRequired) {
+		this.skillsRequired = skillsRequired;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getLocation() {
+		return location;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
-	public Date getPostDate() {
-		return postDate;
+	public String getCompanyName() {
+		return companyName;
 	}
 
-	public void setPostDate(Date date) {
-		this.postDate = date;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
+
+	public String getSalary() {
+		return salary;
+	}
+
+	public void setSalary(String salary) {
+		this.salary = salary;
+	}
+
+	public String getYrsOfExp() {
+		return yrsOfExp;
+	}
+
+	public void setYrsOfExp(String yrsOfExp) {
+		this.yrsOfExp = yrsOfExp;
+	}
+
+	public Date getPostedOn() {
+		return postedOn;
+	}
+
+	public void setPostedOn(Date postedOn) {
+		this.postedOn = postedOn;
+	}
+	
 	
 }

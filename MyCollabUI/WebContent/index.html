@@ -39,6 +39,12 @@
 				            <li><a href="#viewForum">View Forum</a></li>
 				          </ul>
 			        </li>
+			         <li class="dropdown">
+			          	<a class="dropdown-toggle" data-toggle="dropdown" href="">Job<span class="caret"></span></a>
+				          <ul class="dropdown-menu">
+				           <li><a href="#viewjobs">View Jobs</a> </li>
+				          </ul>
+			        </li>	
 			        <li class="dropdown">
 			          	<a class="dropdown-toggle" data-toggle="dropdown" href="">Profile<span class="caret"></span></a>
 				          <ul class="dropdown-menu">
@@ -57,6 +63,7 @@
 									
 				   <li><a href="#manageBlog"><span data-ng-show="islogged"> Manage Blog </span></a> </li>		
 				   <li><a href=""><span data-ng-show="islogged"> Manage Forum </span></a></li>
+				   <li><a href="#addjob"><span data-ng-show="islogged"> Add Job </span></a></li>
 				   <li><a href=""><span data-ng-show="islogged"> Manage Users </span></a></li>
 				   <li><a href=""><span data-ng-show="islogged"> Welcome ADMIN  {{ globals.currentUser.firstname}} </span></a></li>
 				   <li><a href="" data-ng-click="logout()" data-ng-controller='LoginController'><span data-ng-show="islogged"> Logout </span></a></li>
@@ -98,6 +105,8 @@
 <script type="text/javascript" src="blogs/blogViewController.js"></script>
 <script type="text/javascript" src="forums/ForumService.js"></script>
 <script type="text/javascript" src="forums/forumController.js"></script>
+<script type="text/javascript" src="jobs/JobService.js"></script>
+<script type="text/javascript" src="jobs/JobController.js"></script>
 <script type="text/javascript" src="register/ImageController.js"></script>
 <script type="text/javascript" src="register/fileUploadService.js"></script>
 <script type="text/javascript" src="register/fileModel.js"></script>
