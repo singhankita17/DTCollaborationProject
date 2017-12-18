@@ -12,7 +12,7 @@ app.controller('LoginController', LoginController);
              AuthenticationService.Login($scope.user, function (response) {	 
                 if (response.success) {
              
-              // alert("Success")
+            //  alert("Success")
                 	AuthenticationService.SetCredentials($scope.username, $scope.password);
                 	 $rootScope.islogged=true;
                     $location.path('/home');            

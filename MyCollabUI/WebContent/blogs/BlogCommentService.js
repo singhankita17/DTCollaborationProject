@@ -5,6 +5,8 @@
 app.factory('BlogCommentService',function($http,$cookieStore,$rootScope){
 	
 	var blogCommentService = {}
+	
+	var BASE_URL = 'http://localhost:8181/MyCollab';
 		
 	blogCommentService.retrieveComment = function (blogId){
 		

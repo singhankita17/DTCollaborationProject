@@ -15,7 +15,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import com.linkin.model.Forum;
 import com.linkin.service.ForumService;
 
-@Ignore
+
 public class ForumTest {
 	
 	@Autowired
@@ -33,31 +33,32 @@ public class ForumTest {
 		forumService = (ForumService) context.getBean("forumService");
 	}
 
-	
+	@Ignore
 	@Test
 	public void createForumTest(){
-		
-		Forum forum = new Forum();
-		forum.setForumName("Angular JS");
-		forum.setForumContent("Differnce between fatory, service and provider in Angular Js");
-		forum.setUserId(46);
-		forum.setCreatedDate(new Date());
-		forum.setStatus("PENDING");
-		assertTrue("Problem in adding new Forum ", forumService.addForum(forum));
-	}
-	
-
-	@Test
-	public void updateForumTest(){
-		
 		Forum forum = new Forum();
 		
-		forum.setForumId(52);
 		forum.setForumName("Java Inheritance");
 		forum.setForumContent("Does Java supports Multiple Inheritance ? ");
 		forum.setStatus("PENDING");
 		forum.setUserId(42);
 		forum.setCreatedDate(new Date());
+		
+		assertTrue("Problem in adding new Forum ", forumService.addForum(forum));
+	}
+	
+	@Ignore
+	@Test
+	public void updateForumTest(){
+		
+		Forum forum = new Forum();
+		
+		forum.setForumId(166);
+		forum.setForumName("Angular JS");
+		forum.setForumContent("Difference between fatory, service and provider in Angular Js");
+		forum.setUserId(46);
+		forum.setCreatedDate(new Date());
+		forum.setStatus("PENDING");
 		
 		assertTrue("Problem in updating Blog details",forumService.updateForum(forum));
 		
@@ -69,17 +70,29 @@ public class ForumTest {
 		
 		Forum forum = new Forum();
 		
-		forum.setForumId(53);
+		forum.setForumId(168);
 		
 		
 		assertTrue("Problem in updating Blog details",forumService.deleteForum(forum));
 		
 	}
 	
+	
+	@Test
+	public void approveForum(){
+		
+		Forum forum = new Forum();
+		
+		forum.setForumId(166);
+		
+		assertTrue("Problem in approving Forum details", forumService.approveForum(forum));
+		
+	}
+	
 	@Test
 	public void getForumTest(){
 		
-		Forum forum = forumService.getForum(52);
+		Forum forum = forumService.getForum(166);
 		assertNotNull("Problem in retrieving Forum details",forum);
 		System.out.println("Forum Id : "+forum.getForumId()+"  Forum Name : "+forum.getForumName()+"  Forum Content: "+forum.getForumContent()+" User Id: "+forum.getUserId()+"  Creation date : "+forum.getCreatedDate());
 		

@@ -58,6 +58,10 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						.when("/viewjobs",{
 							templateUrl: "jobs/joblist.html",
 							controller: "JobController"
+						})
+						.when("/viewForumDetail/:id",{
+							templateUrl: "forums/viewForumDetail.html",
+							controller: "forumController"
 						});
 						 
 					})
@@ -65,28 +69,31 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						    // keep user logged in after page refresh
 						 	$rootScope.isAdmin = false; 	
 					       $rootScope.globals = $cookies.getObject('globals') || {};
-						   $rootScope.currentuser =  $cookies.getObject('currentuser') || {};
+						 //  $rootScope.currentuser =  $cookies.getObject('currentuser') || {};
 						    console.log(" $rootScope.globals = "+ $rootScope.globals)
-						  
+						  alert( $rootScope.globals)
 						    console.log(" $rootScope.globals.currentUser = "+ $rootScope.globals.currentUser)
 						    if ($rootScope.globals.currentUser) {
 						    	
 						        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
 						    }
 						
+						    alert( $rootScope.globals.currentUser)
 						    $rootScope.$on('$locationChangeStart', function (event, next, current) {
 						        // redirect to login page if not logged in and trying to access a restricted page
 						    	console.log("$location.path() ="+$location.path());
 						    	console.log($routeParams);
 						    	
-						    	var	blogid = $routeParams.id;
+						    	//var	blogid = $routeParams.id;
 						    	
 						        var restrictedPage = $.inArray($location.path(), ['/register','/viewBlogs','','/viewForum']) === -1;
 						    	var adminPage = $.inArray($location.path(), ['/manageBlog']) === -1;
-						        var loggedInUser =  $rootScope.currentuser; // $rootScope.globals.currentUser;
+						        var loggedInUser =  $rootScope.globals.currentUser;
 						    console.log("loggedInUser : ")
 						    console.log(loggedInUser)
+						    alert(loggedInUser)
 						        if(loggedInUser){
+						        	alert("Logged In user")
 						        	   console.log(" $rootScope.islogged = "+ $rootScope.islogged)
 						        	   $rootScope.islogged =true;
 						        	   if($rootScope.globals.currentUser.role === 'ADMIN')
@@ -95,7 +102,7 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						        		   $rootScope.isAdmin = false;
 						        }
 						       
-						        if(($location.path().includes('/viewBlogDetail/')) && !loggedInUser){
+						        if(($location.path().includes('/viewBlogDetail/')||$location.path().includes('/viewForumDetail/')) && !loggedInUser){
 						        	 console.log("Not restricted : ")
 							           
 							    }else if (restrictedPage && !loggedInUser) {

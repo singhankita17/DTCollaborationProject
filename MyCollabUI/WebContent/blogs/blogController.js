@@ -124,7 +124,8 @@ function blogController($scope,$location,BlogService,$rootScope){
 	 }
 	 
 	 function viewUserBlogs(){
-			
+		 if($rootScope.globals.currentUser){
+			 
 		 BlogService.viewUserBlogs(function(response){
 			 
 			 if (response.success) {
@@ -137,6 +138,7 @@ function blogController($scope,$location,BlogService,$rootScope){
 		 		
 		 	}
 		 })
+		 }
 	 }
 	 
 	 $scope.deleteBlog = function(blogId){

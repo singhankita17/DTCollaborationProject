@@ -63,27 +63,26 @@ app.factory('AuthenticationService', AuthenticationService);
         	 var authdata = Base64.encode(username + ':' + password);
              $rootScope.globals = {
                  currentUser: {
-                     username: username,
+                     username: $rootScope.currentuser.userName,
                      authdata: authdata,
                      islogged:true,
                      role:$rootScope.currentuser.role,
-                     firstname: $rootScope.currentuser.firstName,
-                     userObj: $rootScope.currentuser
+                     firstname: $rootScope.currentuser.firstName
                  }
             };
             
             $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
             $cookieStore.put('globals', $rootScope.globals);
-            $cookieStore.put("currentuser",$rootScope.currentuser);
-          //  alert("credential successfully set");
+           // $cookieStore.put("currentuser",$rootScope.currentuser);
+           // alert("credential successfully set");
         }
  
         function ClearCredentials() {
         	//alert("inside clear credential");
             $rootScope.globals = {};
             $cookieStore.remove('globals');
-            $cookieStore.remove('currentuser');
-            $rootScope.currentuser={}
+           // $cookieStore.remove('currentuser');
+           // $rootScope.currentuser={}
             $http.defaults.headers.common.Authorization = 'Basic';
             //alert("credential cleared");
         }

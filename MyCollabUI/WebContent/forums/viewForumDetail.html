@@ -1,0 +1,33 @@
+<div class="post">
+          <div>            
+            <h2>{{forum.forumName}}</h2>
+            <cite>by {{ forum.userId}} on {{forum.createdDate}}</cite>
+            <div class="post-body">
+             <p>
+               {{forum.forumContent}}
+             </p> 
+            </div>
+            
+            <div class="comments">
+             
+              <h3>Replies</h3>
+              <ul>
+               <li data-ng-repeat="comment in commentList">
+                <p> "{{comment.commentText}}"</p>
+                 <cite>- <b>{{comment.userName}}</b> </cite>
+                 <br> {{comment.commentDate | date : "medium"}}
+               </li>
+              </ul>
+               <h4>Add Comment</h4>
+              
+              <div data-ng-show="currentuser.userName">
+              <form name="commentForm">
+              
+	                  <textarea data-ng-model="comment.commentText" cols="20" rows="5" placeholder="Comment Text Here" required></textarea>
+	                                  
+	                  <button data-ng-click="addForumComment(comment,forum.forumId)">Submit</button>
+	           </form>
+	           </div>
+              </div>
+        </div>
+      </div>

@@ -22,7 +22,7 @@
 						<tr data-ng-repeat="job in jobList">
 							<td><a href="" data-ng-click="getJob(job.id)">{{job.jobTitle}}</a></td>
 							<td>{{job.jobDesc}}</td>
-							<td>{{job.postedOn}}</td>
+							<td>{{job.postedOn | date : "medium"}}</td>
 						</tr>
 					</tbody>
 			</table>

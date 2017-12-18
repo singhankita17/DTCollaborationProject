@@ -40,8 +40,8 @@ public class ForumServiceImpl implements ForumService {
 	}
 
 	public boolean approveForum(Forum forum) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return forumDao.approveForum(forum);
 	}
 
 	public List<Forum> getAllUsersForum() {

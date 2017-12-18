@@ -51,8 +51,7 @@ function blogViewController($scope,$location,BlogService,BlogCommentService,$roo
 		 
 	}
 	
-	function retrieveComment(blogId){
-		
+	function retrieveComment(blogId){	
 		 
 		 BlogCommentService.retrieveComment(blogId)
 		 .then(function(response){

@@ -1,5 +1,5 @@
-<div class="row vertical-offset-20" data-ng-controller="blogController">
-		<div class="col-md-4 col-md-offset-4">
+<div class="row vertical-offset-20">
+		<div class="col-md-6 col-md-offset-3">
     		<div class="panel panel-default">
 			  	<div class="panel-heading">
 		  
@@ -8,7 +8,7 @@
 			<div class="panel-body">
 				<div class="panel-body">
 			
-			<!-- <form > -->
+			<form> 
 			 <p><font color="red">{{errormessage}}</font></p>
 			<fieldset>
 				  <div class="form-group">
@@ -18,20 +18,49 @@
 		    
 					   <div class="form-group">
 					    <label for="lastName">Forum Content: </label>
-					    <textarea class="form-control"  name="forumContent" placeholder="Enter Forum Content" data-ng-model="forum.forumContent"></textarea>
+					    <textarea class="form-control"  name="forumContent" placeholder="Enter Forum Content" data-ng-model="forum.forumContent" rows="10" cols="50"></textarea>
 					  	</div>
 					
 					
 					   	<div class="form-group">
 							    <div class="clearfix">
-							      <button type="submit" class="btn btn-success" data-ng-click="createNewForum()">Create Forum</button>
-							      <button type="reset"  class="btn btn-danger">Cancel</button>		     
+							      <button type="submit" class="btn btn-success" data-ng-click="createNewForum()" data-ng-hide="editForumFlag">Create Forum</button>
+							       <button type="submit" class="btn btn-success" data-ng-click="updateForum(forum)" data-ng-show="editForumFlag">Update Blog</button>
+							      <!-- <button type="reset"  class="btn btn-danger">Cancel</button>	 -->	     
 							 </div>
 			    		</div>
 			    	</fieldset>
-			 <!--    </form> -->
+			 </form> 
 			   </div>
 		</div>
+		
+		<div class="panel-heading">
+		  
+		  			<h3 class="panel-title"> User Forums </h3>
+		        </div>
+			<div class="panel-body">
+				<table>
+					<thead>
+						<tr>
+							<th>Forum Id</th>
+							<th>Forum Title</th>
+							<th>Forum Content</th>
+							<th>Forum Status</th>
+							<th colspan="2">Forum Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="forum in forumUserList">
+							<td>{{forum.forumId}}</td>
+							<td>{{forum.forumName}}</td>
+							<td>{{forum.forumContent | limitTo:70}}..</td>
+							<td>{{forum.status}}</td>
+							<td colspan="2"> <button data-ng-click="editForum(forum)"><span class="glyphicon glyphicon-pencil"></span></button> <br>
+							 <button  data-ng-click="deleteForum(forum.forumId)"><span class="glyphicon glyphicon-remove"></span></button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>	
 		</div>
   </div>
 </div>

@@ -2,33 +2,44 @@ app.factory("ForumService",ForumService);
 
 var BASE_URL = 'http://localhost:8181/MyCollab';
 
-ForumService.$inject = ['$http', '$cookieStore', '$rootScope'];
-
 function ForumService($http,$cookieStore,$rootScope){
 	
 	var service = {}
 	
 	service.createForum = createForum;
-		
-	return service;
+	service.viewAllForums = viewAllForums;
+	service.viewForumDetail = viewForumDetail;
+	service.viewUserForums = viewUserForums;
+	service.deleteForum = deleteForum;
+	service.updateForum = updateForum;
 	
-	function createForum(forum,callback){
+	function createForum(forum){
 		
-		$http.post(BASE_URL+"/createForum",forum).then(function(response){
-			
-		
-			if(response != null){
-				 response = { success: true, data: response.data };
-			}else{
-				 response = { success: false, message :'Forum creation failed' };
-			}
-			
-			callback(response)
-			
-		},function(response){
-			
-			 response = { success: false,message : 'Forum creation failed' };
-			 callback(response)
-		})
+		return $http.post(BASE_URL+"/createForum",forum)
 	}
+	
+	function viewAllForums(){
+		return $http.get(BASE_URL+"/viewForums")
+	}
+	
+	function viewForumDetail(forumId){
+		
+		return $http.get(BASE_URL+"/viewForumById/"+forumId)
+	}
+	
+	function viewUserForums(){
+		return $http.get(BASE_URL+"/viewUserForums")
+	}
+	
+	function updateForum(forum){
+		
+		return $http.put(BASE_URL+"/updateForum",forum)
+	}
+	
+	function deleteForum(forumId){
+		
+		return $http.delete(BASE_URL+"/deleteForumById/"+forumId)
+	}
+
+	return service;
 }

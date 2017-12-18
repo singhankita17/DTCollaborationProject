@@ -1,5 +1,6 @@
 package com.linkin.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -83,8 +84,15 @@ public class ForumDaoImpl implements ForumDao {
 
 	@Transactional
 	public boolean approveForum(Forum forum) {
-		// TODO Auto-generated method stub
-		return false;
+		try{			
+		    Forum forumObj = sessionFactory.getCurrentSession().load(Forum.class, forum.getForumId());
+		    forumObj.setStatus("APPROVED");
+		    forumObj.setPublishDate(new Date());
+		    return true;
+		}catch(Exception e){
+			System.out.println("Exception raised: "+e);
+			return false;
+		}
 	}
 
 	@Transactional
@@ -108,6 +116,19 @@ public class ForumDaoImpl implements ForumDao {
 		session.close();
 		
 		return forumList;
+	}
+
+	@Transactional
+	public boolean rejectForum(Forum forum) {
+		try{			
+		    Forum forumObj = sessionFactory.getCurrentSession().load(Forum.class, forum.getForumId());
+		    forumObj.setStatus("REJECTED");
+		    forumObj.setPublishDate(new Date());
+		    return true;
+		}catch(Exception e){
+			System.out.println("Exception raised: "+e);
+			return false;
+		}
 	}
 
 }
