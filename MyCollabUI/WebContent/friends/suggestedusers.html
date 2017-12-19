@@ -1,0 +1,26 @@
+<div class="row vertical-offset-20">
+		<div class="col-md-6 col-md-offset-3">
+    		<div class="panel panel-default">
+			  	<div class="panel-heading">
+		  
+		  			<h3 class="panel-title"> List Of Suggested Users </h3>
+		        </div>
+			<div class="panel-body">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>First Name</th><th>Last Name</th><th>Role</th><th>IsOnline</th><th>Friend Request</th>
+					</tr>					
+				</thead>
+				<tbody>
+				<tr data-ng-repeat="user in suggesteduserList">
+					<td>{{user.firstName}}</td><td>{{user.lastName}}</td><td>{{user.role}}</td>
+					<td data-ng-if="user.isOnline">Yes</td><td data-ng-if="!user.isOnline">No</td>
+					<td><button data-ng-click="friendRequest(user.c_user_id)">Send Friend Request</button></td>
+				</tr>
+				</tbody>
+			</table>
+			</div>
+	</div>
+</div>
+</div>

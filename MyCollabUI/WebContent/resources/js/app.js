@@ -62,6 +62,10 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						.when("/viewForumDetail/:id",{
 							templateUrl: "forums/viewForumDetail.html",
 							controller: "forumController"
+						})
+						.when("/suggestedUsers",{
+							templateUrl: "friends/suggestedusers.html",
+							controller: "FriendController"
 						});
 						 
 					})
@@ -71,14 +75,14 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 					       $rootScope.globals = $cookies.getObject('globals') || {};
 						 //  $rootScope.currentuser =  $cookies.getObject('currentuser') || {};
 						    console.log(" $rootScope.globals = "+ $rootScope.globals)
-						  alert( $rootScope.globals)
+						  //alert( $rootScope.globals)
 						    console.log(" $rootScope.globals.currentUser = "+ $rootScope.globals.currentUser)
 						    if ($rootScope.globals.currentUser) {
 						    	
 						        $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
 						    }
 						
-						    alert( $rootScope.globals.currentUser)
+						   // alert( $rootScope.globals.currentUser)
 						    $rootScope.$on('$locationChangeStart', function (event, next, current) {
 						        // redirect to login page if not logged in and trying to access a restricted page
 						    	console.log("$location.path() ="+$location.path());
@@ -91,9 +95,9 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						        var loggedInUser =  $rootScope.globals.currentUser;
 						    console.log("loggedInUser : ")
 						    console.log(loggedInUser)
-						    alert(loggedInUser)
+						   // alert(loggedInUser)
 						        if(loggedInUser){
-						        	alert("Logged In user")
+						        	//alert("Logged In user")
 						        	   console.log(" $rootScope.islogged = "+ $rootScope.islogged)
 						        	   $rootScope.islogged =true;
 						        	   if($rootScope.globals.currentUser.role === 'ADMIN')
