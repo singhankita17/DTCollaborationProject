@@ -2,7 +2,7 @@
  * Image Controller
  */
 
-app.controller('ImageController', ['$scope', 'fileUploadService', function($scope, fileUploadService){
+app.controller('ImageController', ['$scope', 'fileUploadService','userService', function($scope, fileUploadService){
     $scope.uploadFile = function(){
         var file = $scope.myFile;
         alert(file)
@@ -12,4 +12,15 @@ app.controller('ImageController', ['$scope', 'fileUploadService', function($scop
        // var uploadUrl = "/fileUpload";
         fileUploadService.uploadFileToUrl(file);
      };
+     
+     function getImage(userId){
+    	 
+    	 userService.getImage(userId)
+    	 	.then(function(response){
+    		   $scope.imagePath = response.data
+    	 	},function(response){
+    		 
+    	 		console.log("Error in fetching image")
+    	 	})
+     }
   }]);

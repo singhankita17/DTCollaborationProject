@@ -49,10 +49,11 @@
 			          	<a class="dropdown-toggle" data-toggle="dropdown" href="">Friends<span class="caret"></span></a>
 				          <ul class="dropdown-menu">
 				           <li><a href="#/suggestedUsers"> Suggested Users </a></li>
-				           <li><a href="#"> Pending Friend Requests </a> </li>
-				           <li><a href="#"> Friend List </a></li>
+				           <li><a href="#/pendingrequests"> Pending Friend Requests </a> </li>
+				           <li><a href="#/friendList"> Friend List </a></li>
 				          </ul>
 			        </li>	
+			        <li><a href="#uploadpicture" data-ng-show="islogged"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{globals.currentUser.userId}}" alt="upload Picture" width="50px" height="50px" class="img-rounded"></a></li>
 			        <li class="dropdown">
 			          	<a class="dropdown-toggle" data-toggle="dropdown" href="">Profile<span class="caret"></span></a>
 				          <ul class="dropdown-menu">
@@ -62,6 +63,7 @@
 			        </li>			       
 				   <li><a href="#register"><span data-ng-show="!islogged"> Register </span></a> </li>		
 				   <li><a href="#login"><span data-ng-show="!islogged"> LogIn </span></a></li>
+				   <li><a href="#chat"><span data-ng-show="islogged"> Chat </span></a> </li>
 				   <li><a href=""><span data-ng-show="islogged"> Welcome User {{ globals.currentUser.firstname}} </span></a></li>
 				   <li><a href="" data-ng-click="logout()" data-ng-controller='LoginController'><span data-ng-show="islogged"> Logout </span></a></li>
 				   
@@ -94,6 +96,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+     
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" />
  <!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 <!-- <script type="text/javascript" src="resources/js/angular.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>

@@ -1,6 +1,9 @@
 package com.linkin.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.linkin.model.Friend;
 import com.linkin.model.UsersDetails;
 import com.linkin.service.FriendService;
 import com.linkin.service.UsersService;
@@ -68,6 +73,116 @@ public class FriendRESTController {
 				}else{
 					
 					return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(42,"Error in processing friend request"),HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		}
+		
+		
+		@RequestMapping(value="/pendingFriendRequest",method=RequestMethod.GET)
+		public ResponseEntity<?> pendingFriendRequest(HttpSession session){
+			
+			Integer userId = (Integer) session.getAttribute("userId");
+			
+			if(userId == null){
+				  
+				    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+			else {
+				
+				List<Friend> pendingRequestList = friendService.listOfPendingRequests(userId);
+				if(pendingRequestList!=null){
+					
+					return new ResponseEntity<List<Friend>>(pendingRequestList,HttpStatus.OK);
+					
+				}else{
+					
+					return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(43,"Error in fetching pending friend request list"),HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		}
+		
+		
+		@RequestMapping(value="/updateFriendRequest/{id}/{status}",method=RequestMethod.GET)
+		public ResponseEntity<?> updateFriendRequest(@PathVariable("id") int fromId,@PathVariable("status")String status,HttpSession session){
+			
+			Integer userId = (Integer) session.getAttribute("userId");
+			
+			if(userId == null){
+				  
+				    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+			else {
+			
+				boolean result = false;
+				try
+				{
+				
+				if(status.equals("ACCEPTED")){
+					result = friendService.approveFriendRequest(fromId, userId);
+				}else if(status.equals("REJECTED")){
+					result = friendService.rejectFriendRequest(fromId, userId);
+				}
+				}catch(Exception e){
+					System.out.println("Error msg"+e.getMessage());
+				}
+				if(result){
+					UsersDetails user = usersService.getUserById(fromId);
+					return new ResponseEntity<UsersDetails>(user,HttpStatus.OK);
+					
+				}else{	
+					return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(44,"Error in updating friend request"),HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		}
+		
+		
+		@RequestMapping(value="/listOfFriends",method=RequestMethod.GET)
+		public ResponseEntity<?> listOfFriends(HttpSession session){
+			
+			Integer userId = (Integer) session.getAttribute("userId");
+			
+			if(userId == null){
+				  
+				    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	  
+			else {
+				
+				List<Friend> friendList = friendService.listOfFriends(userId);
+				
+				if(friendList!=null){
+					
+					return new ResponseEntity<List<Friend>>(friendList,HttpStatus.OK);
+					
+				}else{
+					
+					return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(44,"Error in fetching friend list of user"),HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		}
+		
+		
+		@RequestMapping(value="/getNameOfFriends",method=RequestMethod.POST)
+		public ResponseEntity<?> getNameOfFriends(@RequestBody ArrayList<Friend> list,HttpSession session){
+			
+			Integer userId = (Integer) session.getAttribute("userId");
+			
+			if(userId == null){
+				  
+				    return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+			else {
+			
+				System.out.println("list = "+list);
+				
+				Map<Integer, String> userNames = usersService.getUsersFullNames(list);
+								
+				if(userNames!=null){
+					
+					return new ResponseEntity<Map<Integer,String>>(userNames,HttpStatus.OK);
+					
+				}else{
+					
+					return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(44,"Error in fetching friend list of user"),HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 			}
 		}

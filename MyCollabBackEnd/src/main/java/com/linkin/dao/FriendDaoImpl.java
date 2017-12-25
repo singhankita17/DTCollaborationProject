@@ -56,4 +56,48 @@ public class FriendDaoImpl implements FriendDao {
 		
 	}
 
+	@Transactional
+	public List<Friend> listOfPendingRequests(int userId) {
+		Session session = sessionFactory.openSession();
+		List<Friend> pendingRequestList =  session.createQuery("from Friend where toId = :id and status = 'PENDING'",Friend.class).setParameter("id", userId).list();
+		session.close();
+		return pendingRequestList;
+	}
+
+	@Transactional
+	public boolean approveFriendRequest(int fromId, int toId) {
+		Query updateQuery = sessionFactory.getCurrentSession().createQuery("update Friend set status = 'ACCEPTED' where fromId = :fId and toId = :tId");
+		
+		updateQuery.setParameter("fId", fromId);
+		updateQuery.setParameter("tId", toId);
+		int result = updateQuery.executeUpdate();
+		System.out.println(result);
+		if(result > 0)
+			return true;
+		else
+			return false;
+	}
+
+	@Transactional
+	public boolean rejectFriendRequest(int fromId, int toId) {
+		Query updateQuery = sessionFactory.getCurrentSession().createQuery("update Friend set status = 'REJECTED' where fromId = :fId and toId = :tId");
+		
+		updateQuery.setParameter("fId", fromId);
+		updateQuery.setParameter("tId", toId);
+		int result = updateQuery.executeUpdate();
+		if(result > 0)
+			return true;
+		else
+			return false;
+	}
+
+	@Transactional
+	public List<Friend> listOfFriends(int userId) {
+		
+		Session session = sessionFactory.openSession();
+		List<Friend> friendList =  session.createQuery("from Friend where (fromId = :id or toId = :id) and status = 'ACCEPTED'",Friend.class).setParameter("id", userId).list();
+		session.close();
+		return friendList;
+	}
+
 }

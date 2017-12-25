@@ -1,11 +1,14 @@
 package com.linkin.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.linkin.dao.UsersDao;
+import com.linkin.model.Friend;
 import com.linkin.model.UsersDetails;
 
 @Service("usersService")
@@ -58,6 +61,10 @@ public class UsersServiceImpl implements UsersService{
 		
 		return usersDao.checkIfValidUser(username, password);
 	}
-	
-	
+
+	public Map<Integer, String> getUsersFullNames(ArrayList<Friend> friendList) {
+		
+		return usersDao.getUsersFullNames(friendList);
+	}
+
 }

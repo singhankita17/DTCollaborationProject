@@ -1,0 +1,25 @@
+<div class="row vertical-offset-20">
+		<div class="col-md-6 col-md-offset-3">
+    		<div class="panel panel-default">
+			  	<div class="panel-heading">
+		  
+		  			<h3 class="panel-title">  Friend Lists </h3>
+		        </div>
+			<div class="panel-body">
+			<table class="table table-striped">
+				<tbody>
+			
+				<tr data-ng-repeat="friend in friendList">
+					<td data-ng-hide="globals.currentUser.userId==friend.fromId">{{friendNames[friend.fromId]}}</td>
+					<td data-ng-hide="globals.currentUser.userId==friend.fromId"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{friend.fromId}}" height="50" width="50" alt="User Image Not Found"  class="img-rounded"></td>
+					<td data-ng-hide="globals.currentUser.userId==friend.toId">{{friendNames[friend.toId]}}</td>
+					<td data-ng-hide="globals.currentUser.userId==friend.toId"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{friend.toId}}" height="50" width="50" alt="User Image Not Found"  class="img-rounded"></td>
+				</tr>
+				
+				 
+				</tbody>
+			</table>
+			</div>
+	</div>
+</div>
+</div>

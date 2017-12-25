@@ -15,7 +15,8 @@
 				<tbody>
 				<tr data-ng-repeat="user in suggesteduserList">
 					<td>{{user.firstName}}</td><td>{{user.lastName}}</td><td>{{user.role}}</td>
-					<td data-ng-if="user.isOnline">Yes</td><td data-ng-if="!user.isOnline">No</td>
+					
+					<td data-ng-if="user.online">Yes</td><td data-ng-if="!user.online">No</td>
 					<td><button data-ng-click="friendRequest(user.c_user_id)">Send Friend Request</button></td>
 				</tr>
 				</tbody>

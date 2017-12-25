@@ -66,6 +66,18 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						.when("/suggestedUsers",{
 							templateUrl: "friends/suggestedusers.html",
 							controller: "FriendController"
+						})
+						.when("/pendingrequests",{
+							templateUrl: "friends/pendingrequest.html",
+							controller: "FriendController"
+						})
+						.when("/friendList",{
+							templateUrl: "friends/friendList.html",
+							controller: "FriendController"
+						})
+						.when("/chat",{
+							templateUrl: "chats/chat.html",
+							controller: "ChatController"
 						});
 						 
 					})

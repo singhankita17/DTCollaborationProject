@@ -1,6 +1,10 @@
 package com.linkin.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -8,6 +12,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.linkin.model.Friend;
 import com.linkin.model.UsersDetails;
 
 @Repository
@@ -114,6 +120,31 @@ public class UsersDaoImpl implements UsersDao{
 				return true;
 		else
 				return false;
+	}
+
+	@Transactional
+	public Map<Integer, String> getUsersFullNames(ArrayList<Friend> friendList) {
+		
+		String queryString = "select * from c_users where c_user_id IN (";
+		
+		for(Friend friend:friendList){
+			
+			int userId1 = friend.getFromId();
+			int userId2 = friend.getToId();
+			queryString += userId1+", "+userId2+",";
+		}
+		queryString = queryString.substring(0, queryString.length()-1);
+		queryString += ")";
+		System.out.println("Query ==="+queryString);
+		Session session = sessionFactory.getCurrentSession();
+				
+		List<UsersDetails> users =  session.createSQLQuery(queryString).addEntity(UsersDetails.class).list();
+		Map<Integer,String> userNames = new HashMap<Integer, String>();
+		
+		for(UsersDetails user:users){
+			userNames.put(user.getC_user_id(), user.getFirstName()+" "+user.getLastName());
+		}
+		return userNames;
 	}
 
 	

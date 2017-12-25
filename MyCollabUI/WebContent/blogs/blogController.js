@@ -124,7 +124,7 @@ function blogController($scope,$location,BlogService,$rootScope){
 	 }
 	 
 	 function viewUserBlogs(){
-		 if($rootScope.globals.currentUser){
+		 if($rootScope.isLogged){
 			 
 		 BlogService.viewUserBlogs(function(response){
 			 

@@ -44,6 +44,13 @@ app.factory('userService',function($http,$rootScope){
 		return $http.put(BASE_URL+"/updateUser",user)
 	}
 	
+	function getImage(userId){
+		
+		console.log("Fetching User Image")
+		
+		return $http.get(BASE_URL+"/getimage/"+userId)
+	}
+	
 	return userService;
 	
 });

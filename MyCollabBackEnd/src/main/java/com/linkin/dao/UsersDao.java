@@ -1,7 +1,10 @@
 package com.linkin.dao;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.linkin.model.Friend;
 import com.linkin.model.UsersDetails;
 
 
@@ -24,5 +27,7 @@ public interface UsersDao {
 	public boolean checkIfExistingUser(UsersDetails user);
 
 	public boolean checkIfValidUser(String username, String password);
+	
+	public Map<Integer,String> getUsersFullNames(ArrayList<Friend> friendList);
 	
 }

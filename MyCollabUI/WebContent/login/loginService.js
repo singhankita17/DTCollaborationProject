@@ -67,7 +67,8 @@ app.factory('AuthenticationService', AuthenticationService);
                      authdata: authdata,
                      islogged:true,
                      role:$rootScope.currentuser.role,
-                     firstname: $rootScope.currentuser.firstName
+                     firstname: $rootScope.currentuser.firstName,
+                     userId: $rootScope.currentuser.c_user_id
                  }
             };
             

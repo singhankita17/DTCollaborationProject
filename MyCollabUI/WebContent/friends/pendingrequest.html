@@ -1,0 +1,22 @@
+<div class="row vertical-offset-20">
+		<div class="col-md-6 col-md-offset-3">
+    		<div class="panel panel-default">
+			  	<div class="panel-heading">
+		  
+		  			<h3 class="panel-title"> Pending Friend Requests </h3>
+		        </div>
+			<div class="panel-body">
+			<table class="table table-striped">
+				<tbody>
+				<tr data-ng-repeat="request in pendingRequestList">
+					<td>{{request.fromId}}</td>
+					<td><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{request.fromId}}" height="50" width="50" alt="User Image"  class="img-rounded"></td>
+					<td><a href="" data-ng-click="updatePendingRequest(request.fromId,'ACCEPTED')" class="btn btn-default">Accept</a></td>
+					<td><a href="" data-ng-click="updatePendingRequest(request.fromId,'REJECTED')" class="btn btn-default">Reject</a></td>
+				</tr>
+				</tbody>
+			</table>
+			</div>
+	</div>
+</div>
+</div>
