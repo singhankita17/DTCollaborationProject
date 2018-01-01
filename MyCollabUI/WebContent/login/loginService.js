@@ -1,5 +1,7 @@
 app.factory('AuthenticationService', AuthenticationService);
- var BASE_URL = 'http://localhost:8181/MyCollab';
+
+var BASE_URL = 'http://localhost:8181/MyCollab';
+
     AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope'];
     function AuthenticationService($http, $cookieStore, $rootScope) {
         var service = {};
@@ -24,7 +26,7 @@ app.factory('AuthenticationService', AuthenticationService);
     				 
     				 response = { success: true, data: response.data };
                 } else {
-                    response = { success: false, message: 'Username or password is incorrect' };
+                    response = { success: false, message: response.data.errorMessage };
                 }
                     callback(response);
                 },function(response,data,status,headers,config) {
@@ -33,7 +35,7 @@ app.factory('AuthenticationService', AuthenticationService);
     			console.log(response.data)
     			if(response!=null){
     				
-    				 response = { success: false, message: 'Username or password is incorrect' };
+    				 response = { success: false, message: response.data.errorMessage };
                 }
                     callback(response);
                 }) 

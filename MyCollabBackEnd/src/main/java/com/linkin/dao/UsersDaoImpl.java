@@ -123,15 +123,13 @@ public class UsersDaoImpl implements UsersDao{
 	}
 
 	@Transactional
-	public Map<Integer, String> getUsersFullNames(ArrayList<Friend> friendList) {
+	public Map<Integer, String> getUsersFullNames(List<Integer> friendList) {
 		
 		String queryString = "select * from c_users where c_user_id IN (";
 		
-		for(Friend friend:friendList){
+		for(Integer userId:friendList){
 			
-			int userId1 = friend.getFromId();
-			int userId2 = friend.getToId();
-			queryString += userId1+", "+userId2+",";
+			queryString += userId+",";
 		}
 		queryString = queryString.substring(0, queryString.length()-1);
 		queryString += ")";
@@ -145,6 +143,30 @@ public class UsersDaoImpl implements UsersDao{
 			userNames.put(user.getC_user_id(), user.getFirstName()+" "+user.getLastName());
 		}
 		return userNames;
+	}
+
+	@Transactional
+	public List<Integer> getOnlineUserList() {
+		
+		List<Integer> userList = new ArrayList<Integer>();
+		String queryString = "select * from c_users where ISONLINE = 1";
+		List<UsersDetails> users = sessionFactory.getCurrentSession().createSQLQuery(queryString).addEntity(UsersDetails.class).list();
+		for(UsersDetails user:users){
+			userList.add(user.getC_user_id());
+		}
+		
+		return userList;
+	}
+
+	@Transactional
+	public boolean checkIfAlreadyLoggedInUser(UsersDetails user) {
+		String queryString = "from UsersDetails where c_user_id = :userId and ISONLINE = 1";
+		UsersDetails userObj = sessionFactory.getCurrentSession().createQuery(queryString,UsersDetails.class)
+				.setParameter("userId", user.getC_user_id()).uniqueResult();
+		if(userObj!=null)
+				return true;
+		else
+				return false;
 	}
 
 	

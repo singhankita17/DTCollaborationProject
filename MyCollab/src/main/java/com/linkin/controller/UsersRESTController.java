@@ -2,6 +2,7 @@ package com.linkin.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.linkin.model.Friend;
 import com.linkin.model.UsersDetails;
 import com.linkin.service.UsersService;
 import com.linkin.utility.CollabApplicationError;
@@ -145,7 +147,12 @@ public class UsersRESTController {
 		System.out.println("User Exists = "+ifExists);
 			    
 		if(ifExists){
+			
 			validUser = usersService.getUserByName(users.getUserName());
+			if(usersService.checkIfAlreadyLoggedInUser(validUser)){
+				
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(8,"This user already logged in. Please logout first to login again."), HttpStatus.CONFLICT);
+			}
 			validUser.setOnline(true);
 	        usersService.updateUser(validUser);
 			session.setAttribute("userId", validUser.getC_user_id());
@@ -153,7 +160,7 @@ public class UsersRESTController {
 			
 		}else{
 			
-			return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(6,"UserName or Password does not match"), HttpStatus.CONFLICT);
+			return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(6,"UserName or Password is incorrect"), HttpStatus.CONFLICT);
 		}	
 	
 	}
@@ -230,5 +237,67 @@ public class UsersRESTController {
 				return profilePic;
 		}
 		
-}
+	}
+	
+	@RequestMapping(value="/getNameOfUsers",method=RequestMethod.POST)
+	public ResponseEntity<?> getNameOfUsers(@RequestBody List<Integer> list,HttpSession session){
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		
+		if(userId == null){
+			  
+			    return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+		}	   
+		else {
+		  // List<Integer> userList = new ArrayList<Integer>();
+			System.out.println("list = "+list);
+			/*for(Friend friend:list){
+				
+				int userId1 = friend.getFromId();
+				if(!userList.contains(userId1)){
+					userList.add(userId1);
+				}
+				int userId2 = friend.getToId();
+				if(!userList.contains(userId2)){
+					userList.add(userId2);
+				}
+				
+			}*/
+			Map<Integer, String> userNames = usersService.getUsersFullNames(list);
+							
+			if(userNames!=null){
+				
+				return new ResponseEntity<Map<Integer,String>>(userNames,HttpStatus.OK);
+				
+			}else{
+				
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(44,"Error in fetching Names of user"),HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+	}
+	
+	@RequestMapping(value="/getOnlineUserList",method=RequestMethod.GET)
+	public ResponseEntity<?> getOnlineUserList(HttpSession session){
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		
+		if(userId == null){
+			  
+			    return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+		}	   
+		else {
+			
+			List<Integer> userList = usersService.getOnlineUserList();
+			
+			if(userList!=null){
+				
+				return new ResponseEntity<List<Integer>>(userList,HttpStatus.OK);
+				
+			}else{
+				
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(47,"Error in fetching online list of users"),HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+	}
+		
 }

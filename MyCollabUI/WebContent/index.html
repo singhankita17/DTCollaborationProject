@@ -71,9 +71,9 @@
 			
 			<ul class="nav navbar-nav navbar-right" data-ng-show="isAdmin"> 
 									
-				   <li><a href="#manageBlog"><span data-ng-show="islogged"> Manage Blog </span></a> </li>		
+				   <li><a href="#admin/manageBlog"><span data-ng-show="islogged"> Manage Blog </span></a> </li>		
 				   <li><a href=""><span data-ng-show="islogged"> Manage Forum </span></a></li>
-				   <li><a href="#addjob"><span data-ng-show="islogged"> Add Job </span></a></li>
+				   <li><a href="#admin/addjob"><span data-ng-show="islogged"> Add Job </span></a></li>
 				   <li><a href=""><span data-ng-show="islogged"> Manage Users </span></a></li>
 				   <li><a href=""><span data-ng-show="islogged"> Welcome ADMIN  {{ globals.currentUser.firstname}} </span></a></li>
 				   <li><a href="" data-ng-click="logout()" data-ng-controller='LoginController'><span data-ng-show="islogged"> Logout </span></a></li>
@@ -125,6 +125,10 @@
 <script type="text/javascript" src="register/fileModel.js"></script>
 <script type="text/javascript" src="friends/FriendService.js"></script>
 <script type="text/javascript" src="friends/FriendController.js"></script>
+<script type="text/javascript" src="chats/ChatController.js"></script>
+<script type="text/javascript" src="chats/chatservice.js"></script>
+ <script src="resources/js/sockjs/sockjs.js"></script>
+ <script src="resources/js/stomp/dist/stomp.js"></script>
 <link rel="stylesheet" href="resources/css/style-main.css">
 <link rel="stylesheet" href="resources/css/style-blog.css">
 </html>

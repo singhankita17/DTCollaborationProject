@@ -27,6 +27,10 @@ public interface UsersService {
 
 	public boolean checkIfValidUser(String username, String password);
 	
-	public Map<Integer,String> getUsersFullNames(ArrayList<Friend> friendList);
+	public boolean checkIfAlreadyLoggedInUser(UsersDetails user);
+	
+	public Map<Integer,String> getUsersFullNames(List<Integer> userList);
+	
+	public List<Integer> getOnlineUserList();
 	
 }

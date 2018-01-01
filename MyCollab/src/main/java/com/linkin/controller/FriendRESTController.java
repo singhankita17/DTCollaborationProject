@@ -171,10 +171,21 @@ public class FriendRESTController {
 				    return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
 			}	   
 			else {
-			
+			   List<Integer> userList = new ArrayList<Integer>();
 				System.out.println("list = "+list);
-				
-				Map<Integer, String> userNames = usersService.getUsersFullNames(list);
+				for(Friend friend:list){
+					
+					int userId1 = friend.getFromId();
+					if(!userList.contains(userId1)){
+						userList.add(userId1);
+					}
+					int userId2 = friend.getToId();
+					if(!userList.contains(userId2)){
+						userList.add(userId2);
+					}
+					
+				}
+				Map<Integer, String> userNames = usersService.getUsersFullNames(userList);
 								
 				if(userNames!=null){
 					

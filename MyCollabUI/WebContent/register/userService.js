@@ -1,13 +1,15 @@
 app.factory('userService',function($http,$rootScope){
 	
-	var BASE_URL = "http://localhost:8181/MyCollab";
+	var BASE_URL = 'http://localhost:8181/MyCollab';
 	
 	var userService = {
 			
 			registerUser:registerUser,
 			retrieveUserByUserName:retrieveUserByUserName,
 			retrieveUserByUserId:retrieveUserByUserId,
-			edituserprofile:edituserprofile
+			edituserprofile:edituserprofile,
+			getUserNames: getUserNames,
+			getOnlineUserList: getOnlineUserList
 	};
 	
 	/*userService.registerUser = registerUser;
@@ -49,6 +51,16 @@ app.factory('userService',function($http,$rootScope){
 		console.log("Fetching User Image")
 		
 		return $http.get(BASE_URL+"/getimage/"+userId)
+	}
+	
+	function getUserNames(userList){
+		
+		return $http.post(BASE_URL+"/getNameOfUsers",userList)
+	}
+	
+	function getOnlineUserList(){
+		
+		return $http.get(BASE_URL+"/getOnlineUserList")
 	}
 	
 	return userService;

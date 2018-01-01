@@ -1,8 +1,8 @@
 app.controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope','$location','AuthenticationService','$rootScope'];
+    LoginController.$inject = ['$scope','$location','AuthenticationService','$rootScope','$window'];
  
-    function LoginController($scope,$location, AuthenticationService,$rootScope) {
+    function LoginController($scope,$location, AuthenticationService,$rootScope,$window) {
 	 console.log("login controller")
        $scope.message=''
        
@@ -15,8 +15,11 @@ app.controller('LoginController', LoginController);
             //  alert("Success")
                 	AuthenticationService.SetCredentials($scope.username, $scope.password);
                 	 $rootScope.islogged=true;
-                    $location.path('/home');            
-                 
+                	 if($rootScope.currentuser.role === 'ADMIN'){
+                		 $location.path('/admin/home');    
+                	 }else{
+                		 $location.path('/home');            
+                	 }
                 	
                 } else {
                 	console.log("error"+response.message)
@@ -54,5 +57,5 @@ app.controller('LoginController', LoginController);
                  }
              });
          };
-       
+         
     }

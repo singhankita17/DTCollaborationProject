@@ -7,6 +7,10 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							templateUrl: "home/home.html",
 							controller: "homeController"
 						})
+						.when("/admin/home",{
+							templateUrl: "home/adminHome.html",
+							controller: "homeController"
+						})
 						.when("/login",{
 							templateUrl: "login/login.html",
 							controller: "LoginController"
@@ -31,7 +35,7 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							templateUrl: "blogs/createNewBlog.html",
 							controller: "blogController"
 						})
-						.when("/manageBlog",{
+						.when("/admin/manageBlog",{
 							templateUrl: "blogs/manageBlog.html",
 							controller: "blogController"
 						})
@@ -51,7 +55,7 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							templateUrl: "register/uploadpic.html",
 							controller: "ImageController"
 						})
-						.when("/addjob",{
+						.when("/admin/addjob",{
 							templateUrl: "jobs/jobform.html",
 							controller: "JobController"
 						})
@@ -103,15 +107,15 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						    	//var	blogid = $routeParams.id;
 						    	
 						        var restrictedPage = $.inArray($location.path(), ['/register','/viewBlogs','','/viewForum']) === -1;
-						    	var adminPage = $.inArray($location.path(), ['/manageBlog']) === -1;
+						    	var adminPage = $.inArray($location.path(), ['/admin/manageBlog','/admin/addjob','/admin/home']) !== -1;
 						        var loggedInUser =  $rootScope.globals.currentUser;
-						    console.log("loggedInUser : ")
-						    console.log(loggedInUser)
-						   // alert(loggedInUser)
-						        if(loggedInUser){
-						        	//alert("Logged In user")
+							    console.log("loggedInUser : ")
+							    console.log(loggedInUser)
+							        if(loggedInUser){
+							        	
 						        	   console.log(" $rootScope.islogged = "+ $rootScope.islogged)
 						        	   $rootScope.islogged =true;
+						        	   
 						        	   if($rootScope.globals.currentUser.role === 'ADMIN')
 										   	$rootScope.isAdmin = true;
 						        	   else
@@ -124,6 +128,11 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							    }else if (restrictedPage && !loggedInUser) {
 						        	 console.log("Redirect to login : ")
 						            $location.path('/login');
+						        }else if(adminPage && !$rootScope.isAdmin){
+						        	alert("not authorized to view this page")
+						        	$location.path('/home');
 						        }
 						    });
+						    
+						    
 					});
