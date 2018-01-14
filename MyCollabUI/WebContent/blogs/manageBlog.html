@@ -15,6 +15,7 @@
 							<th>Blog Creation Date</th>
 							<th>Blog Created By</th>
 							<th>Blog Action</th>
+							<th>Rejection Reason</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -22,10 +23,12 @@
 							<td>{{blog.blogId}}</td>
 							<td>{{blog.blogTitle}}</td>
 							<td>{{blog.blogContent}}</td>
-							<td>{{blog.createdDate}}</td>
+							<td>{{blog.createdDate | date : "medium"}}</td>
 							<td>{{blog.userName}}</td>
 							<td><input type="radio" data-ng-model="blog.status" value="APPROVED"> Approve &nbsp;&nbsp;&nbsp;<input type="radio" data-ng-model="blog.status" value="REJECTED"> Reject 
-							<br><button data-ng-click="approveOrRejectBlog(blog.blogId,blog.status)">Ok</button></td>
+							<br></td>
+							<td><input type="text" data-ng-model="rejectionReason"></td>
+							<td><button data-ng-click="approveOrRejectBlog(blog.blogId,blog.status,rejectionReason)">Ok</button></td>
 						</tr>
 					</tbody>
 				</table>
@@ -52,7 +55,7 @@
 							<td>{{blog.blogId}}</td>
 							<td>{{blog.blogTitle}}</td>
 							<td>{{blog.blogContent}}</td>
-							<td>{{blog.createdDate}}</td>
+							<td>{{blog.createdDate | date : "medium"}}</td>
 							<td>{{blog.userName}}</td>
 							<td>{{blog.status}}</td>
 							

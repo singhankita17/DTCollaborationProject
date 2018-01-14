@@ -9,50 +9,75 @@
 			<div class="panel-body">
 				<div class="panel-body">
 			
-			<!-- <form > -->
+			<form name="registrationForm" novalidate> 
 			 <p><font color="red">{{errormessage}}</font></p>
 			<fieldset>
 				  <div class="form-group">
 				  	<label for="firstName">First Name: </label>
-				    <input class="form-control"  type="text"    name="firstName" placeholder="Enter FirstName" data-ng-model="user.firstName" required="required"/>
+				    <input class="form-control"  type="text"    name="firstName" placeholder="Enter FirstName" data-ng-model="user.firstName" required/>
+				      <span style="color:red" data-ng-show="registrationForm.firstName.$dirty && registrationForm.firstName.$invalid">
+  					  <span data-ng-show="registrationForm.firstName.$error.required">Firstname is required.</span>
+  					  </span>
 				   </div>
 		    
 					   <div class="form-group">
 					    <label for="lastName">Last Name: </label>
-					    <input class="form-control"  type="text"  name="lastName" placeholder="Enter LastName" data-ng-model="user.lastName"  required="required"/>
+					    <input class="form-control"  type="text"  name="lastName" placeholder="Enter LastName" data-ng-model="user.lastName"  required/>
+					    <span style="color:red" data-ng-show="registrationForm.lastName.$dirty && registrationForm.lastName.$invalid">
+  					  	<span data-ng-show="registrationForm.lastName.$error.required">Lastname is required.</span>
+  					  </span>
 					  	</div>
 					
 					 <div class="form-group">
 					    <label for="lastName">User Name: </label>
-					    <input class="form-control"  type="text"  name="userName" placeholder="Enter UserName" data-ng-model="user.userName"  required="required"/>
+					    <input class="form-control"  type="text"  name="userName" placeholder="Enter UserName" data-ng-model="user.userName"  required/>
+					    <span style="color:red" data-ng-show="registrationForm.userName.$dirty && registrationForm.userName.$invalid">
+  					  		<span data-ng-show="registrationForm.userName.$error.required">Username is required.</span>
+  					 	 </span>
 					</div>
 		
 					<div class="form-group">		 
 					     <label for="contact">Mobile Number : </label>
-					     <input class="form-control"  type="text"  name="contact" placeholder="Enter Mobile Number" data-ng-model="user.contact"  maxlength="10" required="required"/>
+					     <input class="form-control"  type="text"  name="contact" placeholder="Enter Mobile Number" data-ng-model="user.contact"  maxlength="10" required pattern='(^[0-9]{10,10}$)'/>
+					     <span style="color:red" data-ng-show="registrationForm.contact.$dirty && registrationForm.contact.$invalid">
+  					  		<span data-ng-show="registrationForm.contact.$error.required">Mobile Number is required.</span>
+  					  		<span data-ng-show="registrationForm.contact.$error.pattern">Mobile Number is Invalid.</span>
+  					  	 </span>
 					 </div>
 		    
 					     <div class="form-group">
 					    <label for="email">Email: </label>
-					    <input type="email" class="form-control" name="email"  placeholder="Enter Email" data-ng-model="user.email"  required="required"/>
+					    <input type="email" class="form-control" name="email"  placeholder="Enter Email" data-ng-model="user.email"  required pattern='(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)'/>
+					     <span style="color:red" data-ng-show="registrationForm.email.$dirty && registrationForm.email.$invalid">
+  								<span data-ng-show="registrationForm.email.$error.required">Email is required.</span>
+  								<span data-ng-show="registrationForm.email.$error.email">Invalid email address.</span>
+  								<span data-ng-show="!registrationForm.email.$error.email && registrationForm.email.$error.pattern">Email format must be correct(e.g. abc@gmail.com).</span>
+  						</span>
 					    </div>
 					    
 					    <div class="form-group">
 					  <label for="role">Select Role: </label><br/>
-						<input type="radio" name="role" data-ng-model="user.role" value="STUDENT" > Student
-						<input type="radio" name="role" data-ng-model="user.role"  value="ALUMNI" > Alumni
-						<input type="radio" name="role" data-ng-model="user.role"  value="EMPLOYEE" > Employee
-					
+					  <div ng-init="user.role='STUDENT'">
+						<input type="radio" name="role" data-ng-model="user.role" value="STUDENT" class="col-md-4"> Student<br/>
+						<input type="radio" name="role" data-ng-model="user.role"  value="ALUMNI" class="col-md-4"> Alumni<br/>
+						<input type="radio" name="role" data-ng-model="user.role"  value="EMPLOYEE" class="col-md-4"> Employee
+					</div>
 				</div>
 					    
 					    <div class="form-group">
 					    <label for="password">Password: </label>
-					    <input type="password" class="form-control"  placeholder="Enter Password" data-ng-model="user.password"  required="required"/>
+					    <input type="password" class="form-control"  name="password"placeholder="Enter Password" data-ng-model="user.password" id="password" required/>
+						 <span style="color:red" data-ng-show="registrationForm.password.$dirty && registrationForm.password.$invalid">
+	  					  <span data-ng-show="registrationForm.password.$error.required">Password is required.</span>
+	  					  </span>					   
 					    </div>		
 					    	
 						<div class="form-group">
-					    <label for="passwordRepeat">Reenter Password: </label>
-					    <input type="password" class="form-control"  placeholder="Enter Repeat Password"  name="passwordRepeat" required/>
+					    <label for="passwordRepeat">Confirm Password: </label>
+					    	<input type="password" class="form-control"  placeholder="Enter Repeat Password"  name="passwordRepeat" data-ng-model="passwordRepeat"  required/>
+					    	<span style="color:red" data-ng-show="registrationForm.passwordRepeat.$dirty && registrationForm.passwordRepeat.$invalid">
+	  					  <span data-ng-show="registrationForm.passwordRepeat.$error.required">Confirm Password is required.</span>
+	  					  </span>			   
 					    </div>
 					    
 					     <br/>
@@ -60,12 +85,12 @@
 						<br/>
 					   	<div class="form-group">
 							    <div class="clearfix">
-							      <button type="submit" class="btn btn-success" data-ng-click="register()">Register</button>
+							      <button type="submit" class="btn btn-success" data-ng-click="register()" ng-disabled=!registrationForm.$valid>Register</button>
 							      <button type="reset"  class="btn btn-danger">Cancel</button>		     
 							 </div>
 			    		</div>
 			    	</fieldset>
-			 <!--    </form> -->
+			 </form>
 			   </div>
 		</div>
 		</div>

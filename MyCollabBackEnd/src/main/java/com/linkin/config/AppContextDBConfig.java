@@ -20,6 +20,7 @@ import com.linkin.model.Forum;
 import com.linkin.model.ForumComment;
 import com.linkin.model.Friend;
 import com.linkin.model.JobDetail;
+import com.linkin.model.Notification;
 import com.linkin.model.UsersDetails;
 
 @Configuration
@@ -64,6 +65,7 @@ public class AppContextDBConfig {
 		sessionBuilder.addAnnotatedClass(ForumComment.class);
 		sessionBuilder.addAnnotatedClass(JobDetail.class);
 		sessionBuilder.addAnnotatedClass(Friend.class);
+		sessionBuilder.addAnnotatedClass(Notification.class);
 		System.out.println("Session factory config");
 		return sessionBuilder.buildSessionFactory();
 	}

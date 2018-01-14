@@ -23,7 +23,6 @@ public class BlogComment implements Serializable{
 	
 	private String commentText;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy@HH:mm:ss")
 	private Date commentDate;
 	
 	private int userId;

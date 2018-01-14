@@ -9,52 +9,73 @@
 			<div class="panel-body">
 				<div class="panel-body">
 			
-			<!-- <form > -->
+			 <form name="jobCreationForm" novalidate>
 			<!--  <p><font color="red">{{errorMessage}}</font></p> -->
 			<fieldset>
 				  <div class="form-group">
 				  	<label for="jobTitle">Job Title: </label>
-				    <input class="form-control"  type="text"    name="jobTitle" placeholder="Enter Job Title" data-ng-model="job.jobTitle" required="required"/>
+				    <input class="form-control"  type="text"    name="jobTitle" placeholder="Enter Job Title" data-ng-model="job.jobTitle" required/>
+				    <span style="color:red" data-ng-show="jobCreationForm.jobTitle.$dirty && jobCreationForm.jobTitle.$invalid">
+  					  		<span data-ng-show="jobCreationForm.jobTitle.$error.required">Job Title is required.</span>
+  					</span>
 				   </div>
 		    
 					   <div class="form-group">
 					    <label for="jobDesc">Job Description </label>
-					    <input class="form-control"  type="text"  name="jobDesc" placeholder="Enter Job Description" data-ng-model="job.jobDesc"  required="required"/>
+					    <input class="form-control"  type="text"  name="jobDesc" placeholder="Enter Job Description" data-ng-model="job.jobDesc"  required/>
+					    <span style="color:red" data-ng-show="jobCreationForm.jobDesc.$dirty && jobCreationForm.jobDesc.$invalid">
+  					  		<span data-ng-show="jobCreationForm.jobDesc.$error.required">Job Description is required.</span>
+  					  	</span>
 					  	</div>
 					
 					 <div class="form-group">
 					    <label for="skillsRequired">Skills Required: </label>
-					    <input class="form-control"  type="text"  name="skillsRequired" placeholder="Enter Skills Required" data-ng-model="job.skillsRequired"  required="required"/>
+					    <input class="form-control"  type="text"  name="skillsRequired" placeholder="Enter Skills Required" data-ng-model="job.skillsRequired"  required/>
+					    <span style="color:red" data-ng-show="jobCreationForm.skillsRequired.$dirty && jobCreationForm.skillsRequired.$invalid">
+  					  		<span data-ng-show="jobCreationForm.skillsRequired.$error.required">Skill details is required.</span>
+  					  	</span>
 					</div>
 		
 					<div class="form-group">		 
 					     <label for="location">Location : </label>
-					     <input class="form-control"  type="text"  name="location" placeholder="Enter Location" data-ng-model="job.location"  maxlength="10" required="required"/>
+					     <input class="form-control"  type="text"  name="location" placeholder="Enter Location" data-ng-model="job.location"  maxlength="10" required/>
+					      <span style="color:red" data-ng-show="jobCreationForm.location.$dirty && jobCreationForm.location.$invalid">
+  					  		<span data-ng-show="jobCreationForm.location.$error.required">Location details is required.</span>
+  					  	</span>
 					 </div>
 		    
 					     <div class="form-group">
 					    <label for="companyName">Company Name: </label>
-					    <input type="text" class="form-control" name="companyName"  placeholder="Enter Company Name" data-ng-model="job.companyName"  required="required"/>
+					    <input type="text" class="form-control" name="companyName"  placeholder="Enter Company Name" data-ng-model="job.companyName"  required/>
+					    <span style="color:red" data-ng-show="jobCreationForm.companyName.$dirty && jobCreationForm.companyName.$invalid">
+  					  		<span data-ng-show="jobCreationForm.companyName.$error.required">Company Name is required.</span>
+  					  	</span>
 					    </div>
 					    
 					    <div class="form-group">
 					    <label for="salary">Salary : </label>
-					    <input type="text" class="form-control"  placeholder="Enter Salary" data-ng-model="job.salary"  required="required"/>
+					    <input type="text" class="form-control"  placeholder="Enter Salary" name="salary" data-ng-model="job.salary"  required/>
+					    <span style="color:red" data-ng-show="jobCreationForm.salary.$dirty && jobCreationForm.salary.$invalid">
+  					  		<span data-ng-show="jobCreationForm.salary.$error.required">Salary is required.</span>
+  					  	</span>
 					    </div>		
 					    	
 						<div class="form-group">
 					    <label for="yrsOfExp">Years Of Experience : </label>
 					    <input type="text" class="form-control"  placeholder="Enter Years Of Experience"  name="yrsOfExp" data-ng-model="job.yrsOfExp" required/>
+					     <span style="color:red" data-ng-show="jobCreationForm.yrsOfExp.$dirty && jobCreationForm.yrsOfExp.$invalid">
+  					  		<span data-ng-show="jobCreationForm.yrsOfExp.$error.required">Years Of Experience is required.</span>
+  					  	</span>
 					    </div>
 					    
 					   	<div class="form-group">
 							    <div class="clearfix">
-							      <button type="submit" class="btn btn-success" data-ng-click="addJob(job)">Add Job</button>
+							      <button type="submit" class="btn btn-success" data-ng-click="addJob(job)" ng-disabled=!jobCreationForm.$valid>Add Job</button>
 							      <button type="reset"  class="btn btn-danger">Cancel</button>		     
 							 </div>
 			    		</div>
 			    	</fieldset>
-			 <!--    </form> -->
+			     </form>
 			   </div>
 		</div>
 		</div>

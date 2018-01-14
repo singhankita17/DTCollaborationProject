@@ -54,4 +54,14 @@ public class ForumServiceImpl implements ForumService {
 		return forumDao.getAllPendingForums();
 	}
 
+	public List<Forum> getAllForums() {
+		
+		return forumDao.getAllForums();
+	}
+
+	public boolean rejectForum(Forum forum) {
+		
+		return forumDao.rejectForum(forum);
+	}
+
 }

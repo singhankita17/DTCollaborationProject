@@ -13,9 +13,8 @@
     cursor:pointer;
   }
   
-  nav {
+  .nav {
     margin-top:25px;
-    
     ul {
       padding:0;
       margin:0;
@@ -58,11 +57,10 @@
     }
   }
 
-
 .content {
   width:100%;
   position:relative;
-  padding:20px 40px 20px;
+  padding:20px 40px 40px;
   background-color: #fff;
 }
 
@@ -103,11 +101,11 @@
 }
 
 form {
-  width:50%;
+  width:100%;
 }
 input, textarea {
   display:block;
-  width:100%;
+  width:80%;
   padding:10px;
   font-size:1.1em;
 }

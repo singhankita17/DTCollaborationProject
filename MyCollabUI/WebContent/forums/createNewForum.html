@@ -3,29 +3,35 @@
     		<div class="panel panel-default">
 			  	<div class="panel-heading">
 		  
-		  			<h3 class="panel-title"> Create New Forum </h3>
+		  			<h3 class="panel-title panel-title"> Create New Forum </h3>
 		        </div>
 			<div class="panel-body">
 				<div class="panel-body">
 			
-			<form> 
+			<form name="forumCreationForm" novalidate> 
 			 <p><font color="red">{{errormessage}}</font></p>
 			<fieldset>
 				  <div class="form-group">
-				  	<label for="firstName">Forum Name: </label>
-				    <input class="form-control"  type="text"    name="forumName" placeholder="Enter Forum Name" data-ng-model="forum.forumName" required="required"/>
+				  	<label for="forumName" class="form-control-text">Forum Name: </label>
+				    <input class="form-control"  type="text"    name="forumName" placeholder="Enter Forum Name" data-ng-model="forum.forumName" required/>
+				    <span style="color:red" data-ng-show="forumCreationForm.forumName.$dirty && forumCreationForm.forumName.$invalid">
+  					  	<span data-ng-show="forumCreationForm.forumName.$error.required">Forum Name is required.</span>
+  					  </span>
 				   </div>
 		    
 					   <div class="form-group">
-					    <label for="lastName">Forum Content: </label>
-					    <textarea class="form-control"  name="forumContent" placeholder="Enter Forum Content" data-ng-model="forum.forumContent" rows="10" cols="50"></textarea>
+					    <label for="forumContent" class="form-control-text">Forum Content: </label>
+					    <textarea class="form-control"  name="forumContent" placeholder="Enter Forum Content" data-ng-model="forum.forumContent" rows="10" cols="50" required></textarea>
+					  	<span style="color:red" data-ng-show="forumCreationForm.forumContent.$dirty && forumCreationForm.forumContent.$invalid">
+  					  		<span data-ng-show="forumCreationForm.forumContent.$error.required">Forum Content is required.</span>
+  					  	</span>
 					  	</div>
 					
 					
 					   	<div class="form-group">
 							    <div class="clearfix">
-							      <button type="submit" class="btn btn-success" data-ng-click="createNewForum()" data-ng-hide="editForumFlag">Create Forum</button>
-							       <button type="submit" class="btn btn-success" data-ng-click="updateForum(forum)" data-ng-show="editForumFlag">Update Blog</button>
+							      <button type="submit" class="btn btn-primary form-control-text center-block" data-ng-click="createNewForum()" data-ng-hide="editForumFlag" ng-disabled=!forumCreationForm.$valid>Create Forum</button>
+							       <button type="submit" class="btn btn-primary form-control-text center-block" data-ng-click="updateForum(forum)" data-ng-show="editForumFlag" ng-disabled=!forumCreationForm.$valid>Update Blog</button>
 							      <!-- <button type="reset"  class="btn btn-danger">Cancel</button>	 -->	     
 							 </div>
 			    		</div>
@@ -33,29 +39,29 @@
 			 </form> 
 			   </div>
 		</div>
-		
+		<br>
 		<div class="panel-heading">
 		  
-		  			<h3 class="panel-title"> User Forums </h3>
+		  			<h3 class="panel-title"> My Topics </h3>
 		        </div>
 			<div class="panel-body">
-				<table>
-					<thead>
+				<table  class="forum-table">
+					<thead class="table-header">
 						<tr>
-							<th>Forum Id</th>
-							<th>Forum Title</th>
-							<th>Forum Content</th>
-							<th>Forum Status</th>
-							<th colspan="2">Forum Action</th>
+						<th class="forum-icon"> &nbsp; </th>
+           	   			<th class="forum-topics">Forum Title  </th>
+           	   			<th class="forum-posts"> Forum Status</th>
+           	   			<th class="forum-date">   Action </th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr data-ng-repeat="forum in forumUserList">
-							<td>{{forum.forumId}}</td>
-							<td>{{forum.forumName}}</td>
-							<td>{{forum.forumContent | limitTo:70}}..</td>
-							<td>{{forum.status}}</td>
-							<td colspan="2"> <button data-ng-click="editForum(forum)"><span class="glyphicon glyphicon-pencil"></span></button> <br>
+							<td class="forum-list-icon"><i class="fa fa-file-text" aria-hidden="true" style="font-size:24px;color:#ccc"></i></td>
+           	   		  		<td colspan="1"><div class="forum-name"><a href="#/viewForumDetail/{{forum.forumId}}">{{forum.forumName}}</a></div>
+           	   		 		 <div  class="forum-description">{{forum.forumContent | limitTo:30}}..</div>
+           	   		  		</td>
+							<td><div class="forum-no-posts">{{forum.status}}</div></td>
+							<td class="forum-start-date"> <button data-ng-click="editForum(forum)"><span class="glyphicon glyphicon-pencil"></span></button> <span>    </span>
 							 <button  data-ng-click="deleteForum(forum.forumId)"><span class="glyphicon glyphicon-remove"></span></button></td>
 						</tr>
 					</tbody>

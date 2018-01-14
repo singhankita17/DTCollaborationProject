@@ -8,29 +8,35 @@
 			<div class="panel-body">
 				<div class="panel-body">
 			
-			<!-- <form > -->
+			 <form name="blogCreationForm" novalidate> 
 			 <p><font color="red"></font></p>
 			<fieldset>
 				  <div class="form-group">
 				  	<label for="firstName">Blog Title: </label>
-				    <input class="form-control"  type="text"    name="blogTitle" placeholder="Enter Blog Title" data-ng-model="blog.blogTitle" required="required"/>
+				    <input class="form-control"  type="text"    name="blogTitle" placeholder="Enter Blog Title" data-ng-model="blog.blogTitle" required/>
+				    <span style="color:red" data-ng-show="blogCreationForm.blogTitle.$dirty && blogCreationForm.blogTitle.$invalid">
+  					  	<span data-ng-show="blogCreationForm.blogTitle.$error.required">Blog Title is required.</span>
+  					  </span>
 				   </div>
 		    
 					   <div class="form-group">
-					    <label for="lastName">Blog Content: </label>
-					    <textarea class="form-control"  name="blogContent" placeholder="Enter Blog Content" data-ng-model="blog.blogContent"></textarea>
+					    <label for="blogContent">Blog Content: </label>
+					    <textarea class="form-control"  name="blogContent" placeholder="Enter Blog Content" data-ng-model="blog.blogContent" required></textarea>
+					    <span style="color:red" data-ng-show="blogCreationForm.blogContent.$dirty && blogCreationForm.blogContent.$invalid">
+  					  	<span data-ng-show="blogCreationForm.blogContent.$error.required">Blog Content is required.</span>
+  					  </span>
 					  	</div>
 					
 					
 					   	<div class="form-group">
 							    <div class="clearfix col-md-offset-5" >
-							      <button type="submit" class="btn btn-success" data-ng-click="createNewBlog()" data-ng-hide="editBlogFlag">Create Blog</button>
-							      <button type="submit" class="btn btn-success" data-ng-click="updateBlog(blog)" data-ng-show="editBlogFlag">Update Blog</button>
+							      <button type="submit" class="btn btn-success" data-ng-click="createNewBlog()" data-ng-hide="editBlogFlag" ng-disabled=!blogCreationForm.$valid>Create Blog</button>
+							      <button type="submit" class="btn btn-success" data-ng-click="updateBlog(blog)" data-ng-show="editBlogFlag" ng-disabled=!blogCreationForm.$valid>Update Blog</button>
 							     		     
 							 </div>
 			    		</div>
 			    	</fieldset>
-			 <!--    </form> -->
+			     </form>
 			   </div>
 		</div>
 		

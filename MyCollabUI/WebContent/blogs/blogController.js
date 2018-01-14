@@ -24,6 +24,7 @@ function blogController($scope,$location,BlogService,$rootScope){
 		 		alert("Blog created Successfully")
 		 		$scope.blog={}
 		 		viewUserBlogs();
+		 		
 		 	}else{
 		 		
 		 		$scope.errormessage = response.data.errormessage;
@@ -33,9 +34,9 @@ function blogController($scope,$location,BlogService,$rootScope){
 		 })
 	 }
 	 
-	 function viewBlogs(){
+	 function viewApprovedBlogs(){
 		
-		 BlogService.viewBlogs(function(response){
+		 BlogService.viewApprovedBlogs(function(response){
 			 
 			 if (response.success) {
 				
@@ -49,9 +50,9 @@ function blogController($scope,$location,BlogService,$rootScope){
 		 })
 	 }
 	 
-	 viewBlogs();
+	 viewApprovedBlogs();
 	
-	 $scope.approveOrRejectBlog = function(blogId,status){
+	 $scope.approveOrRejectBlog = function(blogId,status,rejectionReason){
 		 
 		 if(status === 'APPROVED'){
 			 console.log("Approved")
@@ -72,7 +73,7 @@ function blogController($scope,$location,BlogService,$rootScope){
 			 
 		 }else if(status === 'REJECTED'){
 			 console.log("Rejected")
-			  BlogService.rejectBlog(blogId,function(response){
+			  BlogService.rejectBlog(blogId,rejectionReason,function(response){
 			 
 			 if (response.success) {
 				
@@ -151,7 +152,7 @@ function blogController($scope,$location,BlogService,$rootScope){
 		 		 
 		 		viewUserBlogs(); 
 		 		
-		 	}
+		 	 }
 			 else
 			 {
 		 		

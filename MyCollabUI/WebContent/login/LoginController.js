@@ -18,7 +18,10 @@ app.controller('LoginController', LoginController);
                 	 if($rootScope.currentuser.role === 'ADMIN'){
                 		 $location.path('/admin/home');    
                 	 }else{
-                		 $location.path('/home');            
+                		 
+                		 $location.path('/home');    
+
+                	     	getNotifications();
                 	 }
                 	
                 } else {
@@ -58,4 +61,54 @@ app.controller('LoginController', LoginController);
              });
          };
          
-    }
+         
+         function getNotifications(){
+     		
+        	 AuthenticationService.getNotificationNotViewed(function(response){
+        		 if(response.success){
+     			console.log(response.data)
+     			$rootScope.notificationNotViewed = response.data;
+     			$rootScope.notificationNotViewedLength = response.data.length;
+        		 }else{
+	     			console.log(response.data)
+	     			if(response.status==401){
+	     				$location.path("/login");
+	     			}
+        		 }
+     		})
+     		
+     		
+     		AuthenticationService.getNotificationViewed(function(response){
+     			 if(response.success){
+     			console.log(response.data)
+     			$rootScope.notificationViewed = response.data;
+     		}else{
+     			console.log(response.data)
+     			if(response.status==401){
+     				$location.path("/login");
+     			}
+     		}
+     		})
+     	}
+     	     	
+     	$rootScope.updateLength = function(){
+     		$rootScope.notificationNotViewedLength = 0;
+     	}
+     	
+     	$rootScope.updateNotification = function(notificationId){
+     		
+     		AuthenticationService.updateNotification(notificationId,function(response){
+     			 if(response.success){
+     			getNotifications();
+     		}else{
+     			console.log(response.data)
+     			if(response.status==401){
+     				$location.path("/login");
+     			}
+     		}
+     		})
+     	}
+
+         
+
+       }

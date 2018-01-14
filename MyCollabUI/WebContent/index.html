@@ -8,21 +8,22 @@
 <body>
 
  	<header>
-			<nav class="navbar navbar-default navbar-static-top">
+			<nav class="navbar navbar-default navbar-fixed-top">
 			 <div class="container-fluid">
 				<div class="navbar-header">
+				<a class="navbar-brand" href="#home">My Collab</a>
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" >
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><img alt=""  style="max-width:70px; margin-top: -7px;" src=""></a>
+				
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
-			<ul class="nav navbar-nav">
+			<!-- <ul class="nav navbar-nav">
 				<li><a href="#home">Home</a></li>
-			</ul>
+			</ul> -->
 							
 			<ul class="nav navbar-nav navbar-right" data-ng-show="!isAdmin"> 
 				    <li class="dropdown">
@@ -53,7 +54,7 @@
 				           <li><a href="#/friendList"> Friend List </a></li>
 				          </ul>
 			        </li>	
-			        <li><a href="#uploadpicture" data-ng-show="islogged"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{globals.currentUser.userId}}" alt="upload Picture" width="50px" height="50px" class="img-rounded"></a></li>
+			       
 			        <li class="dropdown">
 			          	<a class="dropdown-toggle" data-toggle="dropdown" href="">Profile<span class="caret"></span></a>
 				          <ul class="dropdown-menu">
@@ -61,10 +62,23 @@
 				            <li><a href="#uploadpicture">Upload Profile Picture</a></li>
 				          </ul>
 			        </li>			       
-				   <li><a href="#register"><span data-ng-show="!islogged"> Register </span></a> </li>		
+				    <li><a href="#chat"><span data-ng-show="islogged"> Chat </span></a> </li>
+				    <li><a href="#register"><span data-ng-show="!islogged"> Register </span></a> </li>		
 				   <li><a href="#login"><span data-ng-show="!islogged"> LogIn </span></a></li>
-				   <li><a href="#chat"><span data-ng-show="islogged"> Chat </span></a> </li>
-				   <li><a href=""><span data-ng-show="islogged"> Welcome User {{ globals.currentUser.firstname}} </span></a></li>
+				    <li><a href="#uploadpicture" data-ng-show="islogged"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{globals.currentUser.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle"></a></li>
+				   <li><a href=""><span data-ng-show="islogged"> Welcome {{ globals.currentUser.firstname}} </span></a></li>
+				    <li class="dropdown">
+					    <a href="" class="dropdown-toggle" data-toggle="dropdown" data-ng-show="islogged">
+					   	<span class="glyphicon glyphicon-globe" ng-click="updateLength()">
+					   	<span class="rw-number-notification" ng-if="notificationNotViewedLength>0">{{notificationNotViewedLength}}</span> </span></a>
+					   	
+					   	<ul class="dropdown-menu">
+					           <li ng-repeat="notification in notificationNotViewed"> 
+					           <a href="" ng-click="updateNotification(notification.id)" style="color:red">{{notification.notificationType}} : {{notification.notificationDesc}} is {{notification.approvalStatus}} {{notification.rejectionReason}}</a></li> 
+					           <li ng-repeat="notification1 in notificationViewed"> 
+					           <a href="" style="color:blue">{{notification1.notificationType}} : {{notification1.notificationDesc}} is {{notification1.approvalStatus}} {{notification1.rejectionReason}}</a></li>
+					          </ul>
+				   	</li>
 				   <li><a href="" data-ng-click="logout()" data-ng-controller='LoginController'><span data-ng-show="islogged"> Logout </span></a></li>
 				   
 			</ul>
@@ -72,9 +86,9 @@
 			<ul class="nav navbar-nav navbar-right" data-ng-show="isAdmin"> 
 									
 				   <li><a href="#admin/manageBlog"><span data-ng-show="islogged"> Manage Blog </span></a> </li>		
-				   <li><a href=""><span data-ng-show="islogged"> Manage Forum </span></a></li>
+				   <li><a href="#admin/manageForum"><span data-ng-show="islogged"> Manage Forum </span></a></li>
 				   <li><a href="#admin/addjob"><span data-ng-show="islogged"> Add Job </span></a></li>
-				   <li><a href=""><span data-ng-show="islogged"> Manage Users </span></a></li>
+				    <li><a href="#uploadpicture" data-ng-show="islogged"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{globals.currentUser.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle"></a></li>
 				   <li><a href=""><span data-ng-show="islogged"> Welcome ADMIN  {{ globals.currentUser.firstname}} </span></a></li>
 				   <li><a href="" data-ng-click="logout()" data-ng-controller='LoginController'><span data-ng-show="islogged"> Logout </span></a></li>
 				   
@@ -84,15 +98,43 @@
 	</nav>		
 	</header>
 		
-	<div id="main">
+	<div id="main" class="offset-60">
 		<div data-ng-view>
 		</div>
 	</div>
 	
-	<div class="footer">
+	<!-- <div class="footer">
 		<b>Website Footer</b> 
-	</div>
+	</div> -->
 </body>
+<div class="footer">
+<div class="container">
+<div class="social-links social-icons" style="text-align:right"><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a><a href="https://twitter.com/?request_context=signup" target="_blank"><i class="fa fa-twitter"></i></a><a href="https://www.linkedin.com/" target="_blank"><i class="fa fa-linkedin"></i></a><a href="https://github.com/singhankita17" target="_blank"><i class="fa fa-github"></i></a></div>
+<div class="row">
+</div>
+ <div class="row">
+	<div class="col-md-3 col-sm-4 footer-navigation">		   
+	</div>
+	<div class="col-md-2 col-sm-4 footer-navigation">
+	    <h4><a href="#"><span>Help </span></a></h4>	    
+	</div>
+	
+	<div class="col-md-2 col-sm-4 footer-contacts">
+	    <h4><a href="#"><span>Community </span></a></h4>	 
+	</div>
+	<div class="col-md-2 col-sm-4 footer-contacts">
+	    <h4><a href="#"><span>Developer </span></a></h4>	 
+	</div>	
+</div>
+<hr>
+<div class="row">
+	<div class="footer-navigation"></div>	
+	<div class="footer-navigation"> Term Of Service | Privacy | Content Policy</div>
+	<div class="footer-navigation"></div>   
+</div>
+</div>
+</div>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -107,6 +149,7 @@
 <script type="text/javascript" src="resources/js/angular-cookies.min.js"></script> -->
 <script type="text/javascript" src="resources/js/app.js"></script>
 <script type="text/javascript" src="home/HomeController.js"></script>
+<script type="text/javascript" src="home/HomeService.js"></script>
 <script type="text/javascript" src="register/userService.js"></script>
 <script type="text/javascript" src="register/UserRegistrationController.js"></script>
 <script type="text/javascript" src="login/loginService.js"></script>

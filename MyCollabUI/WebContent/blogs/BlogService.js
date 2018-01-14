@@ -7,7 +7,7 @@ function BlogService($http, $cookieStore, $rootScope){
 	var service = {}
 	
 	service.createBlog = createBlog;
-	service.viewBlogs = viewBlogs;
+	service.viewApprovedBlogs = viewApprovedBlogs;
 	service.viewBlogById = viewBlogById;
 	service.updateNoOfLikes = updateNoOfLikes;
 	service.viewPendingBlogs = viewPendingBlogs;
@@ -44,9 +44,9 @@ function BlogService($http, $cookieStore, $rootScope){
 		})
 	}
 	
-	function viewBlogs(callback){
+	function viewApprovedBlogs(callback){
 		
-		$http.get(BASE_URL+"/viewBlogs").then(function(response){
+		$http.get(BASE_URL+"/viewApprovedBlogs").then(function(response){
 	
 			console.log("response data: "+response.data)
     			if(response!=null){
@@ -117,7 +117,7 @@ function BlogService($http, $cookieStore, $rootScope){
 		})
 	}
 	
-function viewPendingBlogs(callback){
+	function viewPendingBlogs(callback){
 		
 		$http.get(BASE_URL+"/viewPendingBlogs").then(function(response){
 	
@@ -141,7 +141,7 @@ function viewPendingBlogs(callback){
 		})
 	}
 
-function viewAllBlogs(callback){
+	function viewAllBlogs(callback){
 	
 	$http.get(BASE_URL+"/viewAllBlogs").then(function(response){
 
@@ -215,9 +215,10 @@ function approveBlog(blogId,callback){
 	})
 }
 
-function rejectBlog(blogId,callback){
-	
-	$http.get(BASE_URL+"/rejectBlog/"+blogId).then(function(response){
+function rejectBlog(blogId,rejectionReason,callback){
+	if(rejectionReason != undefined){
+	$http.get(BASE_URL+"/rejectBlog/"+blogId+"?rejectionReason="+rejectionReason)
+	.then(function(response){
 
 		console.log("response data: "+response.data)
 			if(response!=null){
@@ -237,6 +238,29 @@ function rejectBlog(blogId,callback){
 		
                 callback(response);
 	})
+	}else{
+		$http.get(BASE_URL+"/rejectBlog/"+blogId)
+	.then(function(response){
+
+		console.log("response data: "+response.data)
+			if(response!=null){
+				 
+				 response = { success: true, data: response.data };
+            } else {
+            	 
+                response = { success: false, message: 'Blog Rejection failed' };
+            }
+                callback(response);
+	},function(response){
+		console.log(response.data)
+			if(response!=null){
+				 
+				 response = { success: false, message: 'Reject Blog status failed' };
+            }
+		
+                callback(response);
+	})
+	}
 }
 
 

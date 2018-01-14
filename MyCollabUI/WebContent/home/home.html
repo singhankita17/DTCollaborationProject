@@ -1,5 +1,73 @@
-<div align="center">
-	<h1>Home Page</h1>
-	
-	{{ message }}
+		<!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div   ng-repeat="blog in blogList | orderBy : '-createdDate'">
+            <a href="#/viewBlogDetail/{{blog.blogId}}">
+              <h2 class="post-title">
+                {{blog.blogTitle}}
+              </h2>
+              <h3 class="post-subtitle">
+               {{blog.blogContent | limitTo:70}}...
+              </h3>
+            </a>
+             <p class="fa fa-comment-o push-left"> {{commentCountList[blog.blogId].length}}
+            </p>
+            <p class="fa fa-heart" style="color:#337ab7"> {{blog.noOfLikes}}
+            </p>
+            <p class="post-meta">Posted by
+              <a href="">{{ blog.userName}}</a>
+              on {{blog.createdDate | date:'MMMM d, y @ h:mma'}}</p>
+               <hr>
+          </div>
+         
+         <!--  <div>
+            <a href="post.html">
+              <h2 class="post-title">
+                I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.
+              </h2>
+            </a>
+            <p class="post-meta">Posted by
+              <a href="#">Start Bootstrap</a>
+              on September 18, 2017</p>
+          </div>
+          <hr>
+          <div class="post-preview">
+            <a href="post.html">
+              <h2 class="post-title">
+                Science has not yet mastered prophecy
+              </h2>
+              <h3 class="post-subtitle">
+                We predict too much for the next year and yet far too little for the next ten.
+              </h3>
+            </a>
+            <p class="post-meta">Posted by
+              <a href="#">Start Bootstrap</a>
+              on August 24, 2017</p>
+          </div>
+          <hr>
+          <div class="post-preview">
+            <a href="post.html">
+              <h2 class="post-title">
+                Failure is not an option
+              </h2>
+              <h3 class="post-subtitle">
+                Many say exploration is part of our destiny, but it’s actually our duty to future generations.
+              </h3>
+            </a>
+            <p class="post-meta">Posted by
+              <a href="#">Start Bootstrap</a>
+              on July 8, 2017</p>
+          </div>
+          <hr> -->
+          <!-- Pager -->
+          <div class="clearfix">
+            <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   <hr/>
+
 </div>

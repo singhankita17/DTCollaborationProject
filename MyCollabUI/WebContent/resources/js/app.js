@@ -41,6 +41,10 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						})
 						.when("/viewForum",{
 							templateUrl: "forums/viewForum.html",
+							controller: "forumController"								
+						})
+						.when("/admin/manageForum",{
+							templateUrl: "forums/manageForum.html",
 							controller: "forumController"
 						})
 						.when("/createForum",{
@@ -82,7 +86,8 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						.when("/chat",{
 							templateUrl: "chats/chat.html",
 							controller: "ChatController"
-						});
+						})
+						.otherwise({templateUrl: "home/home.html",controller: "homeController"});
 						 
 					})
 					.run(function run($rootScope, $location, $routeParams,$cookies, $http) {
@@ -106,7 +111,7 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						    	
 						    	//var	blogid = $routeParams.id;
 						    	
-						        var restrictedPage = $.inArray($location.path(), ['/register','/viewBlogs','','/viewForum']) === -1;
+						        var restrictedPage = $.inArray($location.path(), ['/register','/viewBlogs','','/viewForum','/home']) === -1;
 						    	var adminPage = $.inArray($location.path(), ['/admin/manageBlog','/admin/addjob','/admin/home']) !== -1;
 						        var loggedInUser =  $rootScope.globals.currentUser;
 							    console.log("loggedInUser : ")
@@ -133,6 +138,5 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						        	$location.path('/home');
 						        }
 						    });
-						    
 						    
 					});

@@ -18,7 +18,11 @@ public interface ForumService {
 	
 	public boolean approveForum(Forum forum);
 	
+	public boolean rejectForum(Forum forum);
+	
 	public List<Forum> getAllUsersForum();
 
 	public List<Forum> getAllPendingForums();
+	
+	public List<Forum> getAllForums();
 }

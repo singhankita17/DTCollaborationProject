@@ -25,4 +25,6 @@ public interface ForumDao {
 
 	public List<Forum> getAllPendingForums();
 
+	public List<Forum> getAllForums();
+
 }

@@ -12,15 +12,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.linkin.model.Blog;
 import com.linkin.model.BlogComment;
 import com.linkin.model.Forum;
 import com.linkin.model.ForumComment;
+import com.linkin.model.Notification;
 import com.linkin.model.UsersDetails;
 import com.linkin.service.ForumCommentService;
 import com.linkin.service.ForumService;
+import com.linkin.service.NotificationService;
 import com.linkin.service.UsersService;
 import com.linkin.utility.CollabApplicationError;
 
@@ -35,6 +38,9 @@ public class ForumRESTController {
 	
 	@Autowired
 	ForumCommentService forumCommentService;
+	
+	@Autowired
+	NotificationService notificationService;
 	
 	@RequestMapping(value="/createForum",method=RequestMethod.POST)
 	public ResponseEntity<?> createForum(@RequestBody Forum forum,HttpSession session){
@@ -168,6 +174,29 @@ public class ForumRESTController {
 		    }
 	}
 	
+	@RequestMapping(value="/viewAllUsersForums",method=RequestMethod.GET)
+	public ResponseEntity<?> viewAllUsersForums(HttpSession session){
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		
+		 if(userId==null)
+		    {
+		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+		    else	
+		    {
+				List<Forum> forumList = forumService.getAllForums();
+				if(forumList!=null){
+						return new ResponseEntity<List<Forum>>(forumList, HttpStatus.OK);
+				}
+				else
+				{
+						return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(13,"Retrieving Forum details failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+		    }
+	}
+	
+	
 	@RequestMapping(value="/getForumComment/{forumId}",method=RequestMethod.GET)
 	public ResponseEntity<?> getBlogComment(@PathVariable("forumId") int forumId){
 		
@@ -210,4 +239,89 @@ public class ForumRESTController {
 		  
 		}
 	}
+	
+	@RequestMapping(value="/approveForum/{forumId}",method=RequestMethod.GET)
+	public ResponseEntity<?> approveForum(@PathVariable("forumId") int forumId,HttpSession session){
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		 if(userId==null)
+		    {
+		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+		    else	
+		    {
+					Forum forum = forumService.getForum(forumId);
+					if(forum!=null){				
+						if(forumService.approveForum(forum)){
+							   forum = forumService.getForum(forumId);
+							    
+							    //Add entry in Notification for the blog 
+							    Notification notification = new Notification();
+							    notification.setNotificationType("FORUM");
+								notification.setNotificationReferenceId(forum.getForumId());
+								notification.setUserId(forum.getUserId());
+								notification.setApprovalStatus("APPROVED");
+								notification.setViewed(false);
+								notificationService.addNotification(notification);
+								return new ResponseEntity<Forum>(forum, HttpStatus.OK);
+						}
+						else
+						{
+								return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(14,"Error occured during approving Blog details"), HttpStatus.INTERNAL_SERVER_ERROR);
+						}
+					}
+					else
+					{
+							return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(15,"No Blogs found for given Id"), HttpStatus.NOT_FOUND);
+					}
+		    }
+	}
+	
+	@RequestMapping(value="/rejectForum/{forumId}",method=RequestMethod.GET)
+	public ResponseEntity<?> rejectForum(@PathVariable("forumId") int forumId,@RequestParam (required=false) String rejectionReason,HttpSession session){
+					
+		Integer userId = (Integer) session.getAttribute("userId");
+		 if(userId==null)
+		    {
+		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+		    else	
+		    {
+					Forum forumObj = forumService.getForum(forumId);
+					
+					if(forumObj!=null){
+						
+						if(forumService.rejectForum(forumObj)){
+							forumObj = forumService.getForum(forumId);
+								
+								Notification notification = new Notification();
+								notification.setNotificationType("FORUM");
+								notification.setNotificationReferenceId(forumObj.getForumId());
+								notification.setUserId(forumObj.getUserId());
+								notification.setApprovalStatus("REJECTED");
+								notification.setViewed(false);
+								if(rejectionReason==null){
+									notification.setRejectionReason("Reason not mentioned by Admin");
+								}
+								else
+								{
+									notification.setRejectionReason(rejectionReason);
+								}
+								
+								notificationService.addNotification(notification);
+								
+								return new ResponseEntity<Forum>(forumObj, HttpStatus.OK);
+						}
+						else
+						{
+								return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(14,"Error occured during rejecting Blog details"), HttpStatus.INTERNAL_SERVER_ERROR);
+						}
+					}
+					else
+					{
+							return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(15,"No Blogs found for given Id"), HttpStatus.NOT_FOUND);
+					}
+		    }
+	}
+	
 }

@@ -6,21 +6,27 @@
 			    	<h3 class="panel-title">Please sign in</h3>
 			 	</div>
 			  	<div class="panel-body">
+			  	 <form name="loginform">
                     <fieldset>
+                   
                      <p><font color="red">{{message}}</font></p>
                     <br>
                    
 			    	  	<div class="form-group">
-			    		    <input class="form-control" placeholder="UserName" name="username"  data-ng-model="user.userName" type="text" >
+			    		    <input class="form-control" placeholder="UserName" name="username"  data-ng-model="user.userName" type="text" required>
+			    		    <span style="color:red" ng-show="loginform.username.$dirty && loginform.username.$invalid">
+  							<span ng-show="loginform.username.$error.required">Username is required.</span></span>
 			    		</div>
 			    		<div class="form-group">
-			    			<input class="form-control" placeholder="Password" type="password" data-ng-model="user.password"  name="password" maxlength="15"  autocomplete="off">
+			    			<input class="form-control" placeholder="Password" type="password" data-ng-model="user.password"  name="password" maxlength="15"  autocomplete="off" required>
+			    			<span style="color:red" ng-show="loginform.password.$dirty && loginform.password.$invalid">
+  							<span ng-show="loginform.password.$error.required">Password is required.</span></span>
 			    		</div>
 			    		
-			    		<button class="btn btn-lg btn-success btn-block" data-ng-click="login()">Login</button>
+			    		<button class="btn btn-primary btn-lg center-block" style="width:50%;"data-ng-click="login()" ng-disabled=!loginform.$valid>Login</button>
 			    	
 			    	</fieldset>
-			     	
+			     	</form>
 			    </div>
 			</div>
 		</div>

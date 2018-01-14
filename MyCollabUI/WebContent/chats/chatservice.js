@@ -17,7 +17,7 @@ app.directive('ngFocus',function(){
 });
 
 app.factory('socket',function($rootScope){
-	alert('app factory');
+	//alert('app factory');
 	var socket = new SockJS('/MyCollab/portfolio');
 	var stompClient = Stomp.over(socket);
 	

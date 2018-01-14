@@ -1,24 +1,28 @@
 <div class="row vertical-offset-20">
 		<div class="col-md-8 col-md-offset-2">
     		<div class="panel panel-default">
-			  	<div class="panel-heading">
+			  	<div class="panel-heading forum-heading">
 		  
-		  			<h3 class="panel-title"> View All Forums </h3>
+		  			<h3 class="panel-title panel-title"> View All Forums </h3>
 		        </div>
-			<div class="panel-body">
-           <table class="table-bordered">
-           	   <thead>
+		   <div class="panel-body forum-body">
+           <table class="forum-table">
+           	   <thead class="forum-header">
            	   		<tr>
-           	   			<th>  Topics  </th>
-           	   			<th>  No. Of Comments</th>
-           	   			<th>  Posted On </th>
+           	   			<th class="forum-icon"> &nbsp; </th>
+           	   			<th class="forum-topics">Topics  </th>
+           	   			<th class="forum-posts">  No. Of Posts</th>
+           	   			<th class="forum-date">  Discussion started on </th>
            	   		</tr>
            	   </thead>
            	   <tbody>
            	   		  <tr data-ng-repeat="forum in forumList">
-           	   		  <td><a href="#/viewForumDetail/{{forum.forumId}}">{{forum.forumName}}</a></td>
-           	   		  <td></td>
-           	   		  <td>{{forum.createdDate | date: "medium"}}</td>           	   		 
+           	   		  <td class="forum-list-icon"><i class="fa fa-file-text" aria-hidden="true" style="font-size:24px;color:#ccc"></i></td>
+           	   		  <td colspan="1"><div class="forum-name"><a href="#/viewForumDetail/{{forum.forumId}}">{{forum.forumName}}</a></div>
+           	   		  <div  class="forum-description">{{forum.forumContent | limitTo:30}}..</div>
+           	   		  </td>
+           	   		  <td><div class="forum-no-posts">6</div></td>
+           	   		  <td class="forum-start-date">{{forum.createdDate | date: "medium"}}</td>           	   		 
            	   		  </tr>
            	   </tbody>
            </table>    

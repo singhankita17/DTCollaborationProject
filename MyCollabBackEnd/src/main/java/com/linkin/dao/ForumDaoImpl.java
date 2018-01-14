@@ -131,4 +131,15 @@ public class ForumDaoImpl implements ForumDao {
 		}
 	}
 
+	@Transactional
+	public List<Forum> getAllForums() {
+		Session session = sessionFactory.openSession();
+		
+		List<Forum> forumList= session.createQuery("from Forum where status != 'PENDING'",Forum.class).list();
+		
+		session.close();
+		
+		return forumList;
+	}
+
 }

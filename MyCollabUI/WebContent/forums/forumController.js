@@ -65,9 +65,46 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 		 retrieveForumComment(forumId)
 	}
 	
+	function viewAllUsersForums(){
+		
+		 if($rootScope.globals.currentUser){
+			 
+			 ForumService.viewAllUsersForums()
+			 .then(function(response){
+					
+			 		$scope.forumAllList = response.data;
+			 		
+			 	},function(response){
+			 		
+			 		console.log( response.data)
+			 		
+			 	})
+			 }
+	}
+	 
+	 
+	 function viewAllPendingForums(){
+			
+		 if($rootScope.globals.currentUser){
+			 
+			 ForumService.viewAllPendingForums()
+			 .then(function(response){
+					
+			 		$scope.forumPendingList = response.data;
+			 		
+			 	},function(response){
+			 		
+			 		console.log( response.data)
+			 		
+			 	})
+			 }
+	}
+	
 	viewAllForums();
 	viewForumDetail(forumId);
 	viewUserForums();
+	viewAllUsersForums();
+	viewAllPendingForums();
 	
 	$scope.addForumComment = function(comment,forumId){
 		
@@ -142,7 +179,7 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
  
  	})
  
-}
+	}
 	
 	
 
@@ -158,6 +195,34 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 		 		console.log( response.data)
 		 })
 		 
+	 }
+	 
+	 $scope.approveOrRejectForum = function(forumId,status,rejectionReason){
+		 
+		 if(status === 'APPROVED'){
+			 ForumService.approveForum(forumId)
+			 .then(function(response){
+			 
+		 		console.log(response.data);
+		 		
+		 		viewAllPendingForums();
+		 		viewAllUsersForums();
+				 },function(response){	
+				 		console.log( response.data)
+				 })
+		 }else if(status === 'REJECTED'){
+			 ForumService.rejectForum(forumId,rejectionReason)
+			 .then(function(response){
+			 
+		 		console.log(response.data);
+		 		
+		 		viewAllPendingForums();
+		 		viewAllUsersForums();
+				 },function(response){	
+				 		console.log( response.data)
+				 })
+			 
+		 }
 	 }
 	 
 }

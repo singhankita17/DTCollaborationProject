@@ -14,7 +14,7 @@ app.controller('ChatController',['$rootScope','$scope','socket','userService',fu
 		$scope.userId = $rootScope.globals.currentUser.userId;
 		$scope.stompClient.subscribe("/topic/join",function(message){
 			user = JSON.parse(message.body);
-			alert(user+" joined chat")
+			//alert(user+" joined chat")
 			if (user!=$scope.userId && $.inArray(user,$scope.users) == -1){
 				$scope.addUser(user);
 				$scope.latestUser = user;
@@ -32,7 +32,7 @@ app.controller('ChatController',['$rootScope','$scope','socket','userService',fu
 	});
 	
 	$scope.sendMessage = function(chat){
-		alert("Chat.to = "+chat.to);
+		//alert("Chat.to = "+chat.to);
 		if(chat.to === undefined || chat.to === '' ){
 			alert("Please select the Send To Field");
 			$scope.chat.message = '';

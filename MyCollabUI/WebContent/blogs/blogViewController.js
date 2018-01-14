@@ -37,17 +37,19 @@ function blogViewController($scope,$location,BlogService,BlogCommentService,$roo
 	$scope.addComment = function(comment,blogId){
 		
 		comment.blogId = blogId;
-		 $scope.comment.userId = $rootScope.globals.currentUser.userObj.c_user_id;
-		 $scope.comment.username = $rootScope.globals.currentUser.userObj.username;
+		 $scope.comment.userId = $rootScope.globals.currentUser.userId;
+		 $scope.comment.username = $rootScope.globals.currentUser.username;
 		BlogCommentService.addComment(comment)
 		 .then(function(response){
 			 console.log(response.data)
 			 $scope.comment = '';
+			 retrieveComment(blogId);
 		 },function(response){
-			 console.log(response.data)
+			 console.log(response.data);
+			 retrieveComment(blogId);
 		 })
 		 
-		 retrieveComment(blogId)
+		
 		 
 	}
 	
@@ -66,7 +68,7 @@ function blogViewController($scope,$location,BlogService,BlogCommentService,$roo
 	
 	
 	$scope.updateLikes = function(blog){
-		
+		console.log(blog);
 		console.log($scope.clickCount)
 		if($rootScope.clickCount == 0){
 			blog.noOfLikes = blog.noOfLikes + 1;
@@ -92,5 +94,23 @@ function blogViewController($scope,$location,BlogService,BlogCommentService,$roo
 			 		console.log( response.data)	
 			 	}
 		})
+	}
+	
+	
+	$scope.accessCommentBlock = function(){
+		$scope.showCommentBlock = false;
+		console.log( $rootScope.globals.currentUser);
+		
+		if($rootScope.globals.currentUser != undefined){
+			$scope.showCommentBlock = true;
+			
+		}else{
+			
+			$scope.showCommentBlock = false;
+			console.log("redirect to login");
+			$location.path("/login");
+			
+		}
+		
 	}
 }

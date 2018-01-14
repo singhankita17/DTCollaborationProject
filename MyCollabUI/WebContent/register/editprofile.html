@@ -9,60 +9,85 @@
 			<div class="panel-body">
 				<div class="panel-body">
 			
-			<!-- <form > -->
+			 <form name="editUserDetailForm" novalidate>
 			 <p><font color="red">{{error.errorMessage}}</font></p>
 			<fieldset>
 				  <div class="form-group">
 				  	<label for="firstName">First Name: </label>
 				    <input class="form-control"  type="text"    name="firstName" placeholder="Enter FirstName" data-ng-model="user.firstName" required="required"/>
+				    <span style="color:red" data-ng-show="editUserDetailForm.firstName.$dirty && editUserDetailForm.firstName.$invalid">
+  					  <span data-ng-show="editUserDetailForm.firstName.$error.required">Firstname is required.</span>
+  					  </span>
 				   </div>
 		    
 					   <div class="form-group">
 					    <label for="lastName">Last Name: </label>
 					    <input class="form-control"  type="text"  name="lastName" placeholder="Enter LastName" data-ng-model="user.lastName"  required="required"/>
+					    <span style="color:red" data-ng-show="editUserDetailForm.lastName.$dirty && editUserDetailForm.lastName.$invalid">
+  					  	<span data-ng-show="editUserDetailForm.lastName.$error.required">Lastname is required.</span>
+  					  </span>
 					  	</div>
 					
 					 <div class="form-group">
 					    <label for="lastName">User Name: </label>
 					    <input class="form-control"  type="text"  name="userName" placeholder="Enter UserName" data-ng-model="user.userName"  required="required"/>
+					     <span style="color:red" data-ng-show="editUserDetailForm.userName.$dirty && editUserDetailForm.userName.$invalid">
+  					  		<span data-ng-show="editUserDetailForm.userName.$error.required">Username is required.</span>
+  					 	 </span>
 					</div>
 		
 					<div class="form-group">		 
 					     <label for="contact">Mobile Number : </label>
 					     <input class="form-control"  type="text"  name="contact" placeholder="Enter Mobile Number" data-ng-model="user.contact"  maxlength="10" required="required"/>
+					     <span style="color:red" data-ng-show="editUserDetailForm.contact.$dirty && editUserDetailForm.contact.$invalid">
+  					  		<span data-ng-show="editUserDetailForm.contact.$error.required">Mobile Number is required.</span>
+  					  		<span data-ng-show="editUserDetailForm.contact.$error.pattern">Mobile Number is Invalid.</span>
+  					  	 </span>
 					 </div>
 		    
 					     <div class="form-group">
 					    <label for="email">Email: </label>
 					    <input type="email" class="form-control" name="email"  placeholder="Enter Email" data-ng-model="user.email"  required="required"/>
+					    <span style="color:red" data-ng-show="editUserDetailForm.email.$dirty && editUserDetailForm.email.$invalid">
+  								<span data-ng-show="editUserDetailForm.email.$error.required">Email is required.</span>
+  								<span data-ng-show="editUserDetailForm.email.$error.email">Invalid email address.</span>
+  								<span data-ng-show="!editUserDetailForm.email.$error.email && editUserDetailForm.email.$error.pattern">Email format must be correct(e.g. abc@gmail.com).</span>
+  						</span>
 					    </div>
 					    
 					    <div class="form-group">
 					  <label for="role">Select Role: </label><br/>
-						<input type="radio" name="role" data-ng-model="user.role" value="STUDENT" > Student
-						<input type="radio" name="role" data-ng-model="user.role"  value="ALUMNI" > Alumni
-						<input type="radio" name="role" data-ng-model="user.role"  value="EMPLOYEE" > Employee
-					
-				</div>
+						<div ng-init="user.role='STUDENT'">
+						<input type="radio" name="role" data-ng-model="user.role" value="STUDENT" class="col-md-4"> Student<br/>
+						<input type="radio" name="role" data-ng-model="user.role"  value="ALUMNI" class="col-md-4"> Alumni<br/>
+						<input type="radio" name="role" data-ng-model="user.role"  value="EMPLOYEE" class="col-md-4"> Employee
+						</div>
+					</div>
 					    
 					    <div class="form-group">
 					    <label for="password">Password: </label>
 					    <input type="password" class="form-control"  placeholder="Enter Password" data-ng-model="user.password"  required="required"/>
+					     <span style="color:red" data-ng-show="editUserDetailForm.password.$dirty && editUserDetailForm.password.$invalid">
+	  					  <span data-ng-show="editUserDetailForm.password.$error.required">Password is required.</span>
+	  					  </span>
 					    </div>		
 					    	
 						<div class="form-group">
 					    <label for="passwordRepeat">Reenter Password: </label>
 					    <input type="password" class="form-control"  placeholder="Enter Repeat Password"  name="passwordRepeat" required/>
+					    <span style="color:red" data-ng-show="editUserDetailForm.passwordRepeat.$dirty && editUserDetailForm.passwordRepeat.$invalid">
+	  					  <span data-ng-show="editUserDetailForm.passwordRepeat.$error.required">Confirm Password is required.</span>
+	  					  </span>	
 					    </div>
 					  
 					   	<div class="form-group">
 							    <div class="clearfix">
-							      <button type="submit" class="btn btn-success" data-ng-click="edituserprofile()">Update Profile</button>
+							      <button type="submit" class="btn btn-success" data-ng-click="edituserprofile()" ng-disabled=!editUserDetailForm.$valid>Update Profile</button>
 							      <button type="reset"  class="btn btn-danger">Cancel</button>		     
 							 </div>
 			    		</div>
 			    	</fieldset>
-			 <!--    </form> -->
+			    </form>
 			   </div>
 		</div>
 		</div>

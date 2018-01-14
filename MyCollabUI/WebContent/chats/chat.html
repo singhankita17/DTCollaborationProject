@@ -7,13 +7,13 @@
    </header>
   <section class="main container">
      <div class="row">
-    	<div class="col-md-12">
+    	<div class="col-md-6">
 	   		<p class="lead">Type in the box below to start a chat!</p>	   		
 	   	</div> 
      
      </div>
      <div class="row">
-   		<div class="col-md-12">
+   		<div class="col-md-6">
    		<form role="form" id="chatForm" ng-submit="sendMessage(chat)">
    		  <div class="alert alert-info notification" id="joinedChat" ng-if="latestUser" ng-animate="{enter: 'fade', leave: 'fade'}">
             {{userNames[latestUser]}} has joined the chat!
