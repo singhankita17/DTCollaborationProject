@@ -8,7 +8,6 @@ app.factory('userService',function($http,$rootScope){
 			retrieveUserByUserName:retrieveUserByUserName,
 			retrieveUserByUserId:retrieveUserByUserId,
 			edituserprofile:edituserprofile,
-			getUserNames: getUserNames,
 			getOnlineUserList: getOnlineUserList
 	};
 	
@@ -51,11 +50,6 @@ app.factory('userService',function($http,$rootScope){
 		console.log("Fetching User Image")
 		
 		return $http.get(BASE_URL+"/getimage/"+userId)
-	}
-	
-	function getUserNames(userList){
-		
-		return $http.post(BASE_URL+"/getNameOfUsers",userList)
 	}
 	
 	function getOnlineUserList(){

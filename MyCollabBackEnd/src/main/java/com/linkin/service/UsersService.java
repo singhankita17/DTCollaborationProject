@@ -29,8 +29,8 @@ public interface UsersService {
 	
 	public boolean checkIfAlreadyLoggedInUser(UsersDetails user);
 	
-	public Map<Integer,String> getUsersFullNames(List<Integer> userList);
-	
 	public List<Integer> getOnlineUserList();
+	
+	public Map<Integer,String> getAllUsersFullNames();
 	
 }

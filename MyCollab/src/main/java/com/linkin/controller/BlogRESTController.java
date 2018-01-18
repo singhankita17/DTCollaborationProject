@@ -171,6 +171,7 @@ public class BlogRESTController {
 							    Notification notification = new Notification();
 							    notification.setNotificationType("BLOG");
 								notification.setNotificationReferenceId(blogObj.getBlogId());
+								notification.setNotificationDesc(blogObj.getBlogTitle());
 								notification.setUserId(blogObj.getUserId());
 								notification.setApprovalStatus("APPROVED");
 								notification.setViewed(false);
@@ -290,6 +291,7 @@ public class BlogRESTController {
 	public ResponseEntity<?> updateBlog(@RequestBody Blog blog,HttpSession session){
 		
 		Integer userId = (Integer) session.getAttribute("userId");
+		Notification notification;
 		 if(userId==null)
 		    {
 		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
@@ -302,9 +304,23 @@ public class BlogRESTController {
 					Blog tempBlog = blogService.getBlog(blog.getBlogId());
 					tempBlog.setBlogTitle(blog.getBlogTitle());
 					tempBlog.setBlogContent(blog.getBlogContent());
+					//if(tempBlog.getStatus().equals("REJECTED")){
+						tempBlog.setStatus("PENDING");
+						notification = notificationService.getNotification("BLOG", blog.getBlogId());
+						
+						if(notification != null){
+							System.out.println("notification = "+notification.toString());
+							if(notificationService.deleteNotification(notification)){
+								System.out.println("Notification deleted successfully");
+							}
+						}
+					//}
 					if(blogService.updateBlog(tempBlog)){
-						return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+						
+						return new ResponseEntity<Blog>(tempBlog, HttpStatus.OK);
+						
 					}else{
+						
 						return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(21,"Blog Updation failed"), HttpStatus.INTERNAL_SERVER_ERROR);
 					}
 				}

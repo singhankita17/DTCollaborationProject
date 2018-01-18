@@ -46,4 +46,16 @@ public class FriendServiceImpl implements FriendService {
 		return friendDao.listOfFriends(userId);
 	}
 
+	public List<Friend> deleteFriend(Friend friend, int userId) {
+		
+		friendDao.deleteFriend(friend);
+		List<Friend> friendList = friendDao.listOfFriends(userId);
+		return friendList;
+	}
+
+	public Friend getFriendById(int friendId) {
+		
+		return friendDao.getFriendById(friendId);
+	}
+
 }

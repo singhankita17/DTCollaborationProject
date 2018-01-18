@@ -42,8 +42,6 @@ app.controller('LoginController', LoginController);
                 	 
                  	AuthenticationService.ClearCredentials();
                      console.log("success"+response.data)
-                     $rootScope.islogged=false;
-                     $rootScope.isAdmin = false;
                      $location.path('/login');
                      
                  } else {
@@ -108,7 +106,5 @@ app.controller('LoginController', LoginController);
      		}
      		})
      	}
-
-         
-
+     	
        }

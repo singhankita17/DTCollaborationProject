@@ -6,12 +6,13 @@
             <h3><a href="#/viewBlogDetail/{{blog.blogId}}">{{blog.blogTitle | limitTo:40}}</a></h3>
             <p>{{blog.blogContent | limitTo:70}}...</p>
             
-            <p class="fa fa-comment push-left"> 
+            <p class="fa fa-comment-o pull-right" style="color:#337ab7"> {{commentCountList[blog.blogId].length}}
             </p>
-            <p class="fa fa-heart pull-right"> {{blog.noOfLikes}}
+            <p class="fa fa-heart" style="color:#337ab7"> {{blog.noOfLikes}}
             </p>
           </li>
           </ul>     
         </div>
       </div>
     </div>
+    

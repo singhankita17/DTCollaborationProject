@@ -10,10 +10,11 @@
 				<tbody>
 			
 				<tr data-ng-repeat="friend in friendList">
-					<td data-ng-hide="globals.currentUser.userId==friend.fromId">{{friendNames[friend.fromId]}}</td>
-					<td data-ng-hide="globals.currentUser.userId==friend.fromId"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{friend.fromId}}" height="50" width="50" alt="User Image Not Found"  class="img-rounded"></td>
-					<td data-ng-hide="globals.currentUser.userId==friend.toId">{{friendNames[friend.toId]}}</td>
-					<td data-ng-hide="globals.currentUser.userId==friend.toId"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{friend.toId}}" height="50" width="50" alt="User Image Not Found"  class="img-rounded"></td>
+					<td data-ng-hide="globals.currentUser.userId==friend.fromId"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{friend.fromId}}" height="60" width="60" alt="User Image Not Found"  class="img-circle"></td>
+					<td data-ng-hide="globals.currentUser.userId==friend.fromId">{{userNames[friend.fromId]}}</td>
+					<td data-ng-hide="globals.currentUser.userId==friend.toId"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{friend.toId}}" height="60" width="60" alt="User Image Not Found"  class="img-circle"></td>
+					<td data-ng-hide="globals.currentUser.userId==friend.toId">{{userNames[friend.toId]}}</td>	
+					<td><button data-ng-click="deleteFriend(friend)">UNFRIEND</button></td>
 				</tr>
 				
 				 

@@ -8,15 +8,18 @@
                 {{blog.blogTitle}}
               </h2>
               <h3 class="post-subtitle">
-               {{blog.blogContent | limitTo:70}}...
+               {{blog.blogContent | limitTo:150}}...
               </h3>
             </a>
-             <p class="fa fa-comment-o push-left"> {{commentCountList[blog.blogId].length}}
+            <p class="fa fa-heart push-left" style="color:#337ab7"> {{blog.noOfLikes}}
             </p>
-            <p class="fa fa-heart" style="color:#337ab7"> {{blog.noOfLikes}}
+             <p class="fa fa-comment-o" style="color:#337ab7"> {{commentCountList[blog.blogId].length}}
             </p>
-            <p class="post-meta">Posted by
-              <a href="">{{ blog.userName}}</a>
+            
+            <p class="post-meta">
+            <img data-ng-src="http://localhost:8181/MyCollab/getimage/{{blog.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle">
+            Posted by
+              <a href="">{{userNames[blog.userId]}}</a>
               on {{blog.createdDate | date:'MMMM d, y @ h:mma'}}</p>
                <hr>
           </div>

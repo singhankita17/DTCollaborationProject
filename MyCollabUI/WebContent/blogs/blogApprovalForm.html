@@ -1,0 +1,29 @@
+<div class="row vertical-offset-20">
+<div class="container">
+<h2>BlogPost Approval Form</h2>
+<div class="row">
+<div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<b>Blog Title : {{blogPost.blogTitle}}</b><br>
+</div>
+<div class="panel-body">
+{{blogPost.blogContent}}<br><br>
+<div class="pull-right"> <cite>Posted by <strong>{{userNames[blogPost.userId]}}</strong> on {{blogPost.createdDate | date : "medium"}}</cite></div>
+</div>
+</div>
+</div>
+</div>
+<form>
+<input type="radio" data-ng-model="blogPost.status" value="APPROVED" ng-click="showRejectionTxt(false)" class="col-md-2">Approve<br>
+<input type="radio" data-ng-model="blogPost.status" value="REJECTED" ng-click="showRejectionTxt(true)" class="col-md-2">Reject
+<br><br/>
+<div data-ng-show="isRejected">
+Enter Rejection Reason
+<input type="text" data-ng-model="rejectionReason"><br>
+</div>
+<button class="btn btn-primary center-block" data-ng-click="approveOrRejectBlog(blogPost.blogId,blogPost.status,rejectionReason)" ng-controller="blogController">Submit</button>
+</form>
+{{error.errorMessage}}
+</div>
+</div>

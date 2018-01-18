@@ -122,28 +122,6 @@ public class UsersDaoImpl implements UsersDao{
 				return false;
 	}
 
-	@Transactional
-	public Map<Integer, String> getUsersFullNames(List<Integer> friendList) {
-		
-		String queryString = "select * from c_users where c_user_id IN (";
-		
-		for(Integer userId:friendList){
-			
-			queryString += userId+",";
-		}
-		queryString = queryString.substring(0, queryString.length()-1);
-		queryString += ")";
-		System.out.println("Query ==="+queryString);
-		Session session = sessionFactory.getCurrentSession();
-				
-		List<UsersDetails> users =  session.createSQLQuery(queryString).addEntity(UsersDetails.class).list();
-		Map<Integer,String> userNames = new HashMap<Integer, String>();
-		
-		for(UsersDetails user:users){
-			userNames.put(user.getC_user_id(), user.getFirstName()+" "+user.getLastName());
-		}
-		return userNames;
-	}
 
 	@Transactional
 	public List<Integer> getOnlineUserList() {
@@ -167,6 +145,22 @@ public class UsersDaoImpl implements UsersDao{
 				return true;
 		else
 				return false;
+	}
+
+	@Transactional
+	public Map<Integer, String> getAllUsersFullNames() {
+
+		String queryString = "from UsersDetails";
+		
+		Session session = sessionFactory.getCurrentSession();
+				
+		List<UsersDetails> users =  session.createQuery(queryString, UsersDetails.class).list();
+		Map<Integer,String> userNames = new HashMap<Integer, String>();
+		
+		for(UsersDetails user:users){
+			userNames.put(user.getC_user_id(), user.getFirstName()+" "+user.getLastName());
+		}
+		return userNames;
 	}
 
 	

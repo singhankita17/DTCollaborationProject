@@ -13,6 +13,7 @@ function blogViewController($scope,$location,BlogService,BlogCommentService,$roo
 	console.log($routeParams.id)
 	var blogId = $routeParams.id;
 	$rootScope.clickCount = 0;
+	$scope.isRejected=false;
 	function viewBlogDetails(blogId){
 	   
 	   BlogService.viewBlogById(blogId,function(response){
@@ -25,14 +26,45 @@ function blogViewController($scope,$location,BlogService,BlogCommentService,$roo
 		 		
 		 		$scope.error = response.data;
 		 		console.log( response.data)	
+		 		if(response.status==401){
+     				$location.path("/login");
+     			}
 		 	}
 		 })
 		 
 		 retrieveComment(blogId)
 	}
 	
+	function viewPendingBlogDetails(blogId){
+		   
+		   BlogService.viewBlogById(blogId,function(response){
+			   console.log("view blog by Id")
+				 if (response.success) {
+					 console.log( response.data)
+			 		$scope.blogPost = response.data;
+			 		
+			 	}else{
+			 		
+			 		$scope.error = response.data;
+			 		console.log( response.data)	
+			 		if(response.status==401){
+	     				$location.path("/login");
+	     			}
+			 	}
+			 })
+			 
+			 retrieveComment(blogId)
+	}
+	
+	$scope.showRejectionTxt=function(val){
+			$scope.isRejected=val;
+	}
 	
 	viewBlogDetails(blogId);
+	
+	if($rootScope.globals.currentUser.role === 'ADMIN'){
+		viewPendingBlogDetails(blogId);
+	}
 	
 	$scope.addComment = function(comment,blogId){
 		
@@ -46,6 +78,9 @@ function blogViewController($scope,$location,BlogService,BlogCommentService,$roo
 			 retrieveComment(blogId);
 		 },function(response){
 			 console.log(response.data);
+			 if(response.status==401){
+  				$location.path("/login");
+  			}
 			 retrieveComment(blogId);
 		 })
 		 
@@ -63,6 +98,9 @@ function blogViewController($scope,$location,BlogService,BlogCommentService,$roo
 		 },function(response){
 			 
 			 console.log(response.data)
+			 if(response.status==401){
+  				$location.path("/login");
+  			}
 		 })
 	}
 	
@@ -92,6 +130,9 @@ function blogViewController($scope,$location,BlogService,BlogCommentService,$roo
 			 		
 			 		$scope.error = response.data;
 			 		console.log( response.data)	
+			 		if(response.status==401){
+	     				$location.path("/login");
+	     			}
 			 	}
 		})
 	}

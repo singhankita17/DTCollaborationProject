@@ -18,7 +18,7 @@ app.controller('ChatController',['$rootScope','$scope','socket','userService',fu
 			if (user!=$scope.userId && $.inArray(user,$scope.users) == -1){
 				$scope.addUser(user);
 				$scope.latestUser = user;
-				getUserNames($scope.users)
+				
 				$scope.$apply();
 				$("#joinedChat").fadeIn(100).delay(2000).fadeOut(200);
 			}
@@ -26,7 +26,7 @@ app.controller('ChatController',['$rootScope','$scope','socket','userService',fu
 		
 		$scope.stompClient.subscribe("/app/join/"+$scope.userId,function(message){
 			$scope.users = JSON.parse(message.body);
-			getUserNames( message.body);
+			
 			$scope.$apply();
 		})
 	});
@@ -103,32 +103,15 @@ app.controller('ChatController',['$rootScope','$scope','socket','userService',fu
 	    	.then(function(response){
 	    		console.log("online user list "+response.data);
 	    		$scope.users = response.data;
-	    		getUserNames(response.data)
+	    		
 	    	},function(response){
 	    		console.log("inside failure");
 				console.log(response.data);
-				
+				if(response.status==401){
+     				$location.path("/login");
+     			}
 	    	})
 	    	
 	    }
-	 
-	    
-	    function getUserNames(userList){
-	    	
-			console.log("inside list of user Names")
-			console.log(userList);
-			
-			userService.getUserNames(userList)
-			.then(function(response){	
-				
-				console.log("inside success");
-				console.log(response.data);
-				$scope.userNames = response.data;	
-			},function(response){
-			
-				console.log("inside failure");
-				console.log(response.data);
-			});
-		}
-	
+	 	
 }])

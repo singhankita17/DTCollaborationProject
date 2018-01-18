@@ -18,4 +18,8 @@ public interface FriendService {
 	  public boolean rejectFriendRequest(int fromId,int toId);
 	  
 	  public List<Friend> listOfFriends(int userId);
+	  
+	  public List<Friend> deleteFriend(Friend friend,int userId);
+	  
+	  public Friend getFriendById(int friendId);
 }

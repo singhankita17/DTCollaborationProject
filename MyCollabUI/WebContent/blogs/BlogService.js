@@ -30,7 +30,7 @@ function BlogService($http, $cookieStore, $rootScope){
     				 response = { success: true, data: response.data };
                 } else {
                 	 
-                    response = { success: false, message: 'Blog creation failed' };
+                    response = { success: false, message: 'Blog creation failed', status: response.status };
                 }
                     callback(response);
 		},function(response){
@@ -54,7 +54,7 @@ function BlogService($http, $cookieStore, $rootScope){
     				 response = { success: true, data: response.data };
                 } else {
                 	 
-                    response = { success: false, message: 'Blog Search failed' };
+                    response = { success: false, message: 'Blog Search failed', status: response.status };
                 }
                     callback(response);
 		},function(response){
@@ -79,14 +79,14 @@ function BlogService($http, $cookieStore, $rootScope){
     				 response = { success: true, data: response.data };
                 } else {
                 	 
-                    response = { success: false, message: 'Blog Search failed' };
+                    response = { success: false, message: 'Blog Search failed',status: response.status };
                 }
                     callback(response);
 		},function(response){
 			console.log(response.data)
     			if(response!=null){
     				 
-    				 response = { success: false, message: 'Fetching blog details failed' };
+    				 response = { success: false, message: 'Fetching blog details failed',status: response.status };
                 }
 			
                     callback(response);
@@ -103,14 +103,14 @@ function BlogService($http, $cookieStore, $rootScope){
     				 response = { success: true, data: response.data };
                 } else {
                 	 
-                    response = { success: false, message: 'Likes updation failed' };
+                    response = { success: false, message: 'Likes updation failed',status: response.status };
                 }
                     callback(response);
 		},function(response){
 			console.log(response.data)
     			if(response!=null){
     				 
-    				 response = { success: false, message: 'Likes updation failed' };
+    				 response = { success: false, message: 'Likes updation failed',status: response.status };
                 }
 			
                     callback(response);
@@ -127,14 +127,14 @@ function BlogService($http, $cookieStore, $rootScope){
     				 response = { success: true, data: response.data };
                 } else {
                 	 
-                    response = { success: false, message: 'Blog Search failed' };
+                    response = { success: false, message: 'Blog Search failed',status: response.status };
                 }
                     callback(response);
 		},function(response){
 			console.log(response.data)
     			if(response!=null){
     				 
-    				 response = { success: false, message: 'Fetching blog details failed' };
+    				 response = { success: false, message: 'Fetching blog details failed',status: response.status };
                 }
 			
                     callback(response);
@@ -152,14 +152,14 @@ function BlogService($http, $cookieStore, $rootScope){
 				 response = { success: true, data: response.data };
             } else {
             	 
-                response = { success: false, message: 'Blog Search failed' };
+                response = { success: false, message: 'Blog Search failed',status: response.status };
             }
                 callback(response);
 	},function(response){
 		console.log(response.data)
 			if(response!=null){
 				 
-				 response = { success: false, message: 'Fetching blog details failed' };
+				 response = { success: false, message: 'Fetching blog details failed',status: response.status };
             }
 		
                 callback(response);
@@ -177,14 +177,14 @@ function viewUserBlogs(callback){
 				 response = { success: true, data: response.data };
             } else {
             	 
-                response = { success: false, message: 'Blog Search failed' };
+                response = { success: false, message: 'Blog Search failed',status: response.status };
             }
                 callback(response);
 	},function(response){
 		console.log(response.data)
 			if(response!=null){
 				 
-				 response = { success: false, message: 'Fetching blog details failed' };
+				 response = { success: false, message: 'Fetching blog details failed',status: response.status };
             }
 		
                 callback(response);
@@ -201,14 +201,14 @@ function approveBlog(blogId,callback){
 				 response = { success: true, data: response.data };
             } else {
             	 
-                response = { success: false, message: 'Blog Approval failed' };
+                response = { success: false, message: 'Blog Approval failed',status: response.status };
             }
                 callback(response);
 	},function(response){
 		console.log(response.data)
 			if(response!=null){
 				 
-				 response = { success: false, message: 'Approving Blog status failed' };
+				 response = { success: false, message: 'Approving Blog status failed',status: response.status };
             }
 		
                 callback(response);
@@ -226,14 +226,14 @@ function rejectBlog(blogId,rejectionReason,callback){
 				 response = { success: true, data: response.data };
             } else {
             	 
-                response = { success: false, message: 'Blog Rejection failed' };
+                response = { success: false, message: 'Blog Rejection failed',status: response.status };
             }
                 callback(response);
 	},function(response){
 		console.log(response.data)
 			if(response!=null){
 				 
-				 response = { success: false, message: 'Reject Blog status failed' };
+				 response = { success: false, message: 'Reject Blog status failed',status: response.status };
             }
 		
                 callback(response);
@@ -248,14 +248,14 @@ function rejectBlog(blogId,rejectionReason,callback){
 				 response = { success: true, data: response.data };
             } else {
             	 
-                response = { success: false, message: 'Blog Rejection failed' };
+                response = { success: false, message: 'Blog Rejection failed',status: response.status };
             }
                 callback(response);
 	},function(response){
 		console.log(response.data)
 			if(response!=null){
 				 
-				 response = { success: false, message: 'Reject Blog status failed' };
+				 response = { success: false, message: 'Reject Blog status failed',status: response.status };
             }
 		
                 callback(response);
@@ -273,14 +273,14 @@ function deleteBlog(blogId,callback){
 				 response = { success: true, data: response.data };
             } else {
             	 
-                response = { success: false, message: 'Blog Search failed' };
+                response = { success: false, message: 'Blog Search failed',status: response.status };
             }
                 callback(response);
 	},function(response){
 		console.log(response.data)
 			if(response!=null){
 				 
-				 response = { success: false, message: 'Fetching blog details failed' };
+				 response = { success: false, message: 'Fetching blog details failed',status: response.status };
             }
 		
                 callback(response);
@@ -297,14 +297,14 @@ function updateBlog(blog,callback){
 				 response = { success: true, data: response.data };
             } else {
             	 
-                response = { success: false, message: 'Blog updation failed' };
+                response = { success: false, message: 'Blog updation failed',status: response.status };
             }
                 callback(response);
 	},function(response){
 		console.log(response.data)
 			if(response!=null){
 				 
-				 response = { success: false, message: 'Blog updation failed' };
+				 response = { success: false, message: 'Blog updation failed',status: response.status };
             }
 		
                 callback(response);

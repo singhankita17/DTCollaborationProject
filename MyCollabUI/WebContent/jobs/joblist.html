@@ -6,41 +6,64 @@
 		  
 		  			<h3 class="panel-title"> All Jobs </h3>
 		        </div>
-			<div class="panel-body">
-			
-			
-			<table class="table-striped">
-					<thead>
-						<tr>
-							<th>Job Title</th>
-							<th>Job Description</th>
-							<th>Job Posted On</th>
+			 <div class="panel-body forum-body">
+          	 <table class="forum-table">
+           	   <thead class="forum-header">
+           	   		<tr>
+						<th class="forum-icon"> &nbsp; </th>
+           	   			<th class="forum-topics">Job Title </th>
+           	   			<th class="forum-posts">  Skills Required</th>
+           	   			<th class="forum-date">  Posted on </th>
 							
 						</tr>
 					</thead>
 					<tbody>
 						<tr data-ng-repeat="job in jobList">
-							<td><a href="" data-ng-click="getJob(job.id)">{{job.jobTitle}}</a></td>
-							<td>{{job.jobDesc}}</td>
-							<td>{{job.postedOn | date : "medium"}}</td>
+							<td class="forum-list-icon"><i class="fa fa-file-text" aria-hidden="true" style="font-size:24px;color:#ccc"></i></td>
+							<td><div class="forum-name"><a href="" data-ng-click="getJob(job.id)">{{job.jobTitle}}</a></div>
+							 <div  class="forum-description">{{job.jobDesc | limitTo:30}}..</div></td>
+							<td><div class="forum-no-posts">{{job.skillsRequired}}</div></td>
+							<td class="forum-start-date">{{job.postedOn | date : "medium"}}</td>
 						</tr>
 					</tbody>
 			</table>
 			</div>
-			<div data-ng-hide="!job">
-			<h3>Job Detail </h3>
-					<pre>
-						<p>Job Title :  {{job.jobTitle}}</p>
-						<p>Job Description : {{job.jobDesc}}</p>
-						<p>Skills Required : {{job.skillsRequired}}</p>
-						<p>Location : {{job.location}}</p>		
-						<p>Company Name : {{job.companyName}}</p>
-						<p>Salary : {{job.salary}}</p>		
-						<p>Years Of Exp : {{job.yrsOfExp}}</p>		
-						<p>Posted On : {{job.postedOn}}</p>		
-					</pre>					
-			
-			</div>
-		</div>
+				
+		
+			<div class="panel panel-default" data-ng-hide="!job">
+			  	<div class="panel-heading">
+		  
+		  			<h3 class="panel-title"> Job Detail  </h3>
+		  			<span class="pull-right"><button id="abc" class="fa fa-plus" data-toggle="collapse" data-target="#JobDetailPane"></button></span>
+		        </div>
+			 <div class="panel-body forum-body collapse" id="JobDetailPane">
+          	 <table class="forum-table">
+          	 	<tr><td class="forum-name">Job Title</td><td class="forum-no-posts"> {{job.jobTitle}}</td>
+          	 	</tr>
+          	 	<tr><td class="forum-name">Job Description</td><td class="forum-no-posts"> {{job.jobDesc}}</td>
+          	 	</tr>
+          	 	<tr><td class="forum-name">Skills Required</td><td class="forum-no-posts"> {{job.skillsRequired}}</td>
+          	 	</tr>
+          	 	<tr><td class="forum-name">Location </td><td class="forum-no-posts"> {{job.location}}</td>
+          	 	</tr>
+          	 	<tr><td class="forum-name">Company Name </td><td class="forum-no-posts"> {{job.companyName}}</td>
+          	 	</tr>
+          	 	<tr><td class="forum-name">Salary </td><td class="forum-no-posts"> {{job.salary}}</td>
+          	 	</tr>
+          	 	<tr><td class="forum-name">Years Of Exp </td><td class="forum-no-posts"> {{job.yrsOfExp}}</td>
+          	 	</tr>
+          	 	<tr><td class="forum-name">Posted On </td><td class="forum-no-posts"> {{job.postedOn | date: "medium"}} </td>
+          	 	</tr>
+          	 	
+          	 </table>
+          	 </div>
+          	 </div>
+         </div> 	 
+	</div>	
 </div>
-</div>
+ <script>
+ 	$('#abc').click(function(){	 
+	  $('#abc').toggleClass('fa fa-plus fa fa-minus');	 
+	});
+   </script>
+	

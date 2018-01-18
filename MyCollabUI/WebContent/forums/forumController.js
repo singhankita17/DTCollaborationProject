@@ -1,9 +1,11 @@
 app.controller("forumController",forumController);
 
 function forumController($scope,$location,ForumService,ForumCommentService,$rootScope,$routeParams){
+		
 		console.log("Forum Controller")
 		
 		var forumId = $routeParams.id;
+		$scope.isRejected=false;
 		
 	$scope.createNewForum = function (){		
 		  	 console.log("Create New Forum")
@@ -17,19 +19,41 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
     	  },function(response){		 		
 		 		$scope.errormessage = response.data.errorMessage;
 		 		console.log($scope.errormessage)
+		 		if(response.status==401){
+     				$location.path("/login");
+     			}
 		 		$location.path("/createForum")
 		 });
 		
 	}
 		
 	function viewAllForums (){
-		
+		 $scope.commentCountList = [];
 		 console.log("viewAllForums")
 		ForumService.viewAllForums()
 		 .then(function(response){
 				//alert(response.data)
 		 		console.log(response.data)
 		 		$scope.forumList = response.data;
+		 		
+		 		 angular.forEach($scope.forumList, function(item){
+	                   console.log(item.forumId);  
+	                   ForumCommentService.retrieveComment(item.forumId)
+	          		 .then(function(response){
+	          			 var obj = {};
+	          			 var valObj = {};
+	          			 $scope.commentList = response.data;
+	          			 valObj.length = response.data.length
+	          			 $scope.commentCountList[item.forumId] = valObj;
+	          			
+	          			 console.log("Comment on ForumId "+item.forumId+" = "+$scope.commentCountList[item.forumId].length)
+	          		 },function(response){
+	          			 
+	          			 console.log(response.data)
+	          			
+	          		 })
+	               })
+		 		
 		 		
  	  },function(response){		 		
  		 //alert(response.data)
@@ -58,11 +82,39 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 			    
 		 		$scope.errormessage = response.data.errorMessage;
 		 		console.log($scope.errormessage)
+		 		if(response.status==401){
+     				$location.path("/login");
+     			}
 		 		$location.path("/viewForumDetail")
 		 });
 		}
 		 
 		 retrieveForumComment(forumId)
+	}
+	
+	
+	function viewPendingForumDetail(forumId){
+		
+		 console.log("Pending viewPendingForumDetail")
+		if(forumId){
+			console.log("Inside Pending viewForumDetail")
+		ForumService.viewForumDetail(forumId)
+		 .then(function(response){
+				
+		 		console.log(response.data)
+		 		$scope.forumPost = response.data;
+		 		
+		 },function(response){		 	
+			    
+		 		$scope.errormessage = response.data.errorMessage;
+		 		console.log($scope.errormessage)
+		 		if(response.status==401){
+    				$location.path("/login");
+    			}
+		 		$location.path("/viewForumDetail")
+		 });
+		}
+		 
 	}
 	
 	function viewAllUsersForums(){
@@ -77,6 +129,9 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 			 	},function(response){
 			 		
 			 		console.log( response.data)
+			 		if(response.status==401){
+	     				$location.path("/login");
+	     			}
 			 		
 			 	})
 			 }
@@ -95,6 +150,9 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 			 	},function(response){
 			 		
 			 		console.log( response.data)
+			 		if(response.status==401){
+	     				$location.path("/login");
+	     			}
 			 		
 			 	})
 			 }
@@ -105,6 +163,10 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 	viewUserForums();
 	viewAllUsersForums();
 	viewAllPendingForums();
+	if($rootScope.globals.currentUser.role === 'ADMIN'){
+		viewPendingForumDetail(forumId);
+	}
+	
 	
 	$scope.addForumComment = function(comment,forumId){
 		
@@ -117,6 +179,9 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 			 $scope.comment = '';
 		 },function(response){
 			 console.log(response.data)
+			 if(response.status==401){
+  				$location.path("/login");
+  			}
 		 })
 		 
 		 retrieveForumComment(forumId)
@@ -149,7 +214,9 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 			 	},function(response){
 			 		
 			 		console.log( response.data)
-			 		
+			 		if(response.status==401){
+	     				$location.path("/login");
+	     			}
 			 	})
 			 }
 	}
@@ -176,7 +243,9 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
  	},function(response){
  		
  		console.log( response.data)
- 
+ 		if(response.status==401){
+				$location.path("/login");
+		}
  	})
  
 	}
@@ -193,6 +262,9 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 		 		viewUserForums(); 
 		 },function(response){	
 		 		console.log( response.data)
+		 		if(response.status==401){
+     				$location.path("/login");
+     			}
 		 })
 		 
 	 }
@@ -207,8 +279,13 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 		 		
 		 		viewAllPendingForums();
 		 		viewAllUsersForums();
+		 		 alert("Forum approved Successfully");
+				 $location.path("/admin/manageForum");
 				 },function(response){	
 				 		console.log( response.data)
+				 		if(response.status==401){
+		     				$location.path("/login");
+		     			}
 				 })
 		 }else if(status === 'REJECTED'){
 			 ForumService.rejectForum(forumId,rejectionReason)
@@ -218,11 +295,35 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 		 		
 		 		viewAllPendingForums();
 		 		viewAllUsersForums();
+		 		 $location.path("/admin/manageForum");
 				 },function(response){	
 				 		console.log( response.data)
+				 		if(response.status==401){
+		     				$location.path("/login");
+		     			}
 				 })
 			 
 		 }
 	 }
+
+	 $scope.showRejectionTxt=function(val){
+			$scope.isRejected=val;
+	}
 	 
+	 $scope.accessCommentBlock = function(){
+			$scope.showCommentBlock = false;
+			console.log( $rootScope.globals.currentUser);
+			
+			if($rootScope.globals.currentUser != undefined){
+				$scope.showCommentBlock = true;
+				
+			}else{
+				
+				$scope.showCommentBlock = false;
+				console.log("redirect to login");
+				$location.path("/login");
+				
+			}
+			
+		}
 }

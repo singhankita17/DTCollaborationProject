@@ -8,11 +8,14 @@
 			<div class="panel-body">
 			<table class="table table-striped">
 				<tbody>
+				<tr data-ng-hide="pendingRequestList.length!==0">
+				<td colspan="4">No Pending Friend Request</td>
+				</tr>
 				<tr data-ng-repeat="request in pendingRequestList">
-					<td>{{request.fromId}}</td>
-					<td><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{request.fromId}}" height="50" width="50" alt="User Image"  class="img-rounded"></td>
-					<td><a href="" data-ng-click="updatePendingRequest(request.fromId,'ACCEPTED')" class="btn btn-default">Accept</a></td>
-					<td><a href="" data-ng-click="updatePendingRequest(request.fromId,'REJECTED')" class="btn btn-default">Reject</a></td>
+					<td><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{request.fromId}}" height="50" width="50" alt="User Image"  class="img-circle"></td>
+					<td>{{userNames[request.fromId]}}</td>
+					<td><a href="" data-ng-click="updatePendingRequest(request,'ACCEPTED')" class="btn btn-default">Accept</a></td>
+					<td><a href="" data-ng-click="updatePendingRequest(request,'REJECTED')" class="btn btn-default">Reject</a></td>
 				</tr>
 				</tbody>
 			</table>

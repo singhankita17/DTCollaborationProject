@@ -1,0 +1,29 @@
+<div class="row vertical-offset-20">
+<div class="container">
+<h2>Forum Approval Form</h2>
+<div class="row">
+<div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<b>Forum : {{forumPost.forumName}}</b><br>
+</div>
+<div class="panel-body">
+{{forumPost.forumContent}}<br><br>
+<div class="pull-right"> <cite>Posted by <strong>{{userNames[forumPost.userId]}}</strong> on {{forumPost.createdDate | date : "medium"}}</cite></div>
+</div>
+</div>
+</div>
+</div>
+<form>
+<input type="radio" data-ng-model="forumPost.status" value="APPROVED" ng-click="showRejectionTxt(false)" class="col-md-2">Approve<br>
+<input type="radio" data-ng-model="forumPost.status" value="REJECTED" ng-click="showRejectionTxt(true)" class="col-md-2">Reject
+<br><br/>
+<div data-ng-show="isRejected">
+Enter Rejection Reason
+<input type="text" data-ng-model="rejectionReason"><br>
+</div>
+<button class="btn btn-primary center-block" data-ng-click="approveOrRejectForum(forumPost.forumId,forumPost.status,rejectionReason)">Submit</button>
+</form>
+{{error.errorMessage}}
+</div>
+</div>

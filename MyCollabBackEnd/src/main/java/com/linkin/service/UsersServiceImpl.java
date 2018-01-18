@@ -62,11 +62,6 @@ public class UsersServiceImpl implements UsersService{
 		return usersDao.checkIfValidUser(username, password);
 	}
 
-	public Map<Integer, String> getUsersFullNames(List<Integer> userList) {
-		
-		return usersDao.getUsersFullNames(userList);
-	}
-
 	public List<Integer> getOnlineUserList() {
 		
 		return usersDao.getOnlineUserList();
@@ -75,6 +70,11 @@ public class UsersServiceImpl implements UsersService{
 	public boolean checkIfAlreadyLoggedInUser(UsersDetails user) {
 		
 		return usersDao.checkIfAlreadyLoggedInUser(user);
+	}
+
+	public Map<Integer, String> getAllUsersFullNames() {
+		
+		return usersDao.getAllUsersFullNames();
 	}
 
 }

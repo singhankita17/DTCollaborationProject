@@ -3,32 +3,32 @@
     		<div class="panel panel-default">
 			  	<div class="panel-heading">
 		  
-		  			<h3 class="panel-title"> Blog Pending for Approval</h3>
+		  			<h3 class="panel-title"> Blogs Pending for Approval</h3>
 		        </div>
 			<div class="panel-body">
-				<table>
-					<thead>
+			<div ng-if="blogPendingList.length==0">No Pending Blogs available</div>
+				<table ng-show="blogPendingList.length>0" class="forum-table">
+					<thead class="table-header">
 						<tr>
-							<th>Blog Id</th>
-							<th>Blog Title</th>
-							<th>Blog Content</th>
-							<th>Blog Creation Date</th>
-							<th>Blog Created By</th>
-							<th>Blog Action</th>
-							<th>Rejection Reason</th>
+							<th class="forum-icon">&nbsp;</th>
+							<th class="forum-topics">Blog Title</th>
+							<th class="forum-posts">Author </th>
+							<th class="forum-date">Posted On</th>
+							<!-- <th>Rejection Reason</th> -->
 						</tr>
 					</thead>
 					<tbody>
 						<tr data-ng-repeat="blog in blogPendingList">
-							<td>{{blog.blogId}}</td>
-							<td>{{blog.blogTitle}}</td>
-							<td>{{blog.blogContent}}</td>
-							<td>{{blog.createdDate | date : "medium"}}</td>
-							<td>{{blog.userName}}</td>
-							<td><input type="radio" data-ng-model="blog.status" value="APPROVED"> Approve &nbsp;&nbsp;&nbsp;<input type="radio" data-ng-model="blog.status" value="REJECTED"> Reject 
+							<td class="forum-list-icon"><i class="fa fa-file-text" aria-hidden="true" style="font-size:24px;color:#ccc"></i></td>
+							<td colspan="1"><div class="forum-name"><a href="#/admin/viewBlogDetail/{{blog.blogId}}">{{blog.blogTitle}}</a></div>
+							 <div  class="forum-description">{{blog.blogContent | limitTo:30}}..</div></td>
+							<td> <div class="forum-no-posts">{{userNames[blog.userId]}}</div></td>
+							<td class="forum-start-date">{{blog.createdDate | date : "medium"}}</td>
+							
+							<!-- <td><input type="radio" data-ng-model="blog.status" value="APPROVED"> Approve &nbsp;&nbsp;&nbsp;<input type="radio" data-ng-model="blog.status" value="REJECTED"> Reject 
 							<br></td>
 							<td><input type="text" data-ng-model="rejectionReason"></td>
-							<td><button data-ng-click="approveOrRejectBlog(blog.blogId,blog.status,rejectionReason)">Ok</button></td>
+							<td><button data-ng-click="approveOrRejectBlog(blog.blogId,blog.status,rejectionReason)">Ok</button></td> -->
 						</tr>
 					</tbody>
 				</table>
@@ -36,29 +36,28 @@
 			<div class="panel panel-default">
 			  	<div class="panel-heading">
 		  
-		  			<h3 class="panel-title"> Blogs Approved</h3>
+		  			<h3 class="panel-title"> All Blogs</h3>
 		        </div>
 			<div class="panel-body">
-				<table>
-					<thead>
+			<div ng-if="blogAllList.length==0">No Blogs available</div>
+				<table ng-show="blogAllList.length>0" class="forum-table">
+					<thead class="table-header">
 						<tr>
-							<th>Blog Id</th>
-							<th>Blog Title</th>
-							<th>Blog Content</th>
-							<th>Creation Date</th>
-							<th>Created By</th>
-							<th>Blog Status</th>
+							<th class="forum-icon">&nbsp;</th>
+							<th class="forum-topics">Blog Title</th>
+							<th class="forum-posts">Author </th>
+							<th  class="forum-posts">Status </th>
+							<th class="forum-date">Posted On</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr data-ng-repeat="blog in blogAllList">
-							<td>{{blog.blogId}}</td>
-							<td>{{blog.blogTitle}}</td>
-							<td>{{blog.blogContent}}</td>
-							<td>{{blog.createdDate | date : "medium"}}</td>
-							<td>{{blog.userName}}</td>
-							<td>{{blog.status}}</td>
-							
+							<td class="forum-list-icon"><i class="fa fa-file-text" aria-hidden="true" style="font-size:24px;color:#ccc"></i></td>
+							<td colspan="1"><div class="forum-name"><a href="#/viewBlogDetail/{{blog.blogId}}">{{blog.blogTitle}}</a></div>
+							 <div  class="forum-description">{{blog.blogContent | limitTo:30}}..</div></td>
+							<td> <div class="forum-no-posts">{{userNames[blog.userId]}}</div></td>
+							<td> <div class="forum-no-posts">{{blog.status}}</div></td>
+							<td class="forum-start-date">{{blog.createdDate | date : "medium"}}</td>							
 						</tr>
 					</tbody>
 				</table>

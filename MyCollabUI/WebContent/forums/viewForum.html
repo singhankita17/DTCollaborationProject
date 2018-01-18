@@ -21,7 +21,7 @@
            	   		  <td colspan="1"><div class="forum-name"><a href="#/viewForumDetail/{{forum.forumId}}">{{forum.forumName}}</a></div>
            	   		  <div  class="forum-description">{{forum.forumContent | limitTo:30}}..</div>
            	   		  </td>
-           	   		  <td><div class="forum-no-posts">6</div></td>
+           	   		  <td><div class="forum-no-posts">{{commentCountList[forum.forumId].length}}</div></td>
            	   		  <td class="forum-start-date">{{forum.createdDate | date: "medium"}}</td>           	   		 
            	   		  </tr>
            	   </tbody>

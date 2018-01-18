@@ -1,26 +1,25 @@
 <div class="post">
           <div>            
             <h2>{{forum.forumName}}</h2>
-            <cite>by {{ forum.userId}} on {{forum.createdDate}}</cite>
+            <cite>by {{ userNames[forum.userId] }} on {{forum.createdDate | date : "medium"}}</cite>
             <div class="post-body">
              <p>
                {{forum.forumContent}}
              </p> 
             </div>
             
-            <div class="comments">
-             
+            <div class="comments">             
               <h3>Replies</h3>
               <ul>
                <li data-ng-repeat="comment in commentList">
                 <p> "{{comment.commentText}}"</p>
-                 <cite>- <b>{{comment.userName}}</b> </cite>
+                 <cite>Posted by - <b>{{comment.userName}}</b> </cite>
                  <br> {{comment.commentDate | date : "medium"}}
                </li>
               </ul>
-               <h4>Add Comment</h4>
-              
-              <div data-ng-show="currentuser.userName">
+               <!-- <h4>Add Comment</h4> -->
+               <button data-ng-click="accessCommentBlock()">Add a Comment</button>
+              <div data-ng-show="globals.currentUser.username && showCommentBlock">
               <form name="commentForm">
               
 	                  <textarea data-ng-model="comment.commentText" cols="20" rows="5" placeholder="Comment Text Here" required></textarea>

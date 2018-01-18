@@ -47,6 +47,10 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							templateUrl: "forums/manageForum.html",
 							controller: "forumController"
 						})
+						.when("/admin/viewBlogDetail/:id",{
+							templateUrl: "blogs/blogApprovalForm.html",
+							controller: "blogViewController"
+						})
 						.when("/createForum",{
 							templateUrl: "forums/createNewForum.html",
 							controller: "forumController"
@@ -71,6 +75,10 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							templateUrl: "forums/viewForumDetail.html",
 							controller: "forumController"
 						})
+						.when("/admin/viewForumDetail/:id",{
+							templateUrl: "forums/forumApprovalForm.html",
+							controller: "forumController"
+						})
 						.when("/suggestedUsers",{
 							templateUrl: "friends/suggestedusers.html",
 							controller: "FriendController"
@@ -90,7 +98,7 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						.otherwise({templateUrl: "home/home.html",controller: "homeController"});
 						 
 					})
-					.run(function run($rootScope, $location, $routeParams,$cookies, $http) {
+					.run(function run($rootScope, $location, $routeParams,$cookies, $http,AuthenticationService) {
 						    // keep user logged in after page refresh
 						 	$rootScope.isAdmin = false; 	
 					       $rootScope.globals = $cookies.getObject('globals') || {};
@@ -119,23 +127,64 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							        if(loggedInUser){
 							        	
 						        	   console.log(" $rootScope.islogged = "+ $rootScope.islogged)
-						        	   $rootScope.islogged =true;
+						        	   $rootScope.islogged = true;
 						        	   
 						        	   if($rootScope.globals.currentUser.role === 'ADMIN')
 										   	$rootScope.isAdmin = true;
 						        	   else
 						        		   $rootScope.isAdmin = false;
 						        }
-						       
-						        if(($location.path().includes('/viewBlogDetail/')||$location.path().includes('/viewForumDetail/')) && !loggedInUser){
+							    
+						        if(($location.path().includes('/viewBlogDetail/')||$location.path().includes('/viewForumDetail/')||$location.path().includes('/admin/viewBlogDetail/')||$location.path().includes('/admin/viewForumDetail/')) && !loggedInUser){
 						        	 console.log("Not restricted : ")
 							           
 							    }else if (restrictedPage && !loggedInUser) {
-						        	 console.log("Redirect to login : ")
+						        	console.log("Redirect to login : ")
 						            $location.path('/login');
 						        }else if(adminPage && !$rootScope.isAdmin){
 						        	alert("not authorized to view this page")
 						        	$location.path('/home');
+						        }
+						        if($rootScope.userNames === undefined){
+							        AuthenticationService.getAllApplicationUserNames(function(response){
+						    			 if(response.success){
+						    				 $rootScope.userNames = response.data;	
+						    				 console.log($rootScope.userNames);
+						    				 console.log("$rootScope.userNames");
+							    		}else{
+							    			console.log(response.data)
+							    			
+							    		}
+						    		})
+						        }
+						        
+						        if($rootScope.notificationNotViewed === undefined){
+						        	 AuthenticationService.getNotificationNotViewed(function(response){
+						        		 if(response.success){
+						     			console.log(response.data)
+						     			$rootScope.notificationNotViewed = response.data;
+						     			$rootScope.notificationNotViewedLength = response.data.length;
+						        		 }else{
+							     			console.log(response.data)
+							     			if(response.status==401){
+							     				$location.path("/login");
+							     			}
+						        		 }
+						     		})
+						     		
+						        }
+						        if($rootScope.notificationViewed === undefined){
+						     		AuthenticationService.getNotificationViewed(function(response){
+						     			 if(response.success){
+						     			console.log(response.data)
+						     			$rootScope.notificationViewed = response.data;
+						     		}else{
+						     			console.log(response.data)
+						     			if(response.status==401){
+						     				$location.path("/login");
+						     			}
+						     		}
+						     		})
 						        }
 						    });
 						    

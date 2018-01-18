@@ -1,5 +1,6 @@
 <div class="row vertical-offset-20" data-ng-controller="blogController">
-		<div class="col-md-8 col-md-offset-2">
+<div class="container">
+		<div class="col-md-6 col-md-offset-2">
     		<div class="panel panel-default">
 			  	<div class="panel-heading">
 		  
@@ -12,7 +13,7 @@
 			 <p><font color="red"></font></p>
 			<fieldset>
 				  <div class="form-group">
-				  	<label for="firstName">Blog Title: </label>
+				  	<label for="firstName" class="form-control-text">Blog Title: </label>
 				    <input class="form-control"  type="text"    name="blogTitle" placeholder="Enter Blog Title" data-ng-model="blog.blogTitle" required/>
 				    <span style="color:red" data-ng-show="blogCreationForm.blogTitle.$dirty && blogCreationForm.blogTitle.$invalid">
   					  	<span data-ng-show="blogCreationForm.blogTitle.$error.required">Blog Title is required.</span>
@@ -20,8 +21,8 @@
 				   </div>
 		    
 					   <div class="form-group">
-					    <label for="blogContent">Blog Content: </label>
-					    <textarea class="form-control"  name="blogContent" placeholder="Enter Blog Content" data-ng-model="blog.blogContent" required></textarea>
+					    <label for="blogContent" class="form-control-text">Blog Content: </label>
+					    <textarea class="form-control"  name="blogContent" placeholder="Enter Blog Content" data-ng-model="blog.blogContent" rows="10" cols="50" required></textarea>
 					    <span style="color:red" data-ng-show="blogCreationForm.blogContent.$dirty && blogCreationForm.blogContent.$invalid">
   					  	<span data-ng-show="blogCreationForm.blogContent.$error.required">Blog Content is required.</span>
   					  </span>
@@ -42,31 +43,32 @@
 		
 			  	<div class="panel-heading">
 		  
-		  			<h3 class="panel-title"> User Blogs </h3>
+		  			<h3 class="panel-title"> My Blogs </h3>
 		        </div>
 			<div class="panel-body">
-				<table>
-					<thead>
+			<div ng-if="blogUserList.length==0">No User Blogs available</div>
+				<table ng-show="blogUserList.length>0" class="forum-table">
+					<thead  class="table-header">
 						<tr>
-							<th>Blog Id</th>
-							<th>Blog Title</th>
-							<th>Blog Content</th>
-							<th>Blog Status</th>
-							<th colspan="2">Blog Action</th>
+							<th class="forum-icon"> &nbsp; </th>
+							<th class="forum-topics">Blog Title</th>
+							<th class="forum-posts">Blog Status</th>
+							<th class="forum-date">Blog Action</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr data-ng-repeat="blog in blogUserList">
-							<td>{{blog.blogId}}</td>
-							<td>{{blog.blogTitle}}</td>
-							<td>{{blog.blogContent | limitTo:70}}..</td>
-							<td>{{blog.status}}</td>
-							<td colspan="2"> <button data-ng-click="editBlog(blog)"><span class="glyphicon glyphicon-pencil"></span></button> <br>
+							<td class="forum-list-icon"><i class="fa fa-file-text" aria-hidden="true" style="font-size:24px;color:#ccc"></i></td>
+							<td colspan="1"><div class="forum-name"><a href="#/viewBlogDetail/{{blog.blogId}}">{{blog.blogTitle}}</a></div>
+							 <div  class="forum-description">{{blog.blogContent | limitTo:30}}..</div></td>
+							<td> <div class="forum-no-posts"> {{blog.status}} </div></td>
+							<td class="forum-start-date"> <button data-ng-click="editBlog(blog)"><span class="glyphicon glyphicon-pencil"></span></button> <span>    </span>
 							 <button  data-ng-click="deleteBlog(blog.blogId)"><span class="glyphicon glyphicon-remove"></span></button></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>			
 	</div>
+  </div>
   </div>
 </div>

@@ -13,7 +13,7 @@ var BASE_URL = 'http://localhost:8181/MyCollab';
         service.getNotificationNotViewed = getNotificationNotViewed;
         service.getNotificationViewed = getNotificationViewed;
         service.updateNotification = updateNotification;
-                
+        service.getAllApplicationUserNames = getAllApplicationUserNames;    
  
         return service;
  
@@ -90,6 +90,8 @@ var BASE_URL = 'http://localhost:8181/MyCollab';
             $cookieStore.remove('globals');
            // $cookieStore.remove('currentuser');
            // $rootScope.currentuser={}
+            $rootScope.islogged=false;
+            $rootScope.isAdmin = false;
             $http.defaults.headers.common.Authorization = 'Basic';
             //alert("credential cleared");
         }
@@ -122,6 +124,18 @@ var BASE_URL = 'http://localhost:8181/MyCollab';
     	
     	function updateNotification(notificationId,callback){
     		$http.get(BASE_URL+"/updatenotification/"+notificationId).then(function(response,data,status,headers,config){
+        		response = {success:true,data: response.data };
+        		callback(response);
+        		
+        	},function(response,data,status,headers,config){
+        		
+        		response = {success:false,data: response.data };
+        		callback(response);
+        	});
+    	}
+    	
+    	function getAllApplicationUserNames(callback){
+    		$http.get(BASE_URL+"/getAllUsersName").then(function(response,data,status,headers,config){
         		response = {success:true,data: response.data };
         		callback(response);
         		

@@ -70,11 +70,17 @@ app.controller('homeController',function($scope,$rootScope,$location,HomeService
 	          		 },function(response){
 	          			 
 	          			 console.log(response.data)
+	          			 if(response.status==401){
+	        				$location.path("/login");
+	        			}
 	          		 })
 	               })
 		 	}else{
 		 		
-		 		console.log( response.data)
+		 		console.log( response.data);
+		 		if(response.status==401){
+					$location.path("/login");
+				}
 		 		
 		 	}
 		 })

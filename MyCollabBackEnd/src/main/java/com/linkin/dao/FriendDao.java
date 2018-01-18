@@ -18,4 +18,8 @@ public interface FriendDao {
   public boolean rejectFriendRequest(int fromId,int toId);
   
   public List<Friend> listOfFriends(int userId);
+  
+  public boolean deleteFriend(Friend friend);
+  
+  public Friend getFriendById(int friendId);
 }

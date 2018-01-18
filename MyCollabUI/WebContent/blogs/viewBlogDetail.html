@@ -1,7 +1,8 @@
 <div class="post">
-          <div>            
+<div class="container">
+          <div class="jumbotron">            
             <h2>{{blog.blogTitle}}</h2>
-            <cite>By <strong>{{ blog.userName}}</strong> ~ Posted on {{blog.createdDate | date:'MMMM d, y @ h:mma'}}</cite>
+            <cite>By <strong>{{ userNames[blog.userId]}}</strong> ~ Posted on {{blog.createdDate | date:'MMMM d, y @ h:mma'}}</cite>
             <div class="post-body">
              <p>
                {{blog.blogContent}}
@@ -10,12 +11,13 @@
             
             <div class="comments">
               <input type="hidden"  data-ng-model="clickCount" value="0"/>         
-              <button class="fa fa-heart" data-ng-click="updateLikes(blog)" data-ng-if="blog.userName != globals.currentUser.username" data-ng-show="globals.currentUser.username"> {{blog.noOfLikes}}</button>
+              <button class="fa fa-heart" data-ng-click="updateLikes(blog)" data-ng-if="blog.userName != globals.currentUser.username" data-ng-show="globals.currentUser.username" style="border:none; background: transparent;"> {{blog.noOfLikes}}</button>
               <h4>Comments</h4>
               <ul>
                <li data-ng-repeat="comment in commentList">
-                 "{{comment.commentText}}"
-                 <cite>- <b>{{comment.userName}}</b> </cite>
+                <img data-ng-src="http://localhost:8181/MyCollab/getimage/{{comment.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle">
+                 --  "{{comment.commentText}}"
+                 <cite>- <b>{{userNames[comment.userId]}}</b> </cite>
                   on {{comment.commentDate | date:'MMM d, y @ h:mma'}}
                </li>
               </ul>
@@ -24,7 +26,8 @@
               <form name="commentForm">
               <br/>
 	               <!--  <h4>Add Comment</h4> -->
-	                  <textarea data-ng-model="comment.commentText" cols="5" rows="5" placeholder="Type Comment Text Here" required></textarea>
+	               <img data-ng-src="http://localhost:8181/MyCollab/getimage/{{globals.currentUser.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle">
+	                  <textarea data-ng-model="comment.commentText" cols="3" rows="5" placeholder="Type Comment Text Here" required></textarea>
 	                   <br/>               
 	                  <button  class="btn btn-primary" data-ng-click="addComment(comment,blog.blogId)">Submit</button>
 	           </form>
@@ -32,3 +35,4 @@
               </div>
         </div>
       </div>
+ </div>

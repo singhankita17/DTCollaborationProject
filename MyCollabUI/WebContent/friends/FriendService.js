@@ -13,7 +13,7 @@ app.factory('FriendService',function($http,$cookieStore,$rootScope){
 	friendService.pendingRequest = pendingRequest;
 	friendService.updatePendingRequest = updatePendingRequest;
 	friendService.listOfFriends = listOfFriends;
-	friendService.friendNames = friendNames;
+	friendService.deleteFriend = deleteFriend;
 	
 	function listOfSuggestedUsers(){
 		return $http.get(BASE_URL+"/suggestedUsersList");
@@ -39,9 +39,9 @@ app.factory('FriendService',function($http,$cookieStore,$rootScope){
 		return $http.get(BASE_URL+"/listOfFriends")
 	}
 	
-	function friendNames(friendList){
+	function deleteFriend(friendId){
 		
-		return $http.post(BASE_URL+"/getNameOfFriends",friendList)
+		return $http.get(BASE_URL+"/unfriend/"+friendId)
 	}
 	
 	return friendService;

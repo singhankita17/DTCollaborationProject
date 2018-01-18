@@ -55,4 +55,28 @@ public class NotificationDaoImpl implements NotificationDao {
 		}
 	}
 
+	@Transactional
+	public Notification getNotification(String notificationType,int notificationReferenceId) {
+				
+		Session session = sessionFactory.getCurrentSession();
+		Notification notification= (Notification) session.createQuery(" from Notification where notificationType = ? and notificationReferenceId = ?",Notification.class)
+				 .setParameter(0, notificationType).setParameter(1, notificationReferenceId).uniqueResult();
+		
+		return notification;
+	}
+
+	@Transactional
+	public boolean deleteNotification(Notification notification) {
+		try
+		{
+			sessionFactory.getCurrentSession().delete(notification);
+			return true;
+			
+		}catch(Exception e){
+			
+			System.out.println("Exception raised: "+e);
+			return false;
+		}
+	}
+
 }

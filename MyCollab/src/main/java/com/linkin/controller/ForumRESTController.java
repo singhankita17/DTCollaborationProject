@@ -70,6 +70,7 @@ public class ForumRESTController {
 	@RequestMapping(value="/updateForum",method=RequestMethod.PUT)
 	public ResponseEntity<?> updateForum(@RequestBody Forum forum,HttpSession session){
 		Integer userId = (Integer) session.getAttribute("userId");
+		Notification notification;
 		 if(userId==null)
 		    {
 		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
@@ -82,9 +83,21 @@ public class ForumRESTController {
 		    		forumObj.setForumName(forum.getForumName());
 		    		forumObj.setForumContent(forum.getForumContent());
 		    		forumObj.setStatus("PENDING");
-					if(forumService.updateForum(forum)){
-						return new ResponseEntity<Forum>(forum, HttpStatus.OK);
+		    		notification = notificationService.getNotification("FORUM", forumObj.getForumId());
+					
+					if(notification != null){
+						System.out.println("notification = " + notification.toString());
+						
+						if(notificationService.deleteNotification(notification)){
+							System.out.println("Notification deleted successfully");
+						}
+					}
+					if(forumService.updateForum(forumObj)){  
+						
+						return new ResponseEntity<Forum>(forumObj, HttpStatus.OK);
+						
 					}else{
+						
 						return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(11,"Forum Updation failed"), HttpStatus.INTERNAL_SERVER_ERROR);
 					}
 		    	}
@@ -255,10 +268,11 @@ public class ForumRESTController {
 						if(forumService.approveForum(forum)){
 							   forum = forumService.getForum(forumId);
 							    
-							    //Add entry in Notification for the blog 
+							    //Add entry in Notification for the Forum
 							    Notification notification = new Notification();
 							    notification.setNotificationType("FORUM");
 								notification.setNotificationReferenceId(forum.getForumId());
+								notification.setNotificationDesc(forum.getForumName());
 								notification.setUserId(forum.getUserId());
 								notification.setApprovalStatus("APPROVED");
 								notification.setViewed(false);
@@ -297,6 +311,7 @@ public class ForumRESTController {
 								Notification notification = new Notification();
 								notification.setNotificationType("FORUM");
 								notification.setNotificationReferenceId(forumObj.getForumId());
+								notification.setNotificationDesc(forumObj.getForumName());
 								notification.setUserId(forumObj.getUserId());
 								notification.setApprovalStatus("REJECTED");
 								notification.setViewed(false);

@@ -100,4 +100,21 @@ public class FriendDaoImpl implements FriendDao {
 		return friendList;
 	}
 
+	@Transactional
+	public boolean deleteFriend(Friend friend) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(friend);
+		return true;
+	}
+
+	@Transactional
+	public Friend getFriendById(int friendId) {
+		
+		Session session = sessionFactory.openSession();
+		Friend friend = session.get(Friend.class, friendId);
+		session.close();
+		return friend;
+	}
+
 }

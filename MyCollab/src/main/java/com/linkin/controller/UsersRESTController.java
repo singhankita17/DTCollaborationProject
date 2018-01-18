@@ -239,42 +239,6 @@ public class UsersRESTController {
 		
 	}
 	
-	@RequestMapping(value="/getNameOfUsers",method=RequestMethod.POST)
-	public ResponseEntity<?> getNameOfUsers(@RequestBody List<Integer> list,HttpSession session){
-		
-		Integer userId = (Integer) session.getAttribute("userId");
-		
-		if(userId == null){
-			  
-			    return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
-		}	   
-		else {
-		  // List<Integer> userList = new ArrayList<Integer>();
-			System.out.println("list = "+list);
-			/*for(Friend friend:list){
-				
-				int userId1 = friend.getFromId();
-				if(!userList.contains(userId1)){
-					userList.add(userId1);
-				}
-				int userId2 = friend.getToId();
-				if(!userList.contains(userId2)){
-					userList.add(userId2);
-				}
-				
-			}*/
-			Map<Integer, String> userNames = usersService.getUsersFullNames(list);
-							
-			if(userNames!=null){
-				
-				return new ResponseEntity<Map<Integer,String>>(userNames,HttpStatus.OK);
-				
-			}else{
-				
-				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(44,"Error in fetching Names of user"),HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		}
-	}
 	
 	@RequestMapping(value="/getOnlineUserList",method=RequestMethod.GET)
 	public ResponseEntity<?> getOnlineUserList(HttpSession session){
@@ -298,6 +262,23 @@ public class UsersRESTController {
 				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(47,"Error in fetching online list of users"),HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
+	}
+	
+	@RequestMapping(value="/getAllUsersName",method=RequestMethod.GET)
+	public ResponseEntity<?> getAllUsersName(){
+		
+		
+			Map<Integer, String> userNames = usersService.getAllUsersFullNames();
+							
+			if(userNames!=null){
+				
+				return new ResponseEntity<Map<Integer,String>>(userNames,HttpStatus.OK);
+				
+			}else{
+				
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(44,"Error in fetching Names of user"),HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		
 	}
 		
 }

@@ -29,4 +29,13 @@ public class NotificationServiceImpl implements NotificationService {
 		return notificationDao.addNotification(notification);
 	}
 
+	public Notification getNotification(String notificationType,int notificationReferenceId) {
+		return notificationDao.getNotification(notificationType,notificationReferenceId);
+	}
+
+	public boolean deleteNotification(Notification notification) {
+		
+		return notificationDao.deleteNotification(notification);
+	}
+
 }

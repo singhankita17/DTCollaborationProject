@@ -161,7 +161,34 @@ public class FriendRESTController {
 		}
 		
 		
-		@RequestMapping(value="/getNameOfFriends",method=RequestMethod.POST)
+		@RequestMapping(value="/unfriend/{friendId}",method=RequestMethod.GET)
+		public ResponseEntity<?> deleteFriend(@PathVariable("friendId") int friendId,HttpSession session){
+			
+			Integer userId = (Integer) session.getAttribute("userId");
+			
+			if(userId == null){
+				  
+				    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	  
+			else {
+				
+				Friend friend = friendService.getFriendById(friendId);
+				
+				if(friend!=null){
+					
+					List<Friend> friendList = friendService.deleteFriend(friend, userId);
+					
+					return new ResponseEntity<List<Friend>>(friendList,HttpStatus.OK);
+					
+				}else{
+					
+					return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(46,"Error in deleting friend list of user"),HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		}
+		
+		
+		/*@RequestMapping(value="/getNameOfFriends",method=RequestMethod.POST)
 		public ResponseEntity<?> getNameOfFriends(@RequestBody ArrayList<Friend> list,HttpSession session){
 			
 			Integer userId = (Integer) session.getAttribute("userId");
@@ -172,7 +199,13 @@ public class FriendRESTController {
 			}	   
 			else {
 			   List<Integer> userList = new ArrayList<Integer>();
+			   Map<Integer, String> userNames = null;
 				System.out.println("list = "+list);
+				if(list == null){
+					
+					return new ResponseEntity<Map<Integer,String>>(userNames,HttpStatus.OK);
+				
+				}
 				for(Friend friend:list){
 					
 					int userId1 = friend.getFromId();
@@ -184,17 +217,18 @@ public class FriendRESTController {
 						userList.add(userId2);
 					}
 					
+				}	
+				if(userList!=null){
+					userNames = usersService.getUsersFullNames(userList);				
 				}
-				Map<Integer, String> userNames = usersService.getUsersFullNames(userList);
-								
-				if(userNames!=null){
-					
-					return new ResponseEntity<Map<Integer,String>>(userNames,HttpStatus.OK);
-					
-				}else{
-					
-					return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(44,"Error in fetching friend list of user"),HttpStatus.INTERNAL_SERVER_ERROR);
-				}
-			}
-		}
+					if(userNames!=null){
+						
+						return new ResponseEntity<Map<Integer,String>>(userNames,HttpStatus.OK);
+						
+					}else{
+						
+						return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(44,"Error in fetching friend list of user"),HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+				}				
+		}*/
 }
