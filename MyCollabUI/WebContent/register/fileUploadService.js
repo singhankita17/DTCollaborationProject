@@ -9,14 +9,9 @@ app.service('fileUploadService', ['$http', function ($http) {
                var fd = new FormData();
                fd.append('file', file);
             
-               $http.post(BASE_URL+"/uploadUserImage", fd, {
+              return $http.post(BASE_URL+"/uploadUserImage", fd, {
                   transformRequest: angular.identity,
                   headers: {'Content-Type': undefined}
-               })          
-               .then(function(response){
-            	   console.log(response.data)
-               },function(response){
-            	   console.log(response.data)
-               });
+               }) ;
             }
          }]);

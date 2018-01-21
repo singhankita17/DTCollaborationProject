@@ -14,7 +14,7 @@ app.controller('ChatController',['$rootScope','$scope','socket','userService',fu
 		$scope.userId = $rootScope.globals.currentUser.userId;
 		$scope.stompClient.subscribe("/topic/join",function(message){
 			user = JSON.parse(message.body);
-			//alert(user+" joined chat")
+			alert($rootScope.userNames[user]+" joined chat")
 			if (user!=$scope.userId && $.inArray(user,$scope.users) == -1){
 				$scope.addUser(user);
 				$scope.latestUser = user;
@@ -86,7 +86,7 @@ app.controller('ChatController',['$rootScope','$scope','socket','userService',fu
 	        message.direction = 'incoming';
 	        if(message.from != $scope.userId) {
 	        	console.log("Mesage from ="+message.from)
-	        	message.from = $scope.userNames[message.from];
+	        	message.from =$rootScope.userNames[message.from];
 	        	$scope.addChat(message);
 	            $scope.$apply(); // since inside subscribe closure
 	        }

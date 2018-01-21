@@ -163,9 +163,8 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 	viewUserForums();
 	viewAllUsersForums();
 	viewAllPendingForums();
-	if($rootScope.globals.currentUser.role === 'ADMIN'){
-		viewPendingForumDetail(forumId);
-	}
+	viewPendingForumDetail(forumId);
+	
 	
 	
 	$scope.addForumComment = function(comment,forumId){

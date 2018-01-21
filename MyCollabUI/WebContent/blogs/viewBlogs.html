@@ -1,7 +1,30 @@
-<div class="content">
-        <div class="container">
+<div class="blog">
+<div class="container">
+<!-- <div class="content">
+        <div class="container"> -->
+        <div class="row vertical-offset-20">
           <div class="row">
-           <ul class="post-grid">
+          <div class="col-lg-6 col-lg-offset-3 text-center">  
+          <h2><span class="fa fa-minus"> </span>&nbsp;Blog Posts&nbsp;<span class="fa fa-minus"> </span></h2>
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis  dis parturient montes, nascetur ridiculus </p><br>
+          </div>
+          </div>
+          
+          <div class="row">
+          	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" data-ng-repeat="blog in blogList">
+          		<div class="card text-center">
+          			 <div class="card-block">
+                            <h4 class="card-title"><a href="#/viewBlogDetail/{{blog.blogId}}">{{blog.blogTitle}}</a></h4>
+                            <p class="card-text">{{blog.blogContent | limitTo:70}}...</p>
+                             <p class="fa fa-comment-o pull-right" style="color:#337ab7"> {{commentCountList[blog.blogId].length}}
+            				</p>
+           					 <p class="fa fa-heart pull-right" style="color:#337ab7"> {{blog.noOfLikes}}</p><br><br>
+                            <a class="btn btn-primary" href="#/viewBlogDetail/{{blog.blogId}}">Read More</a>
+                           
+                        </div>
+                     </div>
+                </div>
+          <!--  <ul class="post-grid">
            <li data-ng-repeat="blog in blogList" class="col-sm-4">           
             <h3><a href="#/viewBlogDetail/{{blog.blogId}}">{{blog.blogTitle | limitTo:40}}</a></h3>
             <p>{{blog.blogContent | limitTo:70}}...</p>
@@ -11,8 +34,11 @@
             <p class="fa fa-heart" style="color:#337ab7"> {{blog.noOfLikes}}
             </p>
           </li>
-          </ul>     
+          </ul>   -->   
+        
         </div>
-      </div>
+
     </div>
+    </div>
+</div>
     

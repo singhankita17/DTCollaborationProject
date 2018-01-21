@@ -58,4 +58,9 @@ app.controller("JobController",function($scope,JobService,$location){
 			
 		})
 	}
+	
+	$scope.reset = function(){
+		
+		$scope.job = {};
+	}
 })

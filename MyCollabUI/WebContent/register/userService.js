@@ -8,7 +8,8 @@ app.factory('userService',function($http,$rootScope){
 			retrieveUserByUserName:retrieveUserByUserName,
 			retrieveUserByUserId:retrieveUserByUserId,
 			edituserprofile:edituserprofile,
-			getOnlineUserList: getOnlineUserList
+			getOnlineUserList: getOnlineUserList,
+			getImage: getImage
 	};
 	
 	/*userService.registerUser = registerUser;

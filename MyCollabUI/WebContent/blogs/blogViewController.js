@@ -61,9 +61,10 @@ function blogViewController($scope,$location,BlogService,BlogCommentService,$roo
 	}
 	
 	viewBlogDetails(blogId);
-	
-	if($rootScope.globals.currentUser.role === 'ADMIN'){
-		viewPendingBlogDetails(blogId);
+	if($rootScope.globals.currentUser!=undefined){
+		if($rootScope.globals.currentUser.role === 'ADMIN'){
+			viewPendingBlogDetails(blogId);
+		}
 	}
 	
 	$scope.addComment = function(comment,blogId){

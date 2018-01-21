@@ -121,3 +121,44 @@ input, textarea {
 img {
   max-width:100%;
 }
+
+/*Added for new layout  */
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,900,700,600,500,300,200,100,800);
+
+section{
+    padding:60px 0px;
+    font-family: 'Raleway', sans-serif;
+}
+
+h2 {
+    color: #4C4C4C;
+    word-spacing: 5px;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom:30px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.ion-minus{
+    padding:0px 10px;
+}
+
+div .blog{
+	
+	background-color:#f6f6f6;
+}
+
+.blog .card {
+    background-color: #FFF;
+    border: 1px solid #eceaea;
+    margin: 20px 0px;
+}
+
+.blog .card-block {
+    padding: 15px;
+}
+
+div .jumbotron{
+	background-color:#fff;
+	
+}

@@ -60,8 +60,8 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							controller: "blogViewController"
 						})
 						.when("/uploadpicture",{
-							templateUrl: "register/uploadpic.html",
-							controller: "ImageController"
+							templateUrl: "register/uploadpic.html"
+							//controller: "ImageController"
 						})
 						.when("/admin/addjob",{
 							templateUrl: "jobs/jobform.html",
@@ -95,6 +95,15 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							templateUrl: "chats/chat.html",
 							controller: "ChatController"
 						})
+						.when("/termandconditions",{
+							templateUrl: "utils/termandconditions.html"
+						})
+						.when("/privacypolicy",{
+							templateUrl: "utils/privacypolicy.html"
+						})
+						.when("/contentpolicy",{
+							templateUrl: "utils/contentpolicy.html"
+						})
 						.otherwise({templateUrl: "home/home.html",controller: "homeController"});
 						 
 					})
@@ -119,7 +128,7 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						    	
 						    	//var	blogid = $routeParams.id;
 						    	
-						        var restrictedPage = $.inArray($location.path(), ['/register','/viewBlogs','','/viewForum','/home']) === -1;
+						        var restrictedPage = $.inArray($location.path(), ['/register','/viewBlogs','','/viewForum','/home','/termandconditions','/privacypolicy','/contentpolicy']) === -1;
 						    	var adminPage = $.inArray($location.path(), ['/admin/manageBlog','/admin/addjob','/admin/home']) !== -1;
 						        var loggedInUser =  $rootScope.globals.currentUser;
 							    console.log("loggedInUser : ")
@@ -157,7 +166,8 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							    		}
 						    		})
 						        }
-						        
+						 if(loggedInUser){
+						       						        
 						        if($rootScope.notificationNotViewed === undefined){
 						        	 AuthenticationService.getNotificationNotViewed(function(response){
 						        		 if(response.success){
@@ -170,7 +180,7 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							     				$location.path("/login");
 							     			}
 						        		 }
-						     		})
+						     		});
 						     		
 						        }
 						        if($rootScope.notificationViewed === undefined){
@@ -184,8 +194,9 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 						     				$location.path("/login");
 						     			}
 						     		}
-						     		})
+						     		});
 						        }
-						    });
+						 }
+					});
 						    
 					});

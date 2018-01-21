@@ -1,6 +1,6 @@
-<div class="row vertical-offset-20" data-ng-controller="blogController">
 <div class="container">
-		<div class="col-md-6 col-md-offset-2">
+<div class="row vertical-offset-20" data-ng-controller="blogController">
+		<div class="col-md-8 col-md-offset-2">
     		<div class="panel panel-default">
 			  	<div class="panel-heading">
 		  
@@ -31,8 +31,8 @@
 					
 					   	<div class="form-group">
 							    <div class="clearfix col-md-offset-5" >
-							      <button type="submit" class="btn btn-success" data-ng-click="createNewBlog()" data-ng-hide="editBlogFlag" ng-disabled=!blogCreationForm.$valid>Create Blog</button>
-							      <button type="submit" class="btn btn-success" data-ng-click="updateBlog(blog)" data-ng-show="editBlogFlag" ng-disabled=!blogCreationForm.$valid>Update Blog</button>
+							      <button type="submit" class="btn btn-primary form-control-text" data-ng-click="createNewBlog()" data-ng-hide="editBlogFlag" ng-disabled=!blogCreationForm.$valid>Create Blog</button>
+							      <button type="submit" class="btn btn-primary form-control-text" data-ng-click="updateBlog(blog)" data-ng-show="editBlogFlag" ng-disabled=!blogCreationForm.$valid>Update Blog</button>
 							     		     
 							 </div>
 			    		</div>
@@ -72,3 +72,4 @@
   </div>
   </div>
 </div>
+

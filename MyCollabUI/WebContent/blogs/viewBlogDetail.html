@@ -1,23 +1,23 @@
-<div class="post">
+<div class="blog">
 <div class="container">
+<div class="post">
           <div class="jumbotron">            
-            <h2>{{blog.blogTitle}}</h2>
-            <cite>By <strong>{{ userNames[blog.userId]}}</strong> ~ Posted on {{blog.createdDate | date:'MMMM d, y @ h:mma'}}</cite>
+            <h3>{{blog.blogTitle}}</h3>
+            <img data-ng-src="http://localhost:8181/MyCollab/getimage/{{blog.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle"><cite>By <strong>{{ userNames[blog.userId]}}</strong> ~ Posted on {{blog.createdDate | date:'MMMM d, y @ h:mma'}}</cite>
             <div class="post-body">
-             <p>
+            <br>
                {{blog.blogContent}}
-             </p> 
+           
             </div>
             
             <div class="comments">
               <input type="hidden"  data-ng-model="clickCount" value="0"/>         
               <button class="fa fa-heart" data-ng-click="updateLikes(blog)" data-ng-if="blog.userName != globals.currentUser.username" data-ng-show="globals.currentUser.username" style="border:none; background: transparent;"> {{blog.noOfLikes}}</button>
-              <h4>Comments</h4>
+              <h6>Comments</h6>
               <ul>
                <li data-ng-repeat="comment in commentList">
-                <img data-ng-src="http://localhost:8181/MyCollab/getimage/{{comment.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle">
-                 --  "{{comment.commentText}}"
-                 <cite>- <b>{{userNames[comment.userId]}}</b> </cite>
+                 --  "{{comment.commentText}}"<br>
+                 <cite>-   <img data-ng-src="http://localhost:8181/MyCollab/getimage/{{comment.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle"><b>{{userNames[comment.userId]}}</b> </cite>
                   on {{comment.commentDate | date:'MMM d, y @ h:mma'}}
                </li>
               </ul>
@@ -35,4 +35,6 @@
               </div>
         </div>
       </div>
+ </div>
+ </div>
  </div>

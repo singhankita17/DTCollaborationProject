@@ -1,3 +1,4 @@
+<div class="container">
 <div class="row vertical-offset-20">
 		<div class="col-md-8 col-md-offset-2">
     		<div class="panel panel-default">
@@ -52,7 +53,7 @@
 					<tbody>
 						<tr data-ng-repeat="forum in forumAllList">
 							 <td class="forum-list-icon"><i class="fa fa-file-text" aria-hidden="true" style="font-size:24px;color:#ccc"></i></td>
-							 <td colspan="1"><div class="forum-name"><a href="#/admin/viewForumDetail/{{forum.forumId}}">{{forum.forumName}}</a></div>
+							 <td colspan="1"><div class="forum-name"><a href="#/viewForumDetail/{{forum.forumId}}">{{forum.forumName}}</a></div>
            	   		  			<div  class="forum-description">{{forum.forumContent | limitTo:30}}..</div>
            	   		  		</td>
            	   		  		<td> <div class="forum-no-posts">{{userNames[forum.userId]}}</div></td>
@@ -67,6 +68,6 @@
  		</div>
 	</div>
 </div>
-	
+</div>
 
 				

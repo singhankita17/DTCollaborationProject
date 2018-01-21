@@ -1,6 +1,6 @@
-
+<div class="container">
 <div class="row vertical-offset-20" data-ng-controller="userRegistrationController">
-		<div class="col-md-4 col-md-offset-4">
+		<div class="col-md-6 col-md-offset-3">
     		<div class="panel panel-default">
 			  	<div class="panel-heading">
 		  
@@ -74,19 +74,22 @@
 					    	
 						<div class="form-group">
 					    <label for="passwordRepeat">Confirm Password: </label>
-					    	<input type="password" class="form-control"  placeholder="Enter Repeat Password"  name="passwordRepeat" data-ng-model="passwordRepeat"  required/>
+					    	<input type="password" class="form-control"  placeholder="Enter Repeat Password"  name="passwordRepeat" data-ng-model="passwordRepeat" data-ng-blur="checkPasswordMatch()"  required/>
 					    	<span style="color:red" data-ng-show="registrationForm.passwordRepeat.$dirty && registrationForm.passwordRepeat.$invalid">
 	  					  <span data-ng-show="registrationForm.passwordRepeat.$error.required">Confirm Password is required.</span>
-	  					  </span>			   
+	  					  </span>	
+	  					  
+	  					  <span style="color:red" data-ng-show="passwordMismatch">Password and Confirm Password do not match.</span>
+	  					     
 					    </div>
 					    
 					     <br/>
-					    <p>By creating an account you agree to our <a href="privacy">Terms and Privacy</a>.</p>
+					    <p>By creating an account you agree to our <a href="#/termandconditions">Terms and Privacy</a>.</p>
 						<br/>
 					   	<div class="form-group">
 							    <div class="clearfix">
-							      <button type="submit" class="btn btn-success" data-ng-click="register()" ng-disabled=!registrationForm.$valid>Register</button>
-							      <button type="reset"  class="btn btn-danger">Cancel</button>		     
+							      <button type="submit" class="btn btn-success center-block" data-ng-click="register()" ng-disabled="!registrationForm.$valid || passwordMismatch" >Register</button>
+							    <!--   <button type="reset"  class="btn btn-danger" data-ng-click="reset()">Cancel</button>	 -->	     
 							 </div>
 			    		</div>
 			    	</fieldset>
@@ -95,4 +98,5 @@
 		</div>
 		</div>
   </div>
+</div>
 </div>

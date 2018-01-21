@@ -3,7 +3,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Home Page</title>
-
+ 
 </head>
 <body>
 
@@ -73,10 +73,12 @@
 					   	<span class="rw-number-notification" ng-if="notificationNotViewedLength>0">{{notificationNotViewedLength}}</span> </span></a>
 					   	
 					   	<ul class="dropdown-menu">
+					   	<li ng-show="notificationNotViewed.length==0 && notificationViewed.length==0"><a>No New Notifications Found</a></li>
 					           <li ng-repeat="notification in notificationNotViewed"> 
-					           <a href="" ng-click="updateNotification(notification.id)" style="color:red">{{notification.notificationType}} : {{notification.notificationDesc}} is {{notification.approvalStatus}} {{notification.rejectionReason}}</a></li> 
+					           <a href="" ng-click="updateNotification(notification.id)" style="color:blue">{{notification.notificationType}} : {{notification.notificationDesc}} is {{notification.approvalStatus}} {{notification.rejectionReason}}</a></li> 
+
 					           <li ng-repeat="notification1 in notificationViewed"> 
-					           <a href="" style="color:blue">{{notification1.notificationType}} : {{notification1.notificationDesc}} is {{notification1.approvalStatus}} {{notification1.rejectionReason}}</a></li>
+					           <a href="">{{notification1.notificationType}} : {{notification1.notificationDesc}} is {{notification1.approvalStatus}} {{notification1.rejectionReason}}</a></li>
 					          </ul>
 				   	</li>
 				   <li><a href="" data-ng-click="logout()" data-ng-controller='LoginController'><span data-ng-show="islogged"> Logout </span></a></li>
@@ -95,11 +97,12 @@
 			</ul>
 		  </div>
 		  </div>
-	</nav>		
+	</nav>	
+	
 	</header>
 		
 	<div id="main" class="offset-60">
-		<div data-ng-view>
+		<div data-ng-view autoscroll="true">
 		</div>
 	</div>
 	
@@ -129,7 +132,7 @@
 <hr>
 <div class="row">
 	<div class="footer-navigation"></div>	
-	<div class="footer-navigation"> Term Of Service | Privacy | Content Policy</div>
+	<div class="footer-navigation"> <a href="#/termandconditions">Term Of Service</a> |<a href="#/privacypolicy"> Privacy </a>| <a href="#/contentpolicy">Content Policy</a></div>
 	<div class="footer-navigation"></div>   
 </div>
 </div>
@@ -174,5 +177,7 @@
  <script src="resources/js/stomp/dist/stomp.js"></script>
 <link rel="stylesheet" href="resources/css/style-main.css">
 <link rel="stylesheet" href="resources/css/style-blog.css">
+<link rel="stylesheet" href="resources/css/_masthead.css">
 <script src="resources/js/script-main.js"></script>
+
 </html>

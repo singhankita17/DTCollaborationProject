@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.linkin.model.Friend;
 import com.linkin.model.UsersDetails;
@@ -191,7 +192,7 @@ public class UsersRESTController {
 	
 	
 	@RequestMapping(value="/uploadUserImage",method=RequestMethod.POST)
-	public ResponseEntity<?> uploadUserImage(@RequestParam("file")MultipartFile file,HttpSession session){
+	public ResponseEntity<?> uploadUserImage(@RequestParam CommonsMultipartFile image,HttpSession session){
 		 Integer userId = (Integer) session.getAttribute("userId");
 		   		
 		    if(userId==null)
@@ -201,11 +202,9 @@ public class UsersRESTController {
 		    else
 		    {
 		    	UsersDetails user = usersService.getUserById(userId);
-		    	try {
-					user.setImage(file.getBytes());
-				} catch (IOException e) {
-					return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(4,"User Image Updation failed"+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-				}	
+		    	
+				user.setImage(image.getBytes());
+					
 		        if(usersService.updateUser(user)){
 		        
 					return new ResponseEntity<UsersDetails>(user, HttpStatus.OK);
@@ -221,13 +220,13 @@ public class UsersRESTController {
 	
 	@RequestMapping(value="/getimage/{id}", method=RequestMethod.GET)
 	public @ResponseBody byte[] getProfilePic(@PathVariable("id") int id,HttpSession session){
-		Integer userId = (Integer) session.getAttribute("userId");
+		/*Integer userId = (Integer) session.getAttribute("userId");
 		 if(userId==null)
 		 {
 		    	return null;
 		 }	
 		else
-		{
+		{*/
 			UsersDetails user = usersService.getUserById(id);
 			byte[] profilePic = user.getImage();
 			
@@ -235,7 +234,7 @@ public class UsersRESTController {
 				return null;
 			else			
 				return profilePic;
-		}
+	//	}
 		
 	}
 	
