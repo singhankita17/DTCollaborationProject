@@ -3,11 +3,14 @@ app.controller('userRegistrationController',function($scope,$route,$location,$ro
 	   console.log("invoke user edit profile in controller");
 	   $scope.passwordMismatch = false;
 	   
-	   if($rootScope.currentuser != undefined){
-		   
-		   userService.retrieveUserByUserId($rootScope.currentuser.c_user_id).then(function(response){
-	    		
-				$scope.user = response.data;
+	   if($rootScope.globals.currentUser != undefined){
+		   retrieveUserDetail();
+	   }
+		   function retrieveUserDetail(){
+			   console.log("retrieving user")
+			   userService.retrieveUserByUserId($rootScope.globals.currentUser.userId).then(function(response){
+				$scope.user = response.data;	
+				console.log($scope.user )
 			},
 			function(response){
 				if(response.status == 401){
@@ -16,7 +19,7 @@ app.controller('userRegistrationController',function($scope,$route,$location,$ro
 				console.log(response.data.errorMessage);
 				$scope.errormessage = response.data.errorMessage;
 			})
-	   }
+		   }
 
 		console.log("invoked register function in controller");
 		
@@ -24,11 +27,15 @@ app.controller('userRegistrationController',function($scope,$route,$location,$ro
 	    	if($scope.passwordRepeat !== $scope.user.password){
 	    		console.log("Password and Confirm Password do not match.");
 		   		$scope.errormessage = "Password and Confirm Password do not match.";
+		   		$scope.editUserDetailForm.$setPristine();
+				$scope.editUserDetailForm.$setUntouched();
 		   		$location.path('/register');
 			}else{
 	    	userService.registerUser($scope.user).then(function(response){
 	    		console.log("User registered successfully");
 				$scope.errormessage = "User registered successfully";
+				$scope.registrationForm.$setPristine();
+				$scope.registrationForm.$setUntouched();
 				$location.path ('/login');
 			},
 			function(response){
@@ -40,13 +47,19 @@ app.controller('userRegistrationController',function($scope,$route,$location,$ro
 	  }
 	    
 	  $scope.edituserprofile = function(){
+		  console.log("inside user profile")
+		  console.log($scope.user)
 		  if($scope.passwordRepeat !== $scope.user.password){
 	    		console.log("Password and Confirm Password did not match.");
 		   		$scope.errormessage = "Password and Confirm Password did not match.";
-		   		$location.path('/register');
+		   		/*$scope.editUserDetailForm.$setPristine();
+				$scope.editUserDetailForm.$setUntouched();*/
+		   		$location.path('/editprofile');
 			}else{
 		  userService.edituserprofile($scope.user).then(function(response){
-	    		alert("User updated successfully")
+	    		alert("User updated successfully");
+	    		$scope.editUserDetailForm.$setPristine();
+				$scope.editUserDetailForm.$setUntouched();
 				$location.path ('/home');
 			},
 			function(response){
@@ -58,17 +71,16 @@ app.controller('userRegistrationController',function($scope,$route,$location,$ro
 			})
 		}
 	  }
-	  
-	  $scope.checkPasswordMatch =function(){
+	 
+	  $scope.checkPasswordMatch = function(){
 		  $scope.passwordMismatch = false;
+		  console.log($scope.passwordRepeat)
+		  console.log($scope.user.password)
 		  if($scope.passwordRepeat !== $scope.user.password){
 			  $scope.passwordMismatch = true;
+			  $scope.errormessage = "";
 		  }
 	  }
-	  
-	  	$scope.reset = function(){
-			
-			$scope.user = {};
-		}
+	
 	 
 });

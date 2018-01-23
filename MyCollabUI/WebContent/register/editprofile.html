@@ -1,3 +1,4 @@
+<div class="blog">
 <div class="container">
 <div class="row vertical-offset-20" data-ng-controller="userRegistrationController">
 		<div class="col-md-6 col-md-offset-3">
@@ -10,7 +11,7 @@
 				<div class="panel-body">
 			
 			 <form name="editUserDetailForm" novalidate>
-			 <p><font color="red">{{error.errorMessage}}</font></p>
+			 <p><font color="red">{{errormessage}}</font></p>
 			<fieldset>
 				  <div class="form-group">
 				  	<label for="firstName">First Name: </label>
@@ -73,8 +74,8 @@
 					    </div>		
 					    	
 						<div class="form-group">
-					    <label for="passwordRepeat">Reenter Password: </label>
-					    <input type="password" class="form-control"  placeholder="Enter Repeat Password"  name="passwordRepeat" data-ng-blur="checkPasswordMatch()" required/>
+					    <label for="passwordRepeat">Confirm Password: </label>
+					    <input type="password" class="form-control"  placeholder="Enter Repeat Password"  name="passwordRepeat" data-ng-model="passwordRepeat" data-ng-blur="checkPasswordMatch()" required/>
 					    <span style="color:red" data-ng-show="editUserDetailForm.passwordRepeat.$dirty && editUserDetailForm.passwordRepeat.$invalid">
 	  					  <span data-ng-show="editUserDetailForm.passwordRepeat.$error.required">Confirm Password is required.</span>
 	  					  </span>	
@@ -90,6 +91,7 @@
 			    	</fieldset>
 			    </form>
 			   </div>
+		</div>
 		</div>
 		</div>
   </div>

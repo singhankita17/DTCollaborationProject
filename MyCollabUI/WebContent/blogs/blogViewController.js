@@ -76,7 +76,12 @@ function blogViewController($scope,$location,BlogService,BlogCommentService,$roo
 		 .then(function(response){
 			 console.log(response.data)
 			 $scope.comment = '';
+			 $scope.showCommentBlock = false;			
 			 retrieveComment(blogId);
+			 $scope.commentForm.$setPristine();
+			 $scope.commentForm.$setUntouched();
+			 
+			 
 		 },function(response){
 			 console.log(response.data);
 			 if(response.status==401){

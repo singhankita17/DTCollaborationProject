@@ -50,9 +50,10 @@ app.controller("JobController",function($scope,JobService,$location){
 			$scope.job = response.data;
 			
 		},function(response){
-			$scope.errorMessage = reponse.data.errorMessage;			
-			if(response.status == 401){
-				
+			
+			$scope.errorMessage = reponse.data.errorMessage;	
+			
+			if(response.status == 401){				
 				$location.path('/login')
 			}
 			
@@ -62,5 +63,7 @@ app.controller("JobController",function($scope,JobService,$location){
 	$scope.reset = function(){
 		
 		$scope.job = {};
+		$scope.jobCreationForm.$setPristine();
+		$scope.jobCreationForm.$setUntouched();
 	}
 })

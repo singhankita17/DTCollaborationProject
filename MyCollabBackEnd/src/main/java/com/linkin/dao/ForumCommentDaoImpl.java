@@ -73,7 +73,8 @@ public class ForumCommentDaoImpl implements ForumCommentDao {
 
 		Session session = sessionFactory.openSession();
 		
-		List<ForumComment> forumCommentList= session.createQuery("from ForumComment",ForumComment.class).list();
+		List<ForumComment> forumCommentList= session.createQuery("from ForumComment where forumId = :forumId",ForumComment.class)
+				.setParameter("forumId", forumId).list();
 		
 		session.close();
 		

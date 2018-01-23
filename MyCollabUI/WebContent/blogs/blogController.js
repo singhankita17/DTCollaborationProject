@@ -24,6 +24,8 @@ function blogController($scope,$location,BlogService,BlogCommentService,$rootSco
 		 		alert("Blog created Successfully")
 		 		$scope.blog={}
 		 		viewUserBlogs();
+		 		$scope.blogCreationForm.$setPristine();
+				 $scope.blogCreationForm.$setUntouched();
 		 		
 		 	}else{
 		 		
@@ -222,6 +224,8 @@ function blogController($scope,$location,BlogService,BlogCommentService,$rootSco
 		 		$scope.blog = {};
 		 		$scope.editBlogFlag = false;
 		 		viewUserBlogs(); 
+		 		$scope.blogCreationForm.$setPristine();
+				 $scope.blogCreationForm.$setUntouched();
 		 		
 		 	}
 			 else

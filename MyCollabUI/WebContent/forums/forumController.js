@@ -4,7 +4,7 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 		
 		console.log("Forum Controller")
 		
-		var forumId = $routeParams.id;
+		var forumParamId = $routeParams.id;
 		$scope.isRejected=false;
 		
 	$scope.createNewForum = function (){		
@@ -15,6 +15,8 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 				$scope.errormessage = "Forum created Successfully"
 		 		console.log($scope.errormessage)
 		 		alert($scope.errormessage)
+		 		$scope.forumCreationForm.$setPristine();
+				$scope.forumCreationForm.$setUntouched();
 		 		$location.path("/home")
     	  },function(response){		 		
 		 		$scope.errormessage = response.data.errorMessage;
@@ -42,7 +44,7 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 	          		 .then(function(response){
 	          			 var obj = {};
 	          			 var valObj = {};
-	          			 $scope.commentList = response.data;
+	          			 $scope.forumCommentList = response.data;
 	          			 valObj.length = response.data.length
 	          			 $scope.commentCountList[item.forumId] = valObj;
 	          			
@@ -77,6 +79,7 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 				
 		 		console.log(response.data)
 		 		$scope.forum = response.data;
+		 		retrieveForumComment($scope.forum.forumId);
 		 		
 		 },function(response){		 	
 			    
@@ -89,7 +92,6 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 		 });
 		}
 		 
-		 retrieveForumComment(forumId)
 	}
 	
 	
@@ -159,23 +161,30 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 	}
 	
 	viewAllForums();
-	viewForumDetail(forumId);
+	
 	viewUserForums();
 	viewAllUsersForums();
 	viewAllPendingForums();
-	viewPendingForumDetail(forumId);
+	if(forumParamId!==undefined){
+		viewForumDetail(forumParamId);
+		viewPendingForumDetail(forumParamId);
+	}
 	
 	
 	
 	$scope.addForumComment = function(comment,forumId){
 		
 		comment.forumId = forumId;
-		 $scope.comment.userId = $rootScope.globals.currentUser.userObj.c_user_id;
-		 $scope.comment.username = $rootScope.globals.currentUser.userObj.username;
+		 $scope.comment.userId = $rootScope.globals.currentUser.userId;
+		 $scope.comment.username = $rootScope.globals.currentUser.username;
 		ForumCommentService.addComment(comment)
 		 .then(function(response){
 			 console.log(response.data)
 			 $scope.comment = '';
+			 retrieveForumComment(response.data.forumId);
+			 $scope.commentForm.$setPristine();
+			 $scope.commentForm.$setUntouched();
+			
 		 },function(response){
 			 console.log(response.data)
 			 if(response.status==401){
@@ -188,9 +197,12 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 	
 	
 	function retrieveForumComment(forumId){	
+		 $scope.commentList = {};
+		
 		 if(forumId){
 		 ForumCommentService.retrieveComment(forumId)
 		 .then(function(response){
+			 
 			 console.log("retrieve comment")
 			 console.log(response.data)
 			 $scope.commentList = response.data;
@@ -228,7 +240,7 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
  		$scope.editForumFlag = true;
  		viewUserForums(); 
  				 
-}
+	}
 
 	$scope.updateForum = function(forum){
  
@@ -238,6 +250,8 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
  		$scope.forum = {};
  		$scope.editForumFlag = false;
  		viewUserForums(); 
+ 		$scope.forumCreationForm.$setPristine();
+		$scope.forumCreationForm.$setUntouched();
  		
  	},function(response){
  		

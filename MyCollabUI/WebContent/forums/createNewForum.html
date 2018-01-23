@@ -1,3 +1,4 @@
+<div class="blog">
 <div class="container">
 <div class="row vertical-offset-20">
 		<div class="col-md-8 col-md-offset-2">
@@ -31,8 +32,8 @@
 					
 					   	<div class="form-group">
 							    <div class="clearfix">
-							      <button type="submit" class="btn btn-primary form-control-text center-block" data-ng-click="createNewForum()" data-ng-hide="editForumFlag" ng-disabled=!forumCreationForm.$valid>Create Forum</button>
-							       <button type="submit" class="btn btn-primary form-control-text center-block" data-ng-click="updateForum(forum)" data-ng-show="editForumFlag" ng-disabled=!forumCreationForm.$valid>Update Blog</button>
+							      <button type="submit" class="btn btn-primary form-control-text center-block" data-ng-click="createNewForum()" data-ng-hide="editForumFlag" data-ng-disabled=!forumCreationForm.$valid>Create Forum</button>
+							       <button type="submit" class="btn btn-primary form-control-text center-block" data-ng-click="updateForum(forum)" data-ng-show="editForumFlag" data-ng-disabled=!forumCreationForm.$valid>Update Blog</button>
 							      <!-- <button type="reset"  class="btn btn-danger">Cancel</button>	 -->	     
 							 </div>
 			    		</div>
@@ -46,7 +47,8 @@
 		  			<h3 class="panel-title"> My Topics </h3>
 		        </div>
 			<div class="panel-body">
-				<table  class="forum-table">
+			<div ng-if="forumUserList.length==0">No User Forums available</div>
+				<table  class="forum-table" ng-show="forumUserList.length>0">
 					<thead class="table-header">
 						<tr>
 						<th class="forum-icon"> &nbsp; </th>
@@ -70,5 +72,6 @@
 			</div>	
 		</div>
   </div>
+</div>
 </div>
 </div>

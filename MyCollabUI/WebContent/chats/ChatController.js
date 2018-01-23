@@ -14,7 +14,9 @@ app.controller('ChatController',['$rootScope','$scope','socket','userService',fu
 		$scope.userId = $rootScope.globals.currentUser.userId;
 		$scope.stompClient.subscribe("/topic/join",function(message){
 			user = JSON.parse(message.body);
-			alert($rootScope.userNames[user]+" joined chat")
+			if(user !== $rootScope.globals.currentUser.userId){
+				alert($rootScope.userNames[user]+" joined chat");
+			}
 			if (user!=$scope.userId && $.inArray(user,$scope.users) == -1){
 				$scope.addUser(user);
 				$scope.latestUser = user;

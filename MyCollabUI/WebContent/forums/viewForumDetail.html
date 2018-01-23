@@ -1,6 +1,10 @@
+<head>
+	<link rel="stylesheet" href="resources/css/style-forum.css">
+</head>
+<div class="blog">
 <div class="container">
-<div class="post">
-          <div>            
+<div class="vertical-offset-20">
+         <!--  <div>            
             <h2>{{forum.forumName}}</h2>
             <cite>by {{ userNames[forum.userId] }} on {{forum.createdDate | date : "medium"}}</cite>
             <div class="post-body">
@@ -18,17 +22,79 @@
                  <br> {{comment.commentDate | date : "medium"}}
                </li>
               </ul>
-               <!-- <h4>Add Comment</h4> -->
+               <h4>Add Comment</h4>
                <button data-ng-click="accessCommentBlock()">Add a Comment</button>
               <div data-ng-show="globals.currentUser.username && showCommentBlock">
-              <form name="commentForm">
+              <form name="commentForm" novalidate>
               
 	                  <textarea data-ng-model="comment.commentText" cols="20" rows="5" placeholder="Comment Text Here" required></textarea>
 	                                  
-	                  <button data-ng-click="addForumComment(comment,forum.forumId)">Submit</button>
+	                  <button data-ng-click="addForumComment(comment,forum.forumId)" ng-disabled="!commentForm.$valid">Submit</button>
 	           </form>
 	           </div>
               </div>
+        </div> -->
+       
+        <div class="col-sm-10 col-md-12">
+        <div class="jumbotron">   
+            <div class="msg-wrap">
+                <p class="thread-title">Topic: {{forum.forumName}}</p>
+                <div class="msg odd">
+                    <div class="col-md-3 author">
+                        <h5 class="media-heading">{{ userNames[forum.userId] }} <small class="text-muted"> </small></h5><small class="text-muted">
+                        <i class="fa fa-clock-o"></i> {{forum.createdDate | date : date:'MMM d, y @ h:mma'}}</small>
+                        <a href="" class="">
+                       <!--  <img data-ng-src="http://localhost:8181/MyCollab/getimage/{{globals.currentUser.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle"> -->
+                            <img data-ng-src="http://localhost:8181/MyCollab/getimage/{{forum.userId}}" style="width: 64px; height: 64px;" alt="64x64" class="media-object">
+                        </a>
+                    </div>
+                    <div class="col-md-9">
+                        {{forum.forumContent}}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div data-ng-repeat="comment in commentList">
+    			<div class="msg even"  ng-if="($index%2)===0">
+                    <div class="col-md-3 author">
+                        <h5 class="media-heading">{{ userNames[comment.userId] }} <small class="text-muted"> </small></h5><small class="text-muted">
+                        <i class="fa fa-clock-o"></i> {{comment.commentDate | date:'MMM d, y @ h:mma'}}</small>
+                        <a href="" class="">
+                            <img data-ng-src="http://localhost:8181/MyCollab/getimage/{{comment.userId}}" style="width: 64px; height: 64px;" alt="64x64" class="media-object">
+                        </a>
+                    </div>
+                    <div class="col-md-9">
+                        {{comment.commentText}}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="msg odd" ng-if="($index%2)!==0">
+                    <div class="col-md-3 author">
+                        <h5 class="media-heading">{{ userNames[comment.userId] }} <small class="text-muted"> </small></h5><small class="text-muted">
+                        <i class="fa fa-clock-o"></i> {{comment.commentDate | date:'MMM d, y @ h:mma'}}</small>
+                        <a href="" class="">
+                            <img data-ng-src="http://localhost:8181/MyCollab/getimage/{{comment.userId}}" style="width: 64px; height: 64px;" alt="64x64" class="media-object">
+                        </a>
+                    </div>
+                    <div class="col-md-9">
+                        {{comment.commentText}}
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+    	    </div>
+			</div>
+            <div class="send-wrap ">
+            	 <button class="btn btn-primary" data-ng-click="accessCommentBlock()" data-ng-hide="showCommentBlock">Post a Comment</button>
+                <form  name="commentForm"  accept-charset="UTF-8" method="POST" role="form" data-ng-show="globals.currentUser.username && showCommentBlock" novalidate>
+                    <div class="form-group">
+                        <textarea class="form-control counted"  data-ng-model="comment.commentText" rows="3" placeholder="Write a reply..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button data-ng-click="addForumComment(comment,forum.forumId)" class="btn btn-primary" ng-disabled="!commentForm.$valid" type="submit">Post Reply</button>
+                    </div>
+                </form>
+            </div>
         </div>
       </div>
+     </div>
+     </div>
 </div>
