@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ public class NotificationRESTController {
 
 	@Autowired
 	NotificationService notificationService;
+	
+	private static Logger log = LoggerFactory.getLogger(NotificationRESTController.class);
 	
 	@RequestMapping(value="/getnotification/{viewed}")
 	public ResponseEntity<?> getNotification(@PathVariable("viewed")int viewed,HttpSession session){

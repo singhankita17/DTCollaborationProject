@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,8 @@ public class JobRESTController {
 	
 	@Autowired
 	JobsService jobsService;
+	
+	private static Logger log = LoggerFactory.getLogger(JobRESTController.class);
 
 	@RequestMapping(value="/addJob",method=RequestMethod.POST)
 	public ResponseEntity<?> addJob(@RequestBody JobDetail job,HttpSession session){

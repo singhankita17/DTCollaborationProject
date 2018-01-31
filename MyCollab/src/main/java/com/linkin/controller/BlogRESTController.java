@@ -5,7 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,19 +42,23 @@ public class BlogRESTController {
 	@Autowired
 	NotificationService notificationService;
 	
+	private static Logger log = LoggerFactory.getLogger(BlogRESTController.class);
+	
 	@RequestMapping(value="/createBlog",method=RequestMethod.POST)
 	public ResponseEntity<?> createBlog(@RequestBody Blog blog,HttpSession session){
-		
-		Integer userId = (Integer) session.getAttribute("userId");
+		 log.info("Create New Blog: fetch user session details");
+		 Integer userId = (Integer) session.getAttribute("userId");
 		 if(userId==null)
 		    {
+			 	log.info("Create New Blog: user session details Not Found");
 		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
 			}	   
 		    else	
 		    {
 				UsersDetails user = userService.getUserById(userId);
-				
+				log.info("Create New Blog: user details fetched = "+user.toString());
 				if(user.isOnline()){
+					log.info("Create New Blog: if user is online create new Blog ");
 					blog.setUserId(user.getC_user_id());
 					blog.setUserName(user.getUserName());
 					blog.setStatus("PENDING");
@@ -71,6 +76,7 @@ public class BlogRESTController {
 	
 	@RequestMapping(value="/viewApprovedBlogs",method=RequestMethod.GET)
 	public ResponseEntity<?> viewApprovedBlogs(){
+		 log.info("ViewApprovedBlogs: fetch all Approved Blogs details");
 		List<Blog> blogList = blogService.getAllApprovedBlog();
 		if(blogList!=null){
 				return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
@@ -84,11 +90,11 @@ public class BlogRESTController {
 	
 	@RequestMapping(value="/viewBlogById/{blogId}",method=RequestMethod.GET)
 	public ResponseEntity<?> viewBlogById(@PathVariable("blogId") int blogId){
-		
+		 log.info("ViewBlogById: fetch Blog details by Id = "+blogId);
 		Blog blog = blogService.getBlog(blogId);
-		
+		 log.info("ViewBlogById:  Blog details by Id = "+blog);
 		if(blog!=null){
-				System.out.println("Blog details: "+blog.getBlogId()+" Date: "+blog.getCreatedDate());
+			 log.info("ViewBlogById: Blog details: "+blog.getBlogId()+" Date: "+blog.getCreatedDate());
 				return new ResponseEntity<Blog>(blog, HttpStatus.OK);
 		}
 		else
@@ -99,15 +105,17 @@ public class BlogRESTController {
 	
 	@RequestMapping(value="/viewPendingBlogs",method=RequestMethod.GET)
 	public ResponseEntity<?> viewPendingBlogs(HttpSession session){
-		
+		 log.info("ViewPendingBlogs: fetch all pending Blog details  ");
 		Integer userId = (Integer) session.getAttribute("userId");
 		 if(userId==null)
 		    {
+			 log.info("ViewPendingBlogs: user session details not found  ");
 		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
 			}	   
 		    else	
 		    {
 				List<Blog> blogList = blogService.getAllPendingBlogs();
+				 log.info("ViewPendingBlogs: pending Blog List :  "+blogList);
 				if(blogList!=null){
 						return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
 				}
@@ -120,7 +128,9 @@ public class BlogRESTController {
 	
 	@RequestMapping(value="/viewAllBlogs",method=RequestMethod.GET)
 	public ResponseEntity<?> viewAllBlogs(){
+		log.info("View All Blogs: fetch all Blog details  ");
 		List<Blog> blogList = blogService.getAllBlogs();
+		log.info("View All Blogs:  Blog details List = "+blogList);
 		if(blogList!=null){
 				return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
 		}
@@ -133,7 +143,7 @@ public class BlogRESTController {
 	
 	@RequestMapping(value="/viewUserBlogs",method=RequestMethod.GET)
 	public ResponseEntity<?> viewUserBlogs(HttpSession session){
-		
+		log.info("View User Blogs: fetch all current user Blog details  ");
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(userId==null)
 	    {
@@ -142,6 +152,7 @@ public class BlogRESTController {
 	    else	
 	    {
 				List<Blog> blogList = blogService.getAllBlogs(userId);
+				log.info("View User Blogs: fetch all current user Blog details fetched =  "+blogList);
 				if(blogList!=null){
 						return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
 				}
@@ -154,7 +165,7 @@ public class BlogRESTController {
 	
 	@RequestMapping(value="/approveBlog/{blogId}",method=RequestMethod.GET)
 	public ResponseEntity<?> approveBlog(@PathVariable("blogId") int blogId,HttpSession session){
-		
+		log.info("Approved Blogs: Approve Blog details  ");
 		Integer userId = (Integer) session.getAttribute("userId");
 		 if(userId==null)
 		    {
@@ -166,7 +177,7 @@ public class BlogRESTController {
 					if(blogObj!=null){				
 						if(blogService.approveBlog(blogObj)){
 							    blogObj = blogService.getBlog(blogId);
-							    
+							    log.info("Approved Blogs: Approve Blog details successful "+blogObj);
 							    //Add entry in Notification for the blog 
 							    Notification notification = new Notification();
 							    notification.setNotificationType("BLOG");
@@ -176,6 +187,7 @@ public class BlogRESTController {
 								notification.setApprovalStatus("APPROVED");
 								notification.setViewed(false);
 								notificationService.addNotification(notification);
+								 log.info("Approved Blogs:Add notification details "+notification);
 								return new ResponseEntity<Blog>(blogObj, HttpStatus.OK);
 						}
 						else
@@ -192,7 +204,7 @@ public class BlogRESTController {
 	
 	@RequestMapping(value="/rejectBlog/{blogId}",method=RequestMethod.GET)
 	public ResponseEntity<?> rejectBlog(@PathVariable("blogId") int blogId,@RequestParam (required=false) String rejectionReason,HttpSession session){
-					
+		log.info("Reject Blogs: Reject Blog details  ");		
 		Integer userId = (Integer) session.getAttribute("userId");
 		 if(userId==null)
 		    {
@@ -241,7 +253,7 @@ public class BlogRESTController {
 	
 	@RequestMapping(value="/getBlogComment/{blogId}",method=RequestMethod.GET)
 	public ResponseEntity<?> getBlogComment(@PathVariable("blogId") int blogId){
-		
+		log.info("GetBlogComment: get blog comment by Id =  "+blogId);	
 		List<BlogComment> commentList = blogCommentService.getAllBlogComments(blogId);
 		
 		if(commentList!=null){
@@ -256,25 +268,32 @@ public class BlogRESTController {
 	
 	@RequestMapping(value="/addBlogComment",method=RequestMethod.POST)
 	public ResponseEntity<?> addBlogComment(@RequestBody BlogComment blogComment,HttpSession session){
-		System.out.println("Blog comment = "+blogComment.getBlogId()+" user Id; "+blogComment.getUserId() );
+		log.info("AddBlogComment: Blog comment Blog Id= "+blogComment.getBlogId()+" user Id = "+blogComment.getUserId() );
 		Integer userId =  (Integer) session.getAttribute("userId");
-		UsersDetails user = userService.getUserById(userId);
-		if(user.isOnline()){	
-			blogComment.setCommentDate(new Date());
-			blogComment.setUserName(user.getFirstName()+" "+user.getLastName());
-			if(blogCommentService.addBlogComment(blogComment)){
-				return new ResponseEntity<BlogComment>(blogComment, HttpStatus.OK);
-			}else{
-				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(19,"Blog Comment Addition failed"), HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		}
-		return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(12,"User must be logged in to add a comment"),HttpStatus.CONFLICT);
+		 if(userId==null)
+		    {
+		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+		    else{
+				UsersDetails user = userService.getUserById(userId);
+				if(user.isOnline()){	
+					blogComment.setCommentDate(new Date());
+					blogComment.setUserName(user.getFirstName()+" "+user.getLastName());
+					if(blogCommentService.addBlogComment(blogComment)){
+						return new ResponseEntity<BlogComment>(blogComment, HttpStatus.OK);
+					}else{
+						return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(19,"Blog Comment Addition failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+				}
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(12,"User must be logged in to add a comment"),HttpStatus.CONFLICT);
+		    }
 	}
 		
 	@RequestMapping(value="/updateLikes",method=RequestMethod.POST)
 	public ResponseEntity<?> updateNoOfLikes(@RequestBody Blog blog,HttpSession session){
-		
+		log.info("Update No Of Likes ");
 		Integer userId =  (Integer) session.getAttribute("userId");
+		
 		UsersDetails user = userService.getUserById(userId);
 		if(user.isOnline()){			
 			if(blogService.updateBlog(blog)){
@@ -289,7 +308,7 @@ public class BlogRESTController {
 	
 	@RequestMapping(value="/updateBlog",method=RequestMethod.PUT)
 	public ResponseEntity<?> updateBlog(@RequestBody Blog blog,HttpSession session){
-		
+		log.info("Update Blogs: Update Blog details ");
 		Integer userId = (Integer) session.getAttribute("userId");
 		Notification notification;
 		 if(userId==null)
@@ -330,7 +349,7 @@ public class BlogRESTController {
 	
 	@RequestMapping(value="/deleteBlogById/{blogId}",method=RequestMethod.DELETE)
 	public ResponseEntity<?> deleteBlogById(@PathVariable("blogId") int blogId,HttpSession session){
-		
+		log.info("Delete Blogs: Delete Blog By Id "+ blogId);
 		Integer userId = (Integer) session.getAttribute("userId");
 		 if(userId==null)
 		    {

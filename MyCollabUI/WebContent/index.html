@@ -2,7 +2,7 @@
 <html data-ng-app="myModule">
 <head>
 <meta charset="ISO-8859-1">
-<title>Home Page</title>
+<title>MyCollab - Create your own blogs and forums. Connect with your friends.</title>
  
 </head>
 <body>
@@ -11,7 +11,8 @@
 			<nav class="navbar navbar-default navbar-fixed-top">
 			 <div class="container-fluid">
 				<div class="navbar-header">
-				<a class="navbar-brand" href="#home">My Collab</a>
+				<a class="navbar-brand" href="#home" data-ng-show="!isAdmin">My Collab</a>
+				<a class="navbar-brand" href="#admin/home" data-ng-show="isAdmin">My Collab</a>
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" >
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -46,7 +47,7 @@
 				           <li><a href="#viewjobs">View Jobs</a> </li>
 				          </ul>
 			        </li>	
-			          <li class="dropdown">
+			          <li class="dropdown" data-ng-show="islogged">
 			          	<a class="dropdown-toggle" data-toggle="dropdown" href="">Friends<span class="caret"></span></a>
 				          <ul class="dropdown-menu">
 				           <li><a href="#/suggestedUsers"> Suggested Users </a></li>
@@ -55,20 +56,21 @@
 				          </ul>
 			        </li>	
 			       
-			        <li class="dropdown">
+			        <li class="dropdown" data-ng-show="islogged">
 			          	<a class="dropdown-toggle" data-toggle="dropdown" href="">Profile<span class="caret"></span></a>
 				          <ul class="dropdown-menu">
 				           <li><a href="#editprofile">Edit Profile </a> </li> 
 				            <li><a href="#uploadpicture">Upload Profile Picture</a></li>
 				          </ul>
-			        </li>			       
-				    <li><a href="#chat"><span data-ng-show="islogged"> Chat </span></a> </li>
-				    <li><a href="#register"><span data-ng-show="!islogged"> Register </span></a> </li>		
-				   <li><a href="#login"><span data-ng-show="!islogged"> LogIn </span></a></li>
-				    <li><a href="#uploadpicture" data-ng-show="islogged"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{globals.currentUser.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle"></a></li>
-				   <li><a href=""><span data-ng-show="islogged"> Welcome {{ globals.currentUser.firstname}} </span></a></li>
-				    <li class="dropdown">
-					    <a href="" class="dropdown-toggle" data-toggle="dropdown" data-ng-show="islogged">
+			        </li>
+			       		       
+				   <li data-ng-show="islogged"><a href="#chat"> Chat</a> </li>
+				    <li data-ng-show="!islogged"><a href="#register"> Register </a> </li>		
+				   <li data-ng-show="!islogged"><a href="#login"> LogIn </a></li>
+				    <li data-ng-show="islogged"><a href="#uploadpicture"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{globals.currentUser.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle"></a></li>
+				   <li  data-ng-show="islogged"><a href=""> Welcome {{ globals.currentUser.firstname}} </a></li>
+				    <li class="dropdown" data-ng-show="islogged">
+					    <a href="" class="dropdown-toggle" data-toggle="dropdown">
 					   	<span class="glyphicon glyphicon-globe" ng-click="updateLength()">
 					   	<span class="rw-number-notification" ng-if="notificationNotViewedLength>0">{{notificationNotViewedLength}}</span> </span></a>
 					   	
@@ -81,18 +83,18 @@
 					           <a href="">{{notification1.notificationType}} : {{notification1.notificationDesc}} is {{notification1.approvalStatus}} {{notification1.rejectionReason}}</a></li>
 					          </ul>
 				   	</li>
-				   <li><a href="" data-ng-click="logout()" data-ng-controller='LoginController'><span data-ng-show="islogged"> Logout </span></a></li>
+				   <li data-ng-show="islogged"><a href="" data-ng-click="logout()" data-ng-controller='LoginController'> Logout </a></li>
 				   
 			</ul>
 			
 			<ul class="nav navbar-nav navbar-right" data-ng-show="isAdmin"> 
 									
-				   <li><a href="#admin/manageBlog"><span data-ng-show="islogged"> Manage Blog </span></a> </li>		
-				   <li><a href="#admin/manageForum"><span data-ng-show="islogged"> Manage Forum </span></a></li>
-				   <li><a href="#admin/addjob"><span data-ng-show="islogged"> Add Job </span></a></li>
-				    <li><a href="#uploadpicture" data-ng-show="islogged"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{globals.currentUser.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle"></a></li>
-				   <li><a href=""><span data-ng-show="islogged"> Welcome ADMIN  {{ globals.currentUser.firstname}} </span></a></li>
-				   <li><a href="" data-ng-click="logout()" data-ng-controller='LoginController'><span data-ng-show="islogged"> Logout </span></a></li>
+				   <li data-ng-show="islogged"><a href="#admin/manageBlog"> Manage Blog</a> </li>		
+				   <li data-ng-show="islogged"><a href="#admin/manageForum"> Manage Forum </a></li>
+				   <li data-ng-show="islogged"><a href="#admin/addjob"> Add Job </a></li>
+				    <li data-ng-show="islogged"><a href="#uploadpicture"><img data-ng-src="http://localhost:8181/MyCollab/getimage/{{globals.currentUser.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle"></a></li>
+				   <li data-ng-show="islogged"><a href=""> Welcome ADMIN  {{ globals.currentUser.firstname}} </a></li>
+				   <li data-ng-show="islogged"><a href="" data-ng-click="logout()" data-ng-controller='LoginController'> Logout </a></li>
 				   
 			</ul>
 		  </div>
@@ -109,7 +111,8 @@
 </body>
 <div class="footer">
 <div class="container">
-<div class="social-links social-icons" style="text-align:right"><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a><a href="https://twitter.com/?request_context=signup" target="_blank"><i class="fa fa-twitter"></i></a><a href="https://www.linkedin.com/" target="_blank"><i class="fa fa-linkedin"></i></a><a href="https://github.com/singhankita17" target="_blank"><i class="fa fa-github"></i></a></div>
+<div class="social-links social-icons" style="text-align:right"><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a><a href="https://twitter.com/?request_context=signup" target="_blank"><i class="fa fa-twitter"></i></a>
+<a href="https://www.linkedin.com/" target="_blank"><i class="fa fa-linkedin"></i></a><a href="https://github.com/singhankita17/DTCollaborationProject" target="_blank"><i class="fa fa-github"></i></a></div>
 <div class="row">
 </div>
  <div class="row">

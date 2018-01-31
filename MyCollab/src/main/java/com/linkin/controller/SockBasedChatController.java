@@ -3,6 +3,8 @@ package com.linkin.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -22,6 +24,8 @@ public class SockBasedChatController {
 	@Autowired
 	UsersService usersService;
 	
+	private static Logger log = LoggerFactory.getLogger(SockBasedChatController.class);
+	
 	@Autowired
 	public SockBasedChatController(SimpMessagingTemplate messagingTemplate) {
 		
@@ -30,12 +34,12 @@ public class SockBasedChatController {
 	
 	@SubscribeMapping("/join/{userId}")
 	public List<Integer> join(@DestinationVariable("userId") int userId){
-		System.out.println(" User Id in SockBasedChatController = "+userId);
+		log.info(" User Id in SockBasedChatController = "+userId);
 		
 		users = usersService.getOnlineUserList();
 		
 		
-		System.out.println("=====Join====="+userId);
+		log.info("=====Join====="+userId);
 		messagingTemplate.convertAndSend("/topic/join",userId);
 		
 		return users;
@@ -44,10 +48,10 @@ public class SockBasedChatController {
 	@MessageMapping(value="/chat")
 	public void chatReceived(Chat chat){
 		if("all".equals(chat.getTo())){
-			System.out.println("IN CHAT RECEIVED : "+chat.getMessage()+"  from "+chat.getFrom()+"  send to : "+chat.getTo());
+			log.info("IN CHAT RECEIVED : "+chat.getMessage()+"  from "+chat.getFrom()+"  send to : "+chat.getTo());
 			messagingTemplate.convertAndSend("/queue/chats",chat);
 		}else{
-			System.out.println("CHAT TO : "+chat.getTo()+" from = "+chat.getFrom()+" Message = "+chat.getMessage());
+			log.info("CHAT TO : "+chat.getTo()+" from = "+chat.getFrom()+" Message = "+chat.getMessage());
 			messagingTemplate.convertAndSend("/queue/chats/"+chat.getTo(),chat);
 			messagingTemplate.convertAndSend("/queue/chats/"+chat.getFrom(),chat);
 		}

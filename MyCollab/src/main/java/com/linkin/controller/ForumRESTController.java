@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linkin.model.Blog;
-import com.linkin.model.BlogComment;
+
 import com.linkin.model.Forum;
 import com.linkin.model.ForumComment;
 import com.linkin.model.Notification;
@@ -41,6 +42,8 @@ public class ForumRESTController {
 	
 	@Autowired
 	NotificationService notificationService;
+	
+	private static Logger log = LoggerFactory.getLogger(ForumRESTController.class);
 	
 	@RequestMapping(value="/createForum",method=RequestMethod.POST)
 	public ResponseEntity<?> createForum(@RequestBody Forum forum,HttpSession session){
@@ -86,10 +89,10 @@ public class ForumRESTController {
 		    		notification = notificationService.getNotification("FORUM", forumObj.getForumId());
 					
 					if(notification != null){
-						System.out.println("notification = " + notification.toString());
+						log.info("notification = " + notification.toString());
 						
 						if(notificationService.deleteNotification(notification)){
-							System.out.println("Notification deleted successfully");
+							log.info("Notification deleted successfully");
 						}
 					}
 					if(forumService.updateForum(forumObj)){  

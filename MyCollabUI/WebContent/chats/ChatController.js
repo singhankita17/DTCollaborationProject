@@ -8,6 +8,7 @@ app.controller('ChatController',['$rootScope','$scope','socket','userService',fu
 	$scope.chats = [];
 	$scope.stompClient = socket.stompClient;
 	$scope.users = [];
+	 $scope.CurrentDate = new Date();
 	
 	$scope.$on('sockConnected',function(event,frame){
 		console.log($rootScope.globals.currentUser.userId)
@@ -79,7 +80,10 @@ app.controller('ChatController',['$rootScope','$scope','socket','userService',fu
 	        chat.from = 'Me';
 	        console.log('chat '+chat.from)
 	        chat.direction = 'outgoing';
+	        chat.time = new Date();
 	        $scope.addChat(chat);
+	        
+	       
 	    });
 
 	    $scope.processIncomingMessage = function(message, isBroadcast) {
@@ -89,6 +93,7 @@ app.controller('ChatController',['$rootScope','$scope','socket','userService',fu
 	        if(message.from != $scope.userId) {
 	        	console.log("Mesage from ="+message.from)
 	        	message.from =$rootScope.userNames[message.from];
+	        	message.time = new Date();
 	        	$scope.addChat(message);
 	            $scope.$apply(); // since inside subscribe closure
 	        }

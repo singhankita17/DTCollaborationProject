@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,8 @@ public class FriendRESTController {
 	
 	@Autowired
 	UsersService usersService;
+	
+	private static Logger log = LoggerFactory.getLogger(FriendRESTController.class);
 
 		@RequestMapping(value="/suggestedUsersList",method=RequestMethod.GET)
 		public ResponseEntity<?> suggestedUsersList(HttpSession session){
