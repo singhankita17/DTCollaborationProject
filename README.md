@@ -1,6 +1,6 @@
 # Collaboration Platform
 
-One Paragraph of project description goes here
+My Collab is a collaboration portal for people to share their thoughts, engagae in discussions or connect with friends.
 
 ## Getting Started
 
