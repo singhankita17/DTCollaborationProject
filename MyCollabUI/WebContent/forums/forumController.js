@@ -181,6 +181,7 @@ function forumController($scope,$location,ForumService,ForumCommentService,$root
 		 .then(function(response){
 			 console.log(response.data)
 			 $scope.comment = '';
+			 $scope.showCommentBlock = false;	
 			 retrieveForumComment(response.data.forumId);
 			 $scope.commentForm.$setPristine();
 			 $scope.commentForm.$setUntouched();
