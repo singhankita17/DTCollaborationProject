@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.linkin.model.Blog;
 import com.linkin.model.BlogComment;
+import com.linkin.model.BlogPostLikes;
 import com.linkin.model.Forum;
 import com.linkin.model.ForumComment;
 import com.linkin.model.Friend;
@@ -66,6 +67,7 @@ public class AppContextDBConfig {
 		sessionBuilder.addAnnotatedClass(JobDetail.class);
 		sessionBuilder.addAnnotatedClass(Friend.class);
 		sessionBuilder.addAnnotatedClass(Notification.class);
+		sessionBuilder.addAnnotatedClass(BlogPostLikes.class);
 		System.out.println("Session factory config");
 		return sessionBuilder.buildSessionFactory();
 	}

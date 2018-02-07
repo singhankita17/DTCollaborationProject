@@ -46,8 +46,9 @@
                                         By: <a href="#">{{userNames[comment.userId]}}</a> on {{comment.commentDate | date:'MMM d, y @ h:mma'}}
                                     </div>
                                 </div>
-                                <div class="comment-text">
-                                    
+                                <div data-ng-show="comment.userId === globals.currentUser.userId" class="pull-right">
+                                    <button data-ng-click="editComment(comment)" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-edit"></span></button> <span>    </span>
+							 		<button  data-ng-click="deleteComment(comment)" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
                                 </div>
                                 
                             </div>
@@ -66,9 +67,10 @@
 	               <!--  <h4>Add Comment</h4> -->
 	               <img data-ng-src="http://localhost:8181/MyCollab/getimage/{{globals.currentUser.userId}}" alt="upload Picture" width="30px" height="30px" class="img-circle"> <span class="focus-text"> {{userNames[globals.currentUser.userId]}}</span>
 	               <br/><br/>	                  
-	                  <textarea data-ng-model="comment.commentText" cols="3" rows="3" placeholder="Type Comment Text Here" required></textarea>
+	                  <textarea name="commentTxt" data-ng-model="comment.commentText" cols="3" rows="3" placeholder="Type Comment Text Here" required></textarea>
 	                   <br/>               
-	                  <button  class="btn btn-primary" data-ng-click="addComment(comment,blog.blogId)"  ng-disabled="!commentForm.$valid">Submit</button>
+	                  <button  class="btn btn-primary" data-ng-click="addComment(comment,blog.blogId)"  ng-disabled="!commentForm.$valid"  data-ng-hide="editCommentFlag">Submit</button>
+	                  <button  class="btn btn-primary" data-ng-click="updateComment(comment,blog.blogId)"  ng-disabled="!commentForm.$valid"  data-ng-show="editCommentFlag">Update</button>
 	           </form>
 	           </div>
           

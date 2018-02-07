@@ -64,8 +64,8 @@
            	   		 		 <div  class="forum-description">{{forum.forumContent | limitTo:30}}..</div>
            	   		  		</td>
 							<td><div class="forum-no-posts">{{forum.status}}</div></td>
-							<td class="forum-start-date"> <button data-ng-click="editForum(forum)"><span class="glyphicon glyphicon-pencil"></span></button> <span>    </span>
-							 <button  data-ng-click="deleteForum(forum.forumId)"><span class="glyphicon glyphicon-remove"></span></button></td>
+							<td class="forum-start-date"> <button data-ng-click="editForum(forum)" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-pencil"></span></button> <span>    </span>
+							 <button  data-ng-click="deleteForum(forum.forumId)"  class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span></button></td>
 						</tr>
 					</tbody>
 				</table>

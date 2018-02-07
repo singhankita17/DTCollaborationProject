@@ -1,5 +1,5 @@
-var app = angular.module('myModule',['ngRoute','ngCookies'])
-					.config(function ($routeProvider,$locationProvider){
+var app = angular.module('myModule',['ngRoute','ngCookies','ngIdle'])
+					.config(function ($routeProvider,$locationProvider,IdleProvider, KeepaliveProvider){
 						$locationProvider.hashPrefix('');
 						
 						$routeProvider
@@ -105,9 +105,42 @@ var app = angular.module('myModule',['ngRoute','ngCookies'])
 							templateUrl: "utils/contentpolicy.html"
 						})
 						.otherwise({templateUrl: "home/home.html",controller: "homeController"});
+						
+						IdleProvider.idle(900); // 15 min
+						  IdleProvider.timeout(120);
+						  KeepaliveProvider.interval(600); // heartbeat every 10 min
+						//  KeepaliveProvider.http('/api/heartbeat'); // URL that makes sure session is alive
 						 
 					})
-					.run(function run($rootScope, $location, $routeParams,$cookies, $http,AuthenticationService) {
+					.run(function run($rootScope, $location, $routeParams,$cookies, $http,AuthenticationService,Idle) {
+						
+						 Idle.watch();
+						//  $rootScope.$on('IdleStart', function() { /* Display modal warning or sth */ });
+						  $rootScope.$on('IdleTimeout', function() { /* Logout user */
+
+							  console.log("logout func")
+				              AuthenticationService.Logout(function (response) {	 
+				                 if (response.success) {
+				                	 
+				                 	AuthenticationService.ClearCredentials();
+				                     console.log("success"+response.data)
+				                     $location.path('/login');
+				                     
+				                 } else {
+				                	 
+				                   //  FlashService.Error(response.message);
+				                 //	     alert("error")
+				                	
+				                        console.log(response.data)
+				                		 AuthenticationService.ClearCredentials();
+				                         console.log("User is invalid"+response.data)
+				                         $rootScope.islogged=false;
+				                         $location.path('/login');
+				                	
+				                 }
+				             });
+						  });
+						
 						    // keep user logged in after page refresh
 						 	$rootScope.isAdmin = false; 	
 					       $rootScope.globals = $cookies.getObject('globals') || {};

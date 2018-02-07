@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.linkin.model.Blog;
 import com.linkin.model.BlogComment;
+import com.linkin.model.BlogPostLikes;
 import com.linkin.model.Notification;
 import com.linkin.model.UsersDetails;
 import com.linkin.service.BlogCommentService;
+import com.linkin.service.BlogPostLikesService;
 import com.linkin.service.BlogService;
 import com.linkin.service.NotificationService;
 import com.linkin.service.UsersService;
@@ -41,6 +43,9 @@ public class BlogRESTController {
 
 	@Autowired
 	NotificationService notificationService;
+	
+	@Autowired
+	BlogPostLikesService blogPostLikesService;
 	
 	private static Logger log = LoggerFactory.getLogger(BlogRESTController.class);
 	
@@ -296,10 +301,14 @@ public class BlogRESTController {
 		
 		UsersDetails user = userService.getUserById(userId);
 		if(user.isOnline()){			
-			if(blogService.updateBlog(blog)){
+			//if(blogService.updateBlog(blog)){
+			Blog updatedBlog = blogPostLikesService.updateBlogPostLikes(blog, user);
+			
+			if(updatedBlog != null)
+			{
 				return new ResponseEntity<Blog>(blog, HttpStatus.OK);
 			}else{
-				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(11,"Blog updation failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(11,"Blog Likes updation failed"), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
 		return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(12,"User must be logged in to like"),HttpStatus.CONFLICT);
@@ -368,6 +377,53 @@ public class BlogRESTController {
 				}
 				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(24,"User must be logged in to delete blog"),HttpStatus.CONFLICT);
 		    	
+		    }
+	}
+	
+	
+	@RequestMapping(value="/updateBlogComment",method=RequestMethod.POST)
+	public ResponseEntity<?> updateBlogComment(@RequestBody BlogComment blogComment,HttpSession session){
+		log.info("UpdateBlogComment: Blog comment Blog Id= "+blogComment.getBlogId()+" user Id = "+blogComment.getUserId() );
+		Integer userId =  (Integer) session.getAttribute("userId");
+		 if(userId==null)
+		    {
+		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+		    else{
+				UsersDetails user = userService.getUserById(userId);
+				if(user.isOnline()){	
+					blogComment.setCommentDate(new Date());
+					blogComment.setUserName(user.getFirstName()+" "+user.getLastName());
+					if(blogCommentService.updateBlogComment(blogComment)){
+						return new ResponseEntity<BlogComment>(blogComment, HttpStatus.OK);
+					}else{
+						return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(19,"Blog Comment Updation failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+				}
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(12,"User must be logged in to add a comment"),HttpStatus.CONFLICT);
+		    }
+	}
+	
+	
+	@RequestMapping(value="/deleteBlogComment",method=RequestMethod.POST)
+	public ResponseEntity<?> deleteBlogComment(@RequestBody BlogComment blogComment,HttpSession session){
+		log.info("Delete BlogComment: Blog comment Blog Id= "+blogComment.getBlogId()+" user Id = "+blogComment.getUserId() );
+		Integer userId =  (Integer) session.getAttribute("userId");
+		 if(userId==null)
+		    {
+		    	return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(7,"User session details not found"),HttpStatus.UNAUTHORIZED);
+			}	   
+		    else{
+				UsersDetails user = userService.getUserById(userId);
+				if(user.isOnline()){	
+					
+					if(blogCommentService.deleteBlogComment(blogComment)){
+						return new ResponseEntity<BlogComment>(blogComment, HttpStatus.OK);
+					}else{
+						return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(19,"Blog Comment Deletion failed"), HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+				}
+				return new ResponseEntity<CollabApplicationError>(new CollabApplicationError(12,"User must be logged in to add a comment"),HttpStatus.CONFLICT);
 		    }
 	}
 }

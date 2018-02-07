@@ -19,5 +19,15 @@ app.factory('BlogCommentService',function($http,$cookieStore,$rootScope){
 		return $http.post(BASE_URL+"/addBlogComment",comment)
 	}
 	
+	blogCommentService.updateComment = function (comment){
+		
+		return $http.post(BASE_URL+"/updateBlogComment",comment)
+	}
+	
+	blogCommentService.deleteComment = function (comment){
+		
+		return $http.post(BASE_URL+"/deleteBlogComment",comment)
+	}
+	
 	return blogCommentService;
 })
